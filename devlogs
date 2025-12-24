@@ -4,7 +4,7 @@
     "badge": "BETA",
     "message": "We are rolling out system config settings to a select few, meaning it's right around the corner!",
     "image": "https://github.com/TheDevMarcus/verison/blob/main/logos/decemberlogo.png?raw=true",
-    "layout": "bottom",     
+    "layout": "side",     
     "author": "Chip Hill",
     "color": "#ffa500" 
   },

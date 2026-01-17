@@ -1,5 +1,14 @@
 [
   {
+    "title": "System Config & More!",
+    "badge": "NEW",
+    "message": "System config and more updates are out now! You can now customize your experience further by resetting default apps to their original state or exporting your app configurations for safekeeping. Check out the settings menu to get started!",
+    "image": "https://github.com/TheDevMarcus/verison/blob/main/logos/decemberlogo.png?raw=true",
+    "layout": "left",
+    "author": "Devin West",
+    "color": "#00FF00"
+  },
+  {
     "title": "NOVA Future Update",
     "badge": "ANNOUNCEMENT",
     "message": "As this year comes to an end, we want to thank everyone who has supported NOVA. Your support has helped us grow tremendously. We are excited to share that NOVA is officially funded by Blume, the creators and funders of Nooble Games. With this support, many changes are coming, and NOVA may evolve into a full game focused platform. While details are still being finalized, we’re excited for what’s ahead and hope you continue this journey with us. Wishing everyone a great New Year.",

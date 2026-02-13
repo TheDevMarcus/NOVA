@@ -727,6 +727,81 @@ input:checked + .slider:before { transform: translateX(26px); }
     .app-filter-wrapper { width: 100%; }
     .app-filter-input { width: 100%; }
 }
+.version-block-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.98);
+    backdrop-filter: blur(40px);
+    z-index: 999999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.version-block-modal.show {
+    display: flex;
+}
+.version-block-content {
+    background: #0a0c12;
+    border: 2px solid var(--primary);
+    border-radius: 48px;
+    padding: 48px 32px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 0 60px rgba(0,242,234,0.2);
+}
+.version-block-content h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    color: white;
+    margin-bottom: 20px;
+    letter-spacing: 6px;
+}
+.version-error-icon {
+    font-size: 80px;
+    color: var(--accent);
+    margin-bottom: 20px;
+    line-height: 1;
+}
+.version-message {
+    background: rgba(255,0,80,0.1);
+    border: 1px solid var(--accent);
+    border-radius: 60px;
+    padding: 16px 24px;
+    margin: 24px 0;
+    font-size: 1.1rem;
+    color: #ffb3c6;
+    font-weight: 500;
+}
+.patch-button {
+    background: linear-gradient(135deg, #00f2ea, #006a6a);
+    border: none;
+    padding: 20px 40px;
+    border-radius: 60px;
+    color: white;
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: 6px;
+    cursor: pointer;
+    margin: 20px 0 10px;
+    width: 100%;
+    text-transform: uppercase;
+    transition: 0.3s;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 40px rgba(0,242,234,0.3);
+}
+.patch-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 60px rgba(0,242,234,0.6);
+    border-color: white;
+}
+.block-note {
+    color: #888;
+    font-size: 0.75rem;
+    margin-top: 24px;
+    letter-spacing: 2px;
+}
 </style>
 </head>
 <body>
@@ -746,9 +821,7 @@ input:checked + .slider:before { transform: translateX(26px); }
             DEV UPDATES
         </div>
     </header>
-
     <div class="main-layout">
-        <!-- SEARCH BAR - MAIN FOCUS -->
         <div class="search-section">
             <div class="search-container">
                 <span class="search-icon">
@@ -768,8 +841,6 @@ input:checked + .slider:before { transform: translateX(26px); }
                 </div>
             </div>
         </div>
-
-        <!-- APPS HEADER WITH FILTERS -->
         <div class="apps-header">
             <div class="apps-title">
                 <h2>GAME VAULT</h2>
@@ -789,11 +860,7 @@ input:checked + .slider:before { transform: translateX(26px); }
                 </div>
             </div>
         </div>
-
-        <!-- GAME GRID - SCROLLING, BOXLESS, CLEAN -->
         <div class="apps-grid" id="appsGridContainer"></div>
-
-        <!-- QUICK URL LAUNCH -->
         <div class="url-section">
             <div class="url-input">
                 <input id="url" placeholder="Enter URL or search term..." autocomplete="off" onkeydown="handleUrlKey(event)">
@@ -801,7 +868,6 @@ input:checked + .slider:before { transform: translateX(26px); }
             <button id="startBtn" class="launch-btn" onclick="launch()" disabled>LAUNCH</button>
         </div>
     </div>
-
     <div class="footer">
         <span>DESIGNED BY CHIP HILL</span>
         <div class="footer-links">
@@ -810,8 +876,6 @@ input:checked + .slider:before { transform: translateX(26px); }
         </div>
     </div>
 </div>
-
-<!-- DEV FEED MODAL - BUTTON TRIGGERED -->
 <div class="dev-feed-modal" id="devFeedModal">
     <div class="dev-feed-header">
         <h3>
@@ -824,8 +888,6 @@ input:checked + .slider:before { transform: translateX(26px); }
         <div style="color:#888; padding:20px; text-align:center;">Loading developer messages...</div>
     </div>
 </div>
-
-<!-- MODALS -->
 <div class="modal" id="settingsModal">
     <div class="modal-content">
         <h2 class="modal-header">CONFIG</h2>
@@ -857,7 +919,6 @@ input:checked + .slider:before { transform: translateX(26px); }
         <button onclick="closeModals()" style="width:100%; padding:16px; background:transparent; border:none; color:#aaa; margin-top:12px;">CANCEL</button>
     </div>
 </div>
-
 <div class="modal" id="addAppModal">
     <div class="modal-content">
         <h2 class="modal-header">ADD GAME</h2>
@@ -868,15 +929,25 @@ input:checked + .slider:before { transform: translateX(26px); }
         <button onclick="closeModals()" style="width:100%; padding:16px; background:transparent; border:none; color:#aaa; margin-top:12px;">CANCEL</button>
     </div>
 </div>
-
 <div class="modal" id="imgPreviewModal" onclick="closeModals()">
     <div style="position:relative; display:flex; justify-content:center;">
         <div class="close-preview" onclick="closeModals()">×</div>
         <img id="previewImageElement" style="max-width:90vw; max-height:80vh; border-radius:24px;" src="">
     </div>
 </div>
-
 <input type="file" id="importFile" accept=".json" style="display:none;" onchange="importApps(event)">
+
+<div class="version-block-modal" id="versionBlockModal">
+    <div class="version-block-content">
+        <div class="version-error-icon">⚠️</div>
+        <h2>VERSION MISMATCH</h2>
+        <div class="version-message" id="versionErrorMessage">
+            NOVA 1.0.5 required<br>Current build outdated
+        </div>
+        <button class="patch-button" id="patchRedirectBtn">GET PATCH</button>
+        <div class="block-note">Redirecting to THEONLYNOVA.web.app</div>
+    </div>
+</div>
 
 <script>
 const randomQuotes = [
@@ -895,17 +966,13 @@ const randomQuotes = [
 "Tiny Fishing > your GPA.",
 "420 games and counting."
 ];
-
 function randomQuote() {
     document.getElementById('quoteDisplay').textContent = randomQuotes[Math.floor(Math.random() * randomQuotes.length)];
 }
-
 function handleUrlKey(e) {
     if (e.key === 'Enter') launch();
 }
-
 let SYSTEM_LOCKED = true;
-
 const DEFAULT_APPS = [
     {"name": "Slope","url": "https://slope-unblocked-10x.github.io/","icon": "https://slopeunblocked.bitbucket.io/img/slope.png"},
     {"name": "Tiny Fishing","url": "https://tiny-fishing-unblock.github.io/","icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHLSyv4vBAD4hvl9-vJFUvoHOtGHYYDryUumuKAat_BtVK_QgSHX8VGCiP-EUV1CdrwclKoL-x7uCzc0Zm8Ahm2vS6hhOFOYMPw2g9pA&s=10"},
@@ -922,31 +989,22 @@ const DEFAULT_APPS = [
     {"name": "Class 76","url": "https://class-76.github.io/","icon": "https://icons.veryicon.com/png/o/miscellaneous/alan-ui/logo-game-controller-2.png"},
     {"name": "Murder","url": "https://murder-unblocked.github.io/","icon": "https://play-lh.googleusercontent.com/BT7zrf4JNZj4pRV5YIRT4D0DydkuLEzVvnOwKmmOxuc1sbIUJyZbeaFOhjuLK4CXWFg"}
 ];
-
 let userApps = JSON.parse(localStorage.getItem('novaApps')) || DEFAULT_APPS;
-
 function filterApps() {
     const searchTerm = document.getElementById('globalSearch')?.value.toLowerCase() || '';
     const filterTerm = document.getElementById('appFilterInput')?.value.toLowerCase() || '';
     const combined = searchTerm || filterTerm;
     const sortBy = document.getElementById('sortSelect')?.value || 'name';
-    
-    let filtered = userApps.filter(app => 
-        app.name.toLowerCase().includes(combined)
-    );
-    
+    let filtered = userApps.filter(app => app.name.toLowerCase().includes(combined));
     if (sortBy === 'name' || sortBy === 'az') {
         filtered.sort((a,b) => a.name.localeCompare(b.name));
     }
-    
     document.getElementById('gameCount').innerText = filtered.length;
     renderAppsGrid(filtered);
 }
-
 function renderAppsGrid(appsArray) {
     const container = document.getElementById('appsGridContainer');
     if (!container) return;
-    
     container.innerHTML = appsArray.map((app, idx) => {
         const originalIndex = userApps.findIndex(a => a.url === app.url && a.name === app.name);
         return `<div class="game-card" onclick="document.getElementById('url').value='${app.url}'; launch()">
@@ -962,7 +1020,6 @@ function renderAppsGrid(appsArray) {
         <div class="game-name">Add Game</div>
     </div>`;
 }
-
 function deleteApp(e, i) {
     e.stopPropagation();
     if (confirm(`Remove "${userApps[i]?.name}"?`)) {
@@ -971,11 +1028,9 @@ function deleteApp(e, i) {
         filterApps();
     }
 }
-
 function openAddAppModal() {
     document.getElementById('addAppModal').classList.add('show');
 }
-
 function saveNewApp() {
     const name = document.getElementById('newAppName').value;
     const url = document.getElementById('newAppUrl').value;
@@ -995,7 +1050,6 @@ function saveNewApp() {
         showToast('Game added');
     }
 }
-
 function exportApps() {
     const dataStr = JSON.stringify(userApps, null, 2);
     const blob = new Blob([dataStr], {type: 'application/json'});
@@ -1006,7 +1060,6 @@ function exportApps() {
     URL.revokeObjectURL(url);
     showToast('Exported');
 }
-
 function importApps(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -1027,7 +1080,6 @@ function importApps(e) {
     reader.readAsText(file);
     e.target.value = '';
 }
-
 function restoreDefaultApps() {
     if (confirm('Restore default games?')) {
         userApps = [...DEFAULT_APPS];
@@ -1036,7 +1088,6 @@ function restoreDefaultApps() {
         showToast('Defaults restored');
     }
 }
-
 function showToast(msg) {
     const t = document.createElement('div');
     t.textContent = msg;
@@ -1044,12 +1095,10 @@ function showToast(msg) {
     document.body.appendChild(t);
     setTimeout(()=>{t.style.opacity='0';t.style.transition='0.25s';setTimeout(()=>document.body.removeChild(t),300);},2500);
 }
-
 function toggleDevFeed() {
     const modal = document.getElementById('devFeedModal');
     modal.classList.toggle('show');
 }
-
 async function loadDevMessages() {
     const container = document.getElementById('DevMessagesContainer');
     try {
@@ -1068,27 +1117,33 @@ async function loadDevMessages() {
         container.innerHTML = '<div style="color:#666; padding:20px; text-align:center;">🔌 Developer feed offline</div>';
     }
 }
-
 async function verify() {
     const statusEl = document.getElementById('statusText');
     const btn = document.getElementById('startBtn');
+    const versionBlockModal = document.getElementById('versionBlockModal');
     loadDevMessages();
     try {
         const res = await fetch("https://raw.githubusercontent.com/TheDevMarcus/verison/main/verison");
         const v = (await res.text()).trim();
-        if (v === "1.0.5") {
-            SYSTEM_LOCKED = false; btn.disabled = false; statusEl.innerText = 'V1.0.5 ONLINE';
+        if (v === "1.0.6") {
+            SYSTEM_LOCKED = false; 
+            btn.disabled = false; 
+            statusEl.innerText = 'V1.0.5 ONLINE';
         } else {
-            document.getElementById('mainCard')?.classList.add('locked');
+            versionBlockModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            SYSTEM_LOCKED = true;
+            btn.disabled = true;
             statusEl.innerText = 'V' + v + ' MISMATCH';
         }
     } catch(e) {
-        SYSTEM_LOCKED = false; btn.disabled = false; statusEl.innerText = 'OFFLINE V1.0.5';
+        SYSTEM_LOCKED = false; 
+        btn.disabled = false; 
+        statusEl.innerText = 'OFFLINE V1.0.5';
     }
     filterApps();
     randomQuote();
 }
-
 function openSettings() {
     document.getElementById('settingsModal').classList.add('show');
     document.getElementById('cloak').checked = localStorage.getItem('novaCloak') === 'true';
@@ -1096,11 +1151,9 @@ function openSettings() {
     document.getElementById('cloakIcon').value = localStorage.getItem('novaIcon') || '';
     toggleStealthSettings();
 }
-
 function toggleStealthSettings() {
     document.getElementById('stealthConfig').style.display = document.getElementById('cloak').checked ? 'block' : 'none';
 }
-
 function saveSettings() {
     localStorage.setItem('novaCloak', document.getElementById('cloak').checked);
     localStorage.setItem('novaTitle', document.getElementById('cloakTitle').value);
@@ -1108,23 +1161,19 @@ function saveSettings() {
     closeModals();
     showToast('Settings saved');
 }
-
 function applyCloakPreset(title, icon) {
     document.getElementById('cloakTitle').value = title;
     document.getElementById('cloakIcon').value = icon;
     showToast(`${title} preset`);
 }
-
 function clearCloakPreset() {
     document.getElementById('cloakTitle').value = '';
     document.getElementById('cloakIcon').value = '';
     showToast('Preset cleared');
 }
-
 function closeModals() {
     document.querySelectorAll('.modal').forEach(m => m.classList.remove('show'));
 }
-
 function launch() {
     const target = document.getElementById('url').value;
     if (!target) return;
@@ -1136,7 +1185,6 @@ function launch() {
     const html = `<!DOCTYPE html><html><head><title>${isCloaked?cTitle:'NOVA'}</title><link rel="icon" href="${isCloaked?cIcon:''}"><style>body,html{margin:0;padding:0;overflow:hidden;background:#000;}iframe{width:100vw;height:100vh;border:none;}.nav-bar{position:fixed;top:15px;left:15px;height:50px;width:50px;background:rgba(10,10,10,0.9);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.1);border-radius:20px;z-index:9999;transition:0.4s;display:flex;align-items:center;overflow:hidden;}.nav-bar:hover{width:300px;background:rgba(10,10,10,0.98);}.trigger{min-width:50px;height:50px;display:flex;align-items:center;justify-content:center;color:white;}.controls{display:flex;gap:12px;opacity:0;transition:0.3s;padding-right:16px;}.nav-bar:hover .controls{opacity:1;}.btn{width:36px;height:36px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.05);color:#ccc;cursor:pointer;display:flex;align-items:center;justify-content:center;}.btn:hover{background:rgba(255,255,255,0.2);color:white;}.btn.exit:hover{background:#ff4757;}</style></head><body><div class="nav-bar"><div class="trigger"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div><div class="controls"><button class="btn exit" onclick="window.close()"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"></path></svg></button><button class="btn" onclick="history.back()"><svg><polyline points="15 18 9 12 15 6"/></svg></button><button class="btn" onclick="history.forward()"><svg><polyline points="9 18 15 12 9 6"/></svg></button><button class="btn" onclick="location.reload()"><svg><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button></div></div><iframe src="${finalUrl}" allowfullscreen></iframe></body></html>`;
     win.document.write(html);
 }
-
 const canvas = document.getElementById('snow'), ctx = canvas.getContext('2d');
 let particles = [];
 function resizeCanvas() {
@@ -1157,7 +1205,11 @@ function animateSnow() {
     requestAnimationFrame(animateSnow);
 }
 window.addEventListener('resize', resizeCanvas);
-resizeCanvas(); animateSnow(); verify();
+resizeCanvas(); animateSnow(); 
+document.getElementById('patchRedirectBtn').addEventListener('click', function() {
+    window.location.href = 'https://THEONLYNOVA.web.app';
+});
+verify();
 </script>
 </body>
 </html>

@@ -1125,7 +1125,7 @@ async function verify() {
     try {
         const res = await fetch("https://raw.githubusercontent.com/TheDevMarcus/verison/main/verison");
         const v = (await res.text()).trim();
-        if (v === "1.0.6") {
+        if (v === "1.0.5") {
             SYSTEM_LOCKED = false; 
             btn.disabled = false; 
             statusEl.innerText = 'V1.0.5 ONLINE';

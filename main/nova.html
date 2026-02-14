@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>NOVA · FLUX</title>
+<title>NOVA</title>
 <link rel="icon" type="image/png" href="https://i.ibb.co/ZR8kx20q/New-Project-1.png">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
 <style>
@@ -23,7 +23,6 @@
     --card-border-hover: #ffffff;
     --glass-bg: #100c1c;
     --glass-border: rgba(255, 255, 255, 0.08);
-    --glow-intensity: 0.9;
 }
 * {
     box-sizing: border-box;
@@ -815,19 +814,32 @@ function makeDraggable(el, handle) {
     function closeDragElement() { document.onmouseup = null; document.onmousemove = null; }
 }
 async function fetchRemoteData() {
+    const container = document.getElementById('appsGridContainer');
+    if (!container) return;
     try {
         const [appsRes, quotesRes] = await Promise.all([
-            fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/dapps'),
-            fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/q')
+            fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/dapps', { cache: 'no-cache', headers: { 'Cache-Control': 'no-cache' } }),
+            fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/q', { cache: 'no-cache', headers: { 'Cache-Control': 'no-cache' } })
         ]);
-        if (appsRes.ok) { const appsData = await appsRes.json(); if (Array.isArray(appsData)) defaultApps = appsData; else throw new Error(); } else throw new Error();
-        if (quotesRes.ok) { const quotesData = await quotesRes.json(); if (Array.isArray(quotesData)) quotes = quotesData; else throw new Error(); } else throw new Error();
-    } catch { defaultApps = FALLBACK_DEFAULTS; quotes = FALLBACK_QUOTES; } 
-    finally {
+        if (appsRes.ok) {
+            const appsData = await appsRes.json();
+            if (Array.isArray(appsData)) defaultApps = appsData;
+            else throw new Error('Invalid apps format');
+        } else throw new Error('Apps fetch failed');
+        if (quotesRes.ok) {
+            const quotesData = await quotesRes.json();
+            if (Array.isArray(quotesData)) quotes = quotesData;
+            else throw new Error('Invalid quotes format');
+        } else throw new Error('Quotes fetch failed');
+    } catch (err) {
+        defaultApps = FALLBACK_DEFAULTS;
+        quotes = FALLBACK_QUOTES;
+    } finally {
         defaultUrls = new Set(defaultApps.map(app => app.url));
         userApps = userApps.filter(app => !defaultUrls.has(app.url));
         localStorage.setItem('novaApps', JSON.stringify(userApps));
-        filterApps(); randomQuote();
+        filterApps();
+        randomQuote();
     }
 }
 function filterApps() {
@@ -873,12 +885,12 @@ function handleUrlKey(e) { if (e.key === 'Enter') launch(); }
 function toggleDevFeed() { document.getElementById('devFeedModal').classList.toggle('show'); }
 async function loadDevMessages() {
     const container = document.getElementById('DevMessagesContainer');
-    try { const res = await fetch("https://raw.githubusercontent.com/TheDevMarcus/verison/refs/heads/main/devlogs"); if (!res.ok) throw Error(); const logs = await res.json(); container.innerHTML = logs.map(log => `<div class="log-card" style="border-left-color:${log.color||'var(--primary)'}"><div class="log-title">${log.title}</div><div class="log-msg">${log.message}</div><div class="log-author"><span style="background:${log.color||'var(--primary)'}; width:6px;height:6px;border-radius:50%;display:inline-block;"></span> ${log.author}</div></div>`).join(''); } catch(e) { container.innerHTML = '<div style="color:#8899aa; padding:20px; text-align:center;">🔌 Developer feed offline</div>'; }
+    try { const res = await fetch("https://raw.githubusercontent.com/TheDevMarcus/verison/refs/heads/main/devlogs", { cache: 'no-cache' }); if (!res.ok) throw Error(); const logs = await res.json(); container.innerHTML = logs.map(log => `<div class="log-card" style="border-left-color:${log.color||'var(--primary)'}"><div class="log-title">${log.title}</div><div class="log-msg">${log.message}</div><div class="log-author"><span style="background:${log.color||'var(--primary)'}; width:6px;height:6px;border-radius:50%;display:inline-block;"></span> ${log.author}</div></div>`).join(''); } catch(e) { container.innerHTML = '<div style="color:#8899aa; padding:20px; text-align:center;">🔌 Developer feed offline</div>'; }
 }
 async function verify() {
     const statusEl = document.getElementById('statusText'), btn = document.getElementById('startBtn'), versionBlockModal = document.getElementById('versionBlockModal');
     loadDevMessages();
-    try { const res = await fetch("https://raw.githubusercontent.com/TheDevMarcus/verison/main/verison"); const v = (await res.text()).trim(); if (v === "1.0.6") { btn.disabled = false; statusEl.innerText = 'V1.0.6 ONLINE'; } else { versionBlockModal.classList.add('show'); document.body.style.overflow = 'hidden'; btn.disabled = true; statusEl.innerText = 'V' + v + ' MISMATCH'; } } catch(e) { btn.disabled = false; statusEl.innerText = 'OFFLINE V1.0.6'; }
+    try { const res = await fetch("https://raw.githubusercontent.com/TheDevMarcus/verison/main/verison", { cache: 'no-cache' }); const v = (await res.text()).trim(); if (v === "1.0.6") { btn.disabled = false; statusEl.innerText = 'V1.0.6 ONLINE'; } else { versionBlockModal.classList.add('show'); document.body.style.overflow = 'hidden'; btn.disabled = true; statusEl.innerText = 'V' + v + ' MISMATCH'; } } catch(e) { btn.disabled = false; statusEl.innerText = 'OFFLINE V1.0.6'; }
 }
 function openSettings() { document.getElementById('settingsModal').classList.add('show'); document.getElementById('cloak').checked = localStorage.getItem('novaCloak') === 'true'; document.getElementById('cloakTitle').value = localStorage.getItem('novaTitle') || 'Google Docs'; document.getElementById('cloakIcon').value = localStorage.getItem('novaIcon') || ''; toggleStealthSettings(); }
 function toggleStealthSettings() { document.getElementById('stealthConfig').style.display = document.getElementById('cloak').checked ? 'block' : 'none'; }

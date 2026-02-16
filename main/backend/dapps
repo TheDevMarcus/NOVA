@@ -78,5 +78,10 @@
     "name": "Truffled",
     "url": "cityboi.whereyougoinghem.my",
     "icon": "https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/5/truffle-5c511ag3cgfzhvhdzkk3a.png/truffle-1lcrbjiqymtqp91rvm87d.png?_a=DATAiZAAZAA0"
+  },
+  {
+    "name": "1key",
+    "url": "https://uno-key.github.io",
+    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/Screenshot%202026-02-15%209.01.26%20PM.png?raw=true"
   }
 ]

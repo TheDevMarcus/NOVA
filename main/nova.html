@@ -22,8 +22,7 @@
 --glass-bg: rgba(25, 18, 40, 0.3);
 --glass-border: rgba(255, 255, 255, 0.04);
 --glass-border-hover: rgba(179, 128, 255, 0.3);
---glow-intensity: 0.9;
---trans-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+--trans-smooth: all 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 * {
 box-sizing: border-box;
@@ -31,10 +30,9 @@ box-sizing: border-box;
 margin: 0;
 padding: 0;
 }
-::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: var(--bg-deep); }
 ::-webkit-scrollbar-thumb { background: rgba(179, 128, 255, 0.2); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(179, 128, 255, 0.4); }
 html { height: -webkit-fill-available; }
 body {
 width: 100%;
@@ -53,7 +51,7 @@ position: fixed;
 inset: 0;
 z-index: 0;
 pointer-events: none;
-opacity: 0.6;
+opacity: 0.15;
 }
 .wrapper {
 position: relative;
@@ -62,7 +60,7 @@ min-height: 100vh;
 width: 100%;
 max-width: 1300px;
 margin: 0 auto;
-padding: 32px;
+padding: 24px 28px;
 display: flex;
 flex-direction: column;
 }
@@ -70,7 +68,7 @@ header {
 display: flex;
 align-items: center;
 justify-content: space-between;
-margin-bottom: 32px;
+margin-bottom: 30px;
 }
 .logo-area {
 display: flex;
@@ -103,7 +101,6 @@ padding: 8px 20px;
 border-radius: 40px;
 border: 1px solid rgba(179,128,255,0.15);
 backdrop-filter: blur(12px);
-box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 .status-dot {
 width: 8px; height: 8px;
@@ -149,21 +146,20 @@ border-radius: 100px;
 padding: 8px 12px 8px 24px;
 display: flex;
 align-items: center;
-margin-bottom: 32px;
+margin-bottom: 30px;
 transition: var(--trans-smooth);
 box-shadow: 0 15px 35px -10px rgba(0,0,0,0.6);
 }
 .search-section:focus-within {
 border-color: rgba(179,128,255,0.3);
 background: rgba(25, 18, 40, 0.5);
-box-shadow: 0 15px 35px -10px rgba(0,0,0,0.6), 0 0 25px rgba(179,128,255,0.15);
 }
 .search-container {
 flex: 1;
 display: flex;
 align-items: center;
 }
-.search-icon { color: var(--text-dim); margin-right: 16px; transition: var(--trans-smooth); }
+.search-icon { color: var(--text-dim); margin-right: 16px; }
 .search-section:focus-within .search-icon { color: var(--primary); }
 .search-container input {
 flex: 1;
@@ -175,7 +171,7 @@ font-size: 1.05rem;
 outline: none;
 font-family: 'Outfit', sans-serif;
 }
-.search-container input::placeholder { color: rgba(255,255,255,0.2); font-weight: 300; }
+.search-container input::placeholder { color: rgba(255,255,255,0.2); }
 .search-actions {
 display: flex;
 gap: 12px;
@@ -223,7 +219,6 @@ display: flex;
 align-items: center;
 justify-content: space-between;
 margin-bottom: 20px;
-padding: 0 8px;
 }
 .apps-title {
 display: flex;
@@ -259,10 +254,8 @@ background: rgba(0,0,0,0.3);
 padding: 8px 18px;
 border-radius: 40px;
 border: 1px solid var(--glass-border);
-transition: var(--trans-smooth);
 }
-.filter-sort:hover { border-color: rgba(255,255,255,0.1); }
-.filter-sort span { font-size: 0.75rem; color: var(--text-dim); letter-spacing: 1px; font-weight: 500;}
+.filter-sort span { font-size: 0.75rem; color: var(--text-dim); letter-spacing: 1px; }
 .filter-sort select {
 background: transparent;
 border: none;
@@ -282,7 +275,6 @@ top: 50%;
 transform: translateY(-50%);
 stroke: var(--text-dim);
 z-index: 2;
-transition: var(--trans-smooth);
 width: 14px; height: 14px;
 }
 .app-filter-input {
@@ -294,23 +286,20 @@ color: white;
 font-size: 0.85rem;
 width: 180px;
 font-family: 'Outfit', sans-serif;
-transition: var(--trans-smooth);
 }
-.app-filter-input::placeholder { color: rgba(255,255,255,0.2); }
 .app-filter-input:focus {
 border-color: rgba(179,128,255,0.4);
 width: 220px;
 background: rgba(20,15,30,0.6);
 outline: none;
 }
-.app-filter-input:focus + svg { stroke: var(--primary); }
 .apps-grid {
 display: grid;
 grid-template-columns: repeat(6, 1fr);
 gap: 16px;
-padding: 8px 4px 32px 4px;
-margin-bottom: 20px;
-min-height: 300px;
+padding: 8px 4px 20px 4px;
+margin-bottom: 10px;
+min-height: 280px;
 }
 .loading-grid {
 display: flex;
@@ -318,17 +307,15 @@ justify-content: center;
 align-items: center;
 grid-column: 1 / -1;
 color: var(--text-dim);
-font-size: 0.9rem;
-letter-spacing: 2px;
 gap: 16px;
 }
 .spinner {
-width: 28px;
-height: 28px;
+width: 24px;
+height: 24px;
 border: 2px solid rgba(179,128,255,0.1);
 border-top-color: var(--primary);
 border-radius: 50%;
-animation: spin 0.8s linear infinite;
+animation: spin 0.6s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 .app-card {
@@ -345,35 +332,27 @@ transition: var(--trans-smooth);
 position: relative;
 padding: 8px;
 overflow: hidden;
-backdrop-filter: blur(10px);
+backdrop-filter: blur(6px);
 }
 .app-card:hover {
 background: rgba(30, 22, 45, 0.6);
 border-color: var(--glass-border-hover);
-box-shadow: 0 15px 35px -10px rgba(0,0,0,0.8), 0 0 20px rgba(179,128,255,0.15);
-transform: translateY(-6px);
+box-shadow: 0 12px 25px -10px rgba(0,0,0,0.8), 0 0 10px rgba(179,128,255,0.1);
+transform: translateY(-4px);
 }
 .app-icon {
 width: 100%;
 height: 100%;
 border-radius: 14px;
 overflow: hidden;
-transition: var(--trans-smooth);
-}
-.app-card:hover .app-icon {
-transform: scale(0.92) translateY(-4px);
 }
 .app-icon img {
 width: 100%;
 height: 100%;
 object-fit: cover;
-transition: var(--trans-smooth);
-}
-.app-card:hover .app-icon img {
-transform: scale(1.05);
 }
 .app-name {
-font-size: 0.75rem;
+font-size: 0.7rem;
 font-weight: 500;
 color: white;
 text-align: center;
@@ -383,7 +362,7 @@ overflow: hidden;
 text-overflow: ellipsis;
 letter-spacing: 0.5px;
 opacity: 0;
-transition: var(--trans-smooth);
+transition: 0.15s;
 position: absolute;
 bottom: 0;
 left: 0;
@@ -409,7 +388,7 @@ color: #ffb3d9;
 font-size: 10px;
 opacity: 0;
 transform: scale(0.8);
-transition: var(--trans-smooth);
+transition: 0.15s;
 border: 1px solid rgba(255, 102, 178, 0.3);
 cursor: pointer;
 z-index: 3;
@@ -419,7 +398,130 @@ z-index: 3;
 background: var(--accent);
 color: white;
 box-shadow: 0 0 15px var(--accent-glow);
-transform: scale(1.1) !important;
+}
+.random-game-card {
+background: linear-gradient(145deg, rgba(179,128,255,0.15) 0%, rgba(102,51,153,0.25) 100%);
+border: 2px solid rgba(255,255,255,0.1);
+border-radius: 20px;
+aspect-ratio: 1 / 1;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+transition: all 0.15s ease;
+position: relative;
+padding: 8px;
+overflow: hidden;
+backdrop-filter: blur(10px);
+box-shadow: 0 0 25px rgba(179,128,255,0.15);
+}
+.random-game-card:hover {
+transform: translateY(-4px);
+border-color: var(--accent);
+}
+.random-icon {
+width: 100%;
+height: 100%;
+border-radius: 14px;
+overflow: hidden;
+position: relative;
+background: #0f0a1a;
+}
+.random-icon img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+position: absolute;
+top: 0;
+left: 0;
+opacity: 0;
+transition: opacity 0.35s ease;
+}
+.random-icon img.active { opacity: 1; }
+.random-label {
+position: absolute;
+top: 8px; left: 8px;
+background: rgba(255,102,178,0.3);
+backdrop-filter: blur(4px);
+color: white;
+padding: 4px 10px;
+border-radius: 30px;
+font-size: 0.55rem;
+font-weight: 800;
+letter-spacing: 2px;
+border: 1px solid rgba(255,255,255,0.2);
+z-index: 5;
+}
+.top-game-card {
+background: linear-gradient(145deg, rgba(255,102,178,0.2) 0%, rgba(179,128,255,0.3) 100%);
+border: 2px solid rgba(255,102,178,0.4);
+border-radius: 20px;
+aspect-ratio: 1 / 1;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+transition: all 0.15s ease;
+position: relative;
+padding: 8px;
+overflow: hidden;
+backdrop-filter: blur(10px);
+box-shadow: 0 0 25px rgba(255,102,178,0.2);
+}
+.top-game-card:hover {
+transform: translateY(-4px);
+border-color: var(--accent);
+box-shadow: 0 0 30px rgba(255,102,178,0.4);
+}
+.top-game-icon {
+width: 100%;
+height: 100%;
+border-radius: 14px;
+overflow: hidden;
+}
+.top-game-icon img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+.top-game-name {
+font-size: 0.7rem;
+font-weight: 500;
+color: white;
+text-align: center;
+width: 100%;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+letter-spacing: 0.5px;
+opacity: 0;
+transition: 0.15s;
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(255,102,178,0.5) 60%, transparent 100%);
+padding: 24px 10px 10px;
+z-index: 2;
+}
+.top-game-card:hover .top-game-name {
+opacity: 1;
+}
+.top-game-label {
+position: absolute;
+top: 8px; left: 8px;
+background: rgba(255,102,178,0.4);
+backdrop-filter: blur(4px);
+color: white;
+padding: 4px 10px;
+border-radius: 30px;
+font-size: 0.55rem;
+font-weight: 800;
+letter-spacing: 2px;
+border: 1px solid rgba(255,255,255,0.2);
+z-index: 5;
 }
 .add-app-card {
 background: transparent;
@@ -437,35 +539,21 @@ transition: var(--trans-smooth);
 .add-app-card:hover {
 border-color: var(--primary);
 background: rgba(179,128,255,0.05);
-transform: translateY(-4px);
-box-shadow: 0 10px 25px -5px rgba(179,128,255,0.1);
+transform: translateY(-3px);
 }
 .add-icon {
-width: 48px;
-height: 48px;
+width: 44px; height: 44px;
 border-radius: 50%;
 background: rgba(255,255,255,0.03);
 display: flex;
 align-items: center;
 justify-content: center;
-font-size: 24px;
+font-size: 22px;
 color: var(--text-dim);
-transition: var(--trans-smooth);
 }
-.add-app-card:hover .add-icon {
-color: var(--primary);
-background: rgba(179,128,255,0.1);
-}
-.add-app-card .app-name {
-position: relative;
-background: transparent;
-opacity: 0.5;
-font-size: 0.8rem;
-padding: 0;
-}
-.add-app-card:hover .app-name { color: var(--primary); opacity: 1; }
+.add-app-card:hover .add-icon { color: var(--primary); background: rgba(179,128,255,0.1); }
 .url-section {
-margin: 10px 0 20px;
+margin: 15px 0 25px;
 display: flex;
 gap: 16px;
 align-items: center;
@@ -475,12 +563,10 @@ border: 1px solid var(--glass-border);
 border-radius: 100px;
 padding: 8px 10px 8px 28px;
 box-shadow: 0 15px 35px -10px rgba(0,0,0,0.6);
-transition: var(--trans-smooth);
 }
 .url-section:focus-within {
 border-color: rgba(179,128,255,0.3);
 background: rgba(25, 18, 40, 0.5);
-box-shadow: 0 15px 35px -10px rgba(0,0,0,0.6), 0 0 25px rgba(179,128,255,0.15);
 }
 .url-input { flex: 1; }
 .url-input input {
@@ -493,7 +579,7 @@ font-size: 1.05rem;
 outline: none;
 font-family: 'Outfit', sans-serif;
 }
-.url-input input::placeholder { color: rgba(255,255,255,0.2); font-weight: 300; }
+.url-input input::placeholder { color: rgba(255,255,255,0.2); }
 .launch-btn {
 background: linear-gradient(135deg, var(--primary), #8a4fff);
 border: none;
@@ -506,7 +592,6 @@ letter-spacing: 2px;
 cursor: pointer;
 transition: var(--trans-smooth);
 text-transform: uppercase;
-font-family: 'Outfit', sans-serif;
 }
 .launch-btn:hover:not(:disabled) {
 transform: translateY(-2px);
@@ -548,8 +633,7 @@ border-radius: 32px;
 padding: 40px;
 max-width: 480px; width: 100%;
 max-height: 85vh; overflow-y: auto;
-animation: scaleIn 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), 0 0 30px rgba(179,128,255,0.1);
+animation: scaleIn 0.15s ease;
 }
 .modal-header {
 font-family: 'Outfit', sans-serif;
@@ -560,12 +644,7 @@ margin-bottom: 32px;
 text-align: center;
 color: white;
 }
-.server-list {
-display: flex;
-flex-direction: column;
-gap: 12px;
-margin-bottom: 24px;
-}
+.server-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
 .server-option {
 background: rgba(255,255,255,0.02);
 border: 1px solid rgba(255,255,255,0.04);
@@ -583,8 +662,7 @@ border-color: rgba(179,128,255,0.3);
 transform: translateX(4px);
 }
 .server-number {
-width: 36px;
-height: 36px;
+width: 36px; height: 36px;
 background: rgba(179,128,255,0.1);
 border-radius: 50%;
 display: flex;
@@ -594,27 +672,11 @@ font-weight: 700;
 color: var(--primary);
 border: 1px solid rgba(179,128,255,0.3);
 }
-.server-url {
-flex: 1;
-font-size: 0.85rem;
-color: var(--text-dim);
-word-break: break-all;
-}
+.server-url { flex: 1; font-size: 0.85rem; color: var(--text-dim); word-break: break-all; }
 .setting-row { margin-bottom: 24px; }
 .setting-label { display: block; font-size: 0.7rem; color: var(--text-dim); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
-.modal input {
-width: 100%; padding: 16px 20px;
-background: rgba(0,0,0,0.3);
-border: 1px solid rgba(255,255,255,0.05);
-border-radius: 16px; color: white;
-font-family: 'Outfit', sans-serif;
-transition: var(--trans-smooth);
-}
-.modal input:focus {
-border-color: rgba(179,128,255,0.4);
-outline: none;
-background: rgba(0,0,0,0.5);
-}
+.modal input { width: 100%; padding: 16px 20px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; color: white; }
+.modal input:focus { border-color: rgba(179,128,255,0.4); outline: none; background: rgba(0,0,0,0.5); }
 .switch { position: relative; display: inline-block; width: 52px; height: 28px; float: right; }
 .switch input { opacity: 0; width: 0; height: 0; }
 .slider { position: absolute; cursor: pointer; inset: 0; background-color: rgba(255,255,255,0.1); transition: .3s; border-radius: 30px; }
@@ -622,79 +684,49 @@ background: rgba(0,0,0,0.5);
 input:checked + .slider { background-color: var(--primary); box-shadow: 0 0 15px rgba(179,128,255,0.4); }
 input:checked + .slider:before { transform: translateX(24px); }
 .presets-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 20px 0; }
-.preset-item {
-background: rgba(255,255,255,0.02);
-border: 1px solid rgba(255,255,255,0.04);
-border-radius: 16px; padding: 16px 8px;
-display: flex; flex-direction: column; align-items: center; gap: 10px;
-cursor: pointer; transition: var(--trans-smooth);
-}
-.preset-item:hover {
-background: rgba(179,128,255,0.08);
-border-color: rgba(179,128,255,0.3);
-transform: translateY(-3px);
-}
+.preset-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 16px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; transition: var(--trans-smooth); }
+.preset-item:hover { background: rgba(179,128,255,0.08); border-color: rgba(179,128,255,0.3); transform: translateY(-3px); }
 .preset-icon { width: 36px; height: 36px; border-radius: 10px; overflow: hidden; }
 .preset-icon img { width: 100%; height: 100%; object-fit: cover; }
 .preset-name { font-size: 0.7rem; color: var(--text-dim); }
-.modal-btn {
-width: 100%; padding: 16px;
-background: rgba(255,255,255,0.03);
-border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);
-color: white; margin-bottom: 12px; transition: var(--trans-smooth);
-cursor: pointer; font-family: 'Outfit', sans-serif; font-weight: 500;
-}
+.modal-btn { width: 100%; padding: 16px; background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); color: white; margin-bottom: 12px; transition: var(--trans-smooth); cursor: pointer; }
 .modal-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
 .modal-btn.danger { color: #ff80bf; background: rgba(255,102,178,0.05); border-color: rgba(255,102,178,0.2); }
 .modal-btn.danger:hover { background: rgba(255,102,178,0.15); }
-.modal-btn.primary { background: linear-gradient(135deg, var(--primary), #8a4fff); border: none; font-weight: 700; margin-top: 16px; box-shadow: 0 4px 15px rgba(179,128,255,0.3); }
+.modal-btn.primary { background: linear-gradient(135deg, var(--primary), #8a4fff); border: none; font-weight: 700; margin-top: 16px; }
 .modal-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(179,128,255,0.5); }
-.modal-btn.ghost { background: transparent; border: none; color: var(--text-dim); margin-top: 4px; box-shadow: none; }
+.modal-btn.ghost { background: transparent; border: none; color: var(--text-dim); margin-top: 4px; }
 .modal-btn.ghost:hover { color: white; background: rgba(255,255,255,0.05); }
 .dev-feed-modal {
-position: fixed; bottom: 30px; right: 30px; width: 380px; max-width: 92vw;
+position: fixed; bottom: 30px; right: 30px; width: 360px;
 background: rgba(20, 15, 30, 0.9); backdrop-filter: blur(20px);
 border: 1px solid rgba(255,255,255,0.05); border-radius: 24px;
 z-index: 1000; display: none; flex-direction: column; overflow: hidden;
-animation: slideIn 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+animation: slideIn 0.15s ease;
 }
 .dev-feed-modal.show { display: flex; }
-.dev-feed-header { padding: 18px 24px; background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; justify-content: space-between; align-items: center; }
+.dev-feed-header { padding: 18px 22px; background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; justify-content: space-between; align-items: center; }
 .dev-feed-header h3 { font-size: 0.85rem; font-weight: 700; letter-spacing: 2px; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
-.dev-feed-header h3 svg { stroke: var(--primary); }
-.close-feed { background: rgba(255,255,255,0.05); border: none; width: 28px; height: 28px; border-radius: 50%; color: white; cursor: pointer; transition: var(--trans-smooth); display:flex; align-items:center; justify-content:center; }
-.close-feed:hover { background: rgba(255,255,255,0.1); }
-.dev-feed-content { padding: 20px; max-height: 400px; overflow-y: auto; }
-.log-card { background: rgba(0,0,0,0.3); border-left: 3px solid var(--primary); border-radius: 12px; padding: 16px; margin-bottom: 12px; transition: var(--trans-smooth); }
-.log-card:hover { background: rgba(0,0,0,0.5); transform: translateX(4px); }
-.log-title { font-weight: 600; font-size: 0.85rem; color: white; margin-bottom: 6px; }
-.log-msg { font-size: 0.75rem; color: var(--text-dim); line-height: 1.6; }
+.close-feed { background: rgba(255,255,255,0.05); border: none; width: 28px; height: 28px; border-radius: 50%; color: white; cursor: pointer; }
+.dev-feed-content { padding: 20px; max-height: 350px; overflow-y: auto; }
+.log-card { background: rgba(0,0,0,0.3); border-left: 3px solid var(--primary); border-radius: 12px; padding: 14px; margin-bottom: 10px; }
+.log-title { font-weight: 600; font-size: 0.8rem; color: white; margin-bottom: 5px; }
+.log-msg { font-size: 0.7rem; color: var(--text-dim); line-height: 1.5; }
 .draggable-panel {
-position: fixed; top: 100px; left: 100px; width: 320px;
+position: fixed; top: 100px; left: 100px; width: 300px;
 background: rgba(25, 18, 40, 0.85);
 border: 1px solid rgba(179,128,255,0.2);
 border-radius: 24px; padding: 0; z-index: 10000;
-box-shadow: 0 25px 50px rgba(0,0,0,0.6), 0 0 30px rgba(179,128,255,0.1);
-backdrop-filter: blur(20px); cursor: default; display: none; user-select: none;
-overflow: hidden;
+box-shadow: 0 20px 40px rgba(0,0,0,0.6); backdrop-filter: blur(20px);
+cursor: default; display: none; user-select: none; overflow: hidden;
 }
 .draggable-panel.show { display: block; }
-.panel-header {
-padding: 16px 20px; background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.05);
-font-weight: 600; font-size: 0.9rem; letter-spacing: 2px; color: white; display: flex; justify-content: space-between; align-items: center; cursor: move;
-}
+.panel-header { padding: 16px 18px; background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.05); font-weight: 600; font-size: 0.85rem; letter-spacing: 2px; color: white; display: flex; justify-content: space-between; align-items: center; cursor: move; }
 .panel-header span { color: var(--primary); }
-.panel-close { background: transparent; border: none; color: var(--text-dim); font-size: 16px; cursor: pointer; transition: 0.2s; }
-.panel-close:hover { color: white; }
-.panel-content { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
-.panel-item {
-background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.03);
-border-radius: 16px; padding: 14px 18px; display: flex; align-items: center; gap: 14px;
-cursor: pointer; transition: var(--trans-smooth); font-size: 0.85rem; font-weight: 500; color: var(--text-dim);
-}
+.panel-close { background: transparent; border: none; color: var(--text-dim); font-size: 16px; cursor: pointer; }
+.panel-content { padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+.panel-item { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.03); border-radius: 14px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: var(--trans-smooth); font-size: 0.8rem; color: var(--text-dim); }
 .panel-item:hover { background: rgba(179,128,255,0.1); border-color: rgba(179,128,255,0.3); color: white; transform: translateX(4px); }
-.panel-item svg { stroke: var(--primary); width: 18px; height: 18px; }
 @keyframes scaleIn { from{ opacity: 0; transform: scale(0.97) translateY(10px); } to{ opacity: 1; transform: scale(1) translateY(0); } }
 @keyframes slideIn { from{ opacity: 0; transform: translateX(30px); } to{ opacity: 1; transform: translateX(0); } }
 @keyframes fadeInUp { from{ opacity: 0; transform: translate(-50%, 20px); } to{ opacity: 1; transform: translate(-50%, 0); } }
@@ -712,7 +744,6 @@ h1 { font-size: 2.2rem; }
 .url-input { width: 100%; padding-left: 8px; }
 .launch-btn { width: 100%; }
 }
-@media (max-width: 400px) { .apps-grid { grid-template-columns: repeat(2,1fr); } }
 </style>
 </head>
 <body>
@@ -723,7 +754,7 @@ h1 { font-size: 2.2rem; }
 <h1>NOVA</h1>
 <div class="status-badge">
 <span class="status-dot"></span>
-<span class="status-text" id="statusText">V1.0.7</span>
+<span class="status-text" id="statusText">V1.0.8</span>
 </div>
 </div>
 <div class="dev-button" onclick="toggleDevFeed()">
@@ -731,7 +762,6 @@ h1 { font-size: 2.2rem; }
 UPDATES
 </div>
 </header>
-<div class="main-layout">
 <div class="search-section">
 <div class="search-container">
 <span class="search-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
@@ -777,7 +807,6 @@ UPDATES
 </div>
 <button id="startBtn" class="launch-btn" onclick="launch()" disabled>LAUNCH</button>
 </div>
-</div>
 <div class="footer">
 <span>DESIGNED BY CHIP HILL</span>
 <div class="footer-links">
@@ -787,10 +816,7 @@ UPDATES
 </div>
 </div>
 <div class="draggable-panel" id="adminPanel">
-<div class="panel-header" id="dragHandle">
-<span>SYSTEM ADMIN</span>
-<button class="panel-close" onclick="closeAdminPanel()">✕</button>
-</div>
+<div class="panel-header" id="dragHandle"><span>SYSTEM ADMIN</span><button class="panel-close" onclick="closeAdminPanel()">✕</button></div>
 <div class="panel-content">
 <div class="panel-item" onclick="showToast('Banned user: generic_user_01')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg> Ban User</div>
 <div class="panel-item" onclick="showToast('Unlimited coins granted (just kidding)')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg> Grant Coins</div>
@@ -803,30 +829,16 @@ UPDATES
 <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg> DEV LOGS</h3>
 <button class="close-feed" onclick="toggleDevFeed()">✕</button>
 </div>
-<div class="dev-feed-content" id="DevMessagesContainer">
-<div style="color:var(--text-dim); padding:20px; text-align:center;">Establishing uplink...</div>
-</div>
+<div class="dev-feed-content" id="DevMessagesContainer"><div style="color:var(--text-dim); padding:20px; text-align:center;">Establishing uplink...</div></div>
 </div>
 <div class="modal" id="settingsModal">
 <div class="modal-content">
 <h2 class="modal-header">CONFIGURATION</h2>
-<div class="setting-row">
-<span style="color:white; font-size: 0.85rem; font-weight:600; letter-spacing: 1px;">CLOAK MODE</span>
-<label class="switch"><input type="checkbox" id="cloak" onchange="toggleStealthSettings()"><span class="slider"></span></label>
-</div>
+<div class="setting-row"><span style="color:white; font-size: 0.85rem;">CLOAK MODE</span><label class="switch"><input type="checkbox" id="cloak" onchange="toggleStealthSettings()"><span class="slider"></span></label></div>
 <div id="stealthConfig" style="display:none;">
-<div class="setting-row">
-<label class="setting-label">Tab Title</label>
-<input id="cloakTitle" placeholder="Google Docs">
-</div>
-<div class="setting-row">
-<label class="setting-label">Favicon URL</label>
-<input id="cloakIcon" placeholder="https://...">
-</div>
-<div style="display:flex; justify-content:space-between; margin:24px 0 12px; align-items:center;">
-<span style="color:white; font-size: 0.8rem; font-weight:600; letter-spacing: 1px;">QUICK PRESETS</span>
-<button onclick="clearCloakPreset()" style="background:rgba(255,255,255,0.05); border:none; color:var(--text-dim); padding:6px 16px; border-radius:40px; cursor:pointer; font-size: 0.7rem; letter-spacing: 1px;">CLEAR</button>
-</div>
+<div class="setting-row"><label class="setting-label">Tab Title</label><input id="cloakTitle" placeholder="Google Docs"></div>
+<div class="setting-row"><label class="setting-label">Favicon URL</label><input id="cloakIcon" placeholder="https://..."></div>
+<div style="display:flex; justify-content:space-between; margin:24px 0 12px;"><span style="color:white; font-size: 0.8rem;">QUICK PRESETS</span><button onclick="clearCloakPreset()" style="background:rgba(255,255,255,0.05); border:none; color:var(--text-dim); padding:6px 16px; border-radius:40px; cursor:pointer;">CLEAR</button></div>
 <div class="presets-grid">
 <div class="preset-item" onclick="applyCloakPreset('Google Docs','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_ZPKzisg9Sj2CKJUElIL_ckUnkwcARCP6Ew&s')"><div class="preset-icon"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_ZPKzisg9Sj2CKJUElIL_ckUnkwcARCP6Ew&s"></div><span class="preset-name">Docs</span></div>
 <div class="preset-item" onclick="applyCloakPreset('Google Classroom','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUXXjHfy9EvwxExTgh1S7R8rbtaOwUOqGFEg&s')"><div class="preset-icon"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUXXjHfy9EvwxExTgh1S7R8rbtaOwUOqGFEg&s"></div><span class="preset-name">Classroom</span></div>
@@ -845,18 +857,9 @@ UPDATES
 <div class="modal" id="addAppModal">
 <div class="modal-content">
 <h2 class="modal-header">ADD NEW APP</h2>
-<div class="setting-row">
-<label class="setting-label">Application Name</label>
-<input id="newAppName" placeholder="e.g. Retro Bowl">
-</div>
-<div class="setting-row">
-<label class="setting-label">Target URL (or multiple with commas)</label>
-<input id="newAppUrl" placeholder="https://... or https://link1.com, https://link2.com">
-</div>
-<div class="setting-row">
-<label class="setting-label">Icon URL (Optional)</label>
-<input id="newAppIcon" placeholder="https://...">
-</div>
+<div class="setting-row"><label class="setting-label">Application Name</label><input id="newAppName" placeholder="e.g. Retro Bowl"></div>
+<div class="setting-row"><label class="setting-label">Target URL (or multiple with commas)</label><input id="newAppUrl" placeholder="https://... or https://link1.com, https://link2.com"></div>
+<div class="setting-row"><label class="setting-label">Icon URL (Optional)</label><input id="newAppIcon" placeholder="https://..."></div>
 <button class="modal-btn primary" onclick="saveNewApp()">ADD TO VAULT</button>
 <button class="modal-btn ghost" onclick="closeModals()">CANCEL</button>
 </div>
@@ -873,305 +876,203 @@ UPDATES
 <div class="modal-content" style="text-align:center; padding: 50px 30px;">
 <div style="font-size: 60px; margin-bottom: 20px;">⚠️</div>
 <h2 class="modal-header" style="margin-bottom: 10px; color: var(--accent);">SYSTEM MISMATCH</h2>
-<div style="color: var(--text-dim); margin-bottom: 30px; font-size: 0.95rem; line-height: 1.5;" id="versionErrorMessage">
-NOVA client update required.<br>Your current build is outdated.
-</div>
+<div style="color: var(--text-dim); margin-bottom: 30px;" id="versionErrorMessage">NOVA client update required.<br>Your current build is outdated.</div>
 <button class="modal-btn primary" id="patchRedirectBtn">INSTALL PATCH</button>
 </div>
 </div>
 <script>
 let defaultApps = [], userApps = [], quotes = [], defaultUrls = new Set();
+let rotationInterval = null;
+let topAppsList = [];
 const FALLBACK_DEFAULTS = [{"name":"Slope","url":"https://slope-unblocked-10x.github.io/","icon":"https://slopeunblocked.bitbucket.io/img/slope.png"},{"name":"Tiny Fishing","url":"https://tiny-fishing-unblock.github.io/","icon":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHLSyv4vBAD4hvl9-vJFUvoHOtGHYYDryUumuKAat_BtVK_QgSHX8VGCiP-EUV1CdrwclKoL-x7uCzc0Zm8Ahm2vS6hhOFOYMPw2g9pA&s=10"}];
 const FALLBACK_QUOTES = ["67 isn't funny.", "41 isn't funny.", "what's 9+10?", "you can vent, I might not listen tho", "NOVA > any proxy."];
-try {
-const stored = localStorage.getItem('novaApps');
-userApps = stored ? JSON.parse(stored) : [];
-if (!Array.isArray(userApps)) userApps = [];
-} catch (e) { userApps = []; }
+try { const stored = localStorage.getItem('novaApps'); userApps = stored ? JSON.parse(stored) : []; if (!Array.isArray(userApps)) userApps = []; } catch (e) { userApps = []; }
 function showToast(msg) {
-const t = document.createElement('div');
-t.textContent = msg;
-t.style.cssText = 'position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:var(--primary);color:#000;padding:12px 32px;border-radius:40px;font-size:0.85rem;font-weight:700;z-index:9999;box-shadow:0 15px 30px rgba(179,128,255,0.4);backdrop-filter:blur(10px);animation:fadeInUp 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);';
+const t = document.createElement('div'); t.textContent = msg;
+t.style.cssText = 'position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:var(--primary);color:#000;padding:12px 32px;border-radius:40px;font-size:0.85rem;font-weight:700;z-index:9999;box-shadow:0 15px 30px rgba(179,128,255,0.4);backdrop-filter:blur(10px);animation:fadeInUp 0.15s ease;';
 document.body.appendChild(t);
-setTimeout(()=>{
-t.style.opacity='0';
-t.style.transform='translateX(-50%) translateY(20px)';
-t.style.transition='all 0.3s ease';
-setTimeout(()=>document.body.removeChild(t),300);
-},2500);
+setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(20px)'; t.style.transition='all 0.15s ease'; setTimeout(()=>document.body.removeChild(t),150); },2000);
 }
 let adminTriggerCount = 0;
 function checkAdminTrigger(e) {
-const val = e.target.value.toLowerCase();
-if (val.includes('fakeadmin')) {
-document.getElementById('adminPanel').classList.add('show');
-e.target.value = '';
-adminTriggerCount = 0;
-}
+if (e.target.value.toLowerCase().includes('fakeadmin')) { document.getElementById('adminPanel').classList.add('show'); e.target.value = ''; adminTriggerCount = 0; }
 filterApps();
 }
 function closeAdminPanel() { document.getElementById('adminPanel').classList.remove('show'); }
-makeDraggable(document.getElementById('adminPanel'), document.getElementById('dragHandle'));
 function makeDraggable(el, handle) {
-let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-handle.onmousedown = dragMouseDown;
-function dragMouseDown(e) {
-e = e || window.event; e.preventDefault();
-pos3 = e.clientX; pos4 = e.clientY;
-document.onmouseup = closeDragElement;
-document.onmousemove = elementDrag;
+let pos1=0,pos2=0,pos3=0,pos4=0;
+handle.onmousedown = function(e) { e.preventDefault(); pos3 = e.clientX; pos4 = e.clientY; document.onmouseup = function() { document.onmouseup = null; document.onmousemove = null; }; document.onmousemove = function(e) { e.preventDefault(); pos1 = pos3 - e.clientX; pos2 = pos4 - e.clientY; pos3 = e.clientX; pos4 = e.clientY; el.style.top = (el.offsetTop - pos2) + "px"; el.style.left = (el.offsetLeft - pos1) + "px"; }; };
 }
-function elementDrag(e) {
-e = e || window.event; e.preventDefault();
-pos1 = pos3 - e.clientX; pos2 = pos4 - e.clientY;
-pos3 = e.clientX; pos4 = e.clientY;
-el.style.top = (el.offsetTop - pos2) + "px";
-el.style.left = (el.offsetLeft - pos1) + "px";
-}
-function closeDragElement() { document.onmouseup = null; document.onmousemove = null; }
-}
+makeDraggable(document.getElementById('adminPanel'), document.getElementById('dragHandle'));
 async function fetchRemoteData() {
 try {
-const [appsRes, quotesRes] = await Promise.all([
-fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/dapps'),
-fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/q')
-]);
+const [appsRes, quotesRes] = await Promise.all([ fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/dapps'), fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/q') ]);
 if (appsRes.ok) { const appsData = await appsRes.json(); if (Array.isArray(appsData)) defaultApps = appsData; else throw new Error(); } else throw new Error();
 if (quotesRes.ok) { const quotesData = await quotesRes.json(); if (Array.isArray(quotesData)) quotes = quotesData; else throw new Error(); } else throw new Error();
 } catch { defaultApps = FALLBACK_DEFAULTS; quotes = FALLBACK_QUOTES; }
 finally {
-defaultApps = defaultApps.map(app => {
-if (app.urls && Array.isArray(app.urls)) {
-return { ...app, hasMultipleUrls: true, urls: app.urls };
-} else {
-return { ...app, hasMultipleUrls: false, url: app.url };
-}
-});
+defaultApps = defaultApps.map(app => { if (app.urls && Array.isArray(app.urls)) { return { ...app, hasMultipleUrls: true, urls: app.urls }; } else { return { ...app, hasMultipleUrls: false, url: app.url }; } });
 defaultUrls = new Set(defaultApps.filter(app => !app.hasMultipleUrls).map(app => app.url));
 userApps = userApps.filter(app => !defaultUrls.has(app.url));
 localStorage.setItem('novaApps', JSON.stringify(userApps));
+await loadTopApps();
 filterApps(); randomQuote();
 }
+}
+async function loadTopApps() {
+try {
+const resp = await fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/topgames');
+if (!resp.ok) throw new Error();
+topAppsList = await resp.json();
+if (!Array.isArray(topAppsList)) throw new Error();
+topAppsList = topAppsList.map(app => {
+if (app.urls && Array.isArray(app.urls)) return { ...app, hasMultipleUrls: true, urls: app.urls };
+else return { ...app, hasMultipleUrls: false, url: app.url };
+});
+} catch { topAppsList = []; }
 }
 function filterApps() {
 const searchTerm = (document.getElementById('globalSearch')?.value || '').toLowerCase();
 const filterTerm = (document.getElementById('appFilterInput')?.value || '').toLowerCase();
-const combinedSearch = searchTerm || filterTerm;
-let allApps = [...defaultApps.map(app => ({ ...app, isDefault: true })), ...userApps.map(app => ({ ...app, isDefault: false }))];
-if (combinedSearch) allApps = allApps.filter(app => app.name.toLowerCase().includes(combinedSearch));
-allApps.sort((a, b) => a.name.localeCompare(b.name));
+const combined = searchTerm || filterTerm;
+let allApps = [...defaultApps.map(a => ({ ...a, isDefault: true })), ...userApps.map(a => ({ ...a, isDefault: false }))];
+if (combined) allApps = allApps.filter(a => a.name.toLowerCase().includes(combined));
+allApps.sort((a,b) => a.name.localeCompare(b.name));
 document.getElementById('appCount').innerText = allApps.length;
-renderAppsGrid(allApps);
+renderAppsGrid(allApps, combined);
 }
-function renderAppsGrid(appsArray) {
-const container = document.getElementById('appsGridContainer');
-if (!container) return;
+function renderAppsGrid(appsArray, hasSearch) {
+const container = document.getElementById('appsGridContainer'); if (!container) return;
 let html = '';
-appsArray.forEach((app) => {
-if (app.hasMultipleUrls) {
-html += `<div class="app-card multi-link-app" data-name="${app.name}" data-urls='${JSON.stringify(app.urls)}' data-isdefault="${app.isDefault}">
-<div class="app-icon"><img src="${app.icon}" onerror="this.src='https://ui-avatars.com/api/?background=140f23&color=fff&size=80&name=${encodeURIComponent(app.name.charAt(0))}'"></div>
-<div class="app-name">${app.name} (${app.urls.length} servers)</div>
-${!app.isDefault ? `<div class="app-delete" data-url="${app.url}" onclick="event.stopPropagation(); deleteApp(this, '${app.url}')">✕</div>` : ''}
-</div>`;
-} else {
-html += `<div class="app-card" data-url="${app.url}" data-isdefault="${app.isDefault}">
-<div class="app-icon"><img src="${app.icon}" onerror="this.src='https://ui-avatars.com/api/?background=140f23&color=fff&size=80&name=${encodeURIComponent(app.name.charAt(0))}'"></div>
-<div class="app-name">${app.name}</div>
-${!app.isDefault ? `<div class="app-delete" data-url="${app.url}" onclick="event.stopPropagation(); deleteApp(this, '${app.url}')">✕</div>` : ''}
-</div>`;
-}
+if (!hasSearch) {
+let icons = appsArray.map(a => a.icon).filter(Boolean);
+if (icons.length) {
+let shuffled = [...icons].sort(()=>Math.random()-0.5);
+html += `<div class="random-game-card" onclick="launchRandomGame()"><div class="random-label">🎲 RANDOM</div><div class="random-icon" id="randomIconContainer">${shuffled.map((ic, idx)=>`<img src="${ic}" class="${idx===0?'active':''}" onerror="this.style.display='none'">`).join('')}</div><div class="app-name">SURPRISE ME</div></div>`;
+} else html += `<div class="random-game-card" onclick="launchRandomGame()"><div class="random-label">🎲 RANDOM</div><div class="random-icon" style="display:flex;align-items:center;justify-content:center;">?</div><div class="app-name">SURPRISE ME</div></div>`;
+if (topAppsList.length > 0) {
+topAppsList.forEach(app => {
+const icon = app.icon || `https://ui-avatars.com/api/?background=ff66b2&color=fff&size=128&name=${encodeURIComponent(app.name.charAt(0))}`;
+const dataAttrs = app.hasMultipleUrls ? `data-multi="true" data-urls='${JSON.stringify(app.urls)}'` : `data-url="${app.url || ''}"`;
+html += `<div class="top-game-card" ${dataAttrs} data-name="${app.name}" onclick="handleTopAppClick(this)"><div class="top-game-icon"><img src="${icon}" onerror="this.src='https://ui-avatars.com/api/?background=ff66b2&color=fff&size=128&name=${encodeURIComponent(app.name.charAt(0))}'"></div><div class="top-game-label">⭐ TOP</div><div class="top-game-name">${app.name}</div></div>`;
 });
-html += `<div class="add-app-card" onclick="openAddAppModal()"><div class="add-icon">+</div><div class="app-name">Add To Vault</div></div>`;
+}
+}
+if (appsArray.length===0 && !hasSearch && topAppsList.length===0) html += `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-dim);">No games found.</div>`;
+else if (appsArray.length===0 && hasSearch) html += `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-dim);">No games found.</div>`;
+else {
+appsArray.forEach(app => {
+if (app.hasMultipleUrls) html += `<div class="app-card multi-link-app" data-name="${app.name}" data-urls='${JSON.stringify(app.urls)}'><div class="app-icon"><img src="${app.icon}" onerror="this.src='https://ui-avatars.com/api/?background=140f23&color=fff&size=80&name=${encodeURIComponent(app.name.charAt(0))}'"></div><div class="app-name">${app.name} (${app.urls.length} servers)</div>${!app.isDefault?`<div class="app-delete" data-url="${app.url}" onclick="event.stopPropagation(); deleteApp(this,'${app.url}')">✕</div>`:''}</div>`;
+else html += `<div class="app-card" data-url="${app.url}"><div class="app-icon"><img src="${app.icon}" onerror="this.src='https://ui-avatars.com/api/?background=140f23&color=fff&size=80&name=${encodeURIComponent(app.name.charAt(0))}'"></div><div class="app-name">${app.name}</div>${!app.isDefault?`<div class="app-delete" data-url="${app.url}" onclick="event.stopPropagation(); deleteApp(this,'${app.url}')">✕</div>`:''}</div>`;
+});
+}
+if (!hasSearch && (appsArray.length > 0 || topAppsList.length > 0)) html += `<div class="add-app-card" onclick="openAddAppModal()"><div class="add-icon">+</div><div class="app-name">Add To Vault</div></div>`;
 container.innerHTML = html;
-container.querySelectorAll('.app-card:not(.add-app-card)').forEach(card => {
-card.addEventListener('click', (e) => {
-if (e.target.classList.contains('app-delete')) return;
-if (card.classList.contains('multi-link-app')) {
-const urls = JSON.parse(card.dataset.urls);
-const appName = card.dataset.name;
-showServerSelector(appName, urls);
+if (!hasSearch) startRandomIconRotation();
+document.querySelectorAll('.app-card:not(.add-app-card)').forEach(c=>c.addEventListener('click',function(e){
+if(e.target.classList.contains('app-delete'))return;
+if(this.classList.contains('multi-link-app')){ const u=JSON.parse(this.dataset.urls); showServerSelector(this.dataset.name,u); }
+else { const url=this.dataset.url; if(url){ document.getElementById('url').value=url; launch(); } }
+}));
+document.querySelectorAll('.top-game-card').forEach(c=>c.addEventListener('click',function(e){
+if(this.dataset.multi === 'true') {
+const urls = JSON.parse(this.dataset.urls);
+const name = this.dataset.name;
+showServerSelector(name, urls);
 } else {
-const url = card.dataset.url;
+const url = this.dataset.url;
+if(url) { document.getElementById('url').value = url; launch(); }
+else showToast('no direct link');
+}
+}));
+}
+function handleTopAppClick(el) {
+if (el.dataset.multi === 'true') {
+const urls = JSON.parse(el.dataset.urls);
+const name = el.dataset.name;
+showServerSelector(name, urls);
+} else {
+const url = el.dataset.url;
 if (url) { document.getElementById('url').value = url; launch(); }
-}
-});
-});
-}
-function showServerSelector(appName, urls) {
-const modal = document.getElementById('serverSelectModal');
-const title = document.getElementById('serverModalTitle');
-const list = document.getElementById('serverList');
-title.textContent = `${appName} - SELECT SERVER`;
-let html = '';
-urls.forEach((url, index) => {
-html += `
-<div class="server-option" onclick="selectServer('${url}')">
-<div class="server-number">${index + 1}</div>
-<div class="server-url">${url}</div>
-</div>
-`;
-});
-list.innerHTML = html;
-modal.classList.add('show');
-}
-function selectServer(url) {
-document.getElementById('url').value = url;
-closeServerModal();
-launch();
-}
-function closeServerModal() {
-document.getElementById('serverSelectModal').classList.remove('show');
-}
-function deleteApp(el, url) {
-el.stopPropagation?.();
-if (defaultUrls.has(url)) { showToast('Default apps cannot be deleted'); return; }
-const app = userApps.find(a => a.url === url);
-if (!app) return;
-if (confirm(`Remove "${app.name}" from the vault?`)) {
-userApps = userApps.filter(a => a.url !== url);
-localStorage.setItem('novaApps', JSON.stringify(userApps));
-filterApps(); showToast('App removed');
+else showToast('no direct link');
 }
 }
+function startRandomIconRotation() {
+if (rotationInterval) clearInterval(rotationInterval);
+const c = document.getElementById('randomIconContainer'); if(!c)return;
+const imgs = c.querySelectorAll('img'); if(imgs.length<=1)return;
+let idx=0; imgs.forEach(i=>i.classList.remove('active')); imgs[0].classList.add('active');
+rotationInterval = setInterval(()=>{ imgs[idx].classList.remove('active'); idx=(idx+1)%imgs.length; imgs[idx].classList.add('active'); },1700);
+}
+function launchRandomGame() {
+let all = []; [...defaultApps, ...userApps].forEach(a=>{ if(a.hasMultipleUrls && a.urls) all.push(...a.urls); else if(a.url) all.push(a.url); });
+if(!all.length){ showToast('No games'); return; }
+document.getElementById('url').value = all[Math.floor(Math.random()*all.length)]; launch();
+}
+function deleteApp(el, url) { el.stopPropagation?.(); if(defaultUrls.has(url)){ showToast('Default apps cannot be deleted'); return; }
+const app=userApps.find(a=>a.url===url); if(!app) return; if(confirm(`Remove "${app.name}"?`)){ userApps = userApps.filter(a=>a.url!==url); localStorage.setItem('novaApps',JSON.stringify(userApps)); filterApps(); showToast('Removed'); } }
 function saveNewApp() {
-const name = document.getElementById('newAppName').value.trim();
-const urlInput = document.getElementById('newAppUrl').value.trim();
-const icon = document.getElementById('newAppIcon').value.trim();
-if (!name || !urlInput) { showToast('Name & URL required'); return; }
-const urls = urlInput.split(',').map(u => u.trim()).filter(u => u);
-if (urls.length === 0) { showToast('Invalid URL(s)'); return; }
-const hasMultiple = urls.length > 1;
-if (!hasMultiple) {
-if (defaultUrls.has(urls[0])) { showToast('This app is already in defaults'); return; }
-if (userApps.some(a => a.url === urls[0])) { showToast('You already added this app'); return; }
+const name=document.getElementById('newAppName').value.trim(); const urlIn=document.getElementById('newAppUrl').value.trim(); const icon=document.getElementById('newAppIcon').value.trim();
+if(!name||!urlIn){ showToast('Name & URL required'); return; }
+const urls=urlIn.split(',').map(u=>u.trim()).filter(u=>u); if(urls.length===0) return;
+const hasMult=urls.length>1;
+if(!hasMult){ if(defaultUrls.has(urls[0])){ showToast('Already in defaults'); return; } if(userApps.some(a=>a.url===urls[0])){ showToast('Already added'); return; } }
+const newApp = hasMult ? { name, urls, hasMultipleUrls:true, icon: icon||`https://ui-avatars.com/api/?background=b380ff&color=000&size=80&name=${encodeURIComponent(name.charAt(0))}` } : { name, url:urls[0], icon: icon||`https://ui-avatars.com/api/?background=b380ff&color=000&size=80&name=${encodeURIComponent(name.charAt(0))}` };
+userApps.push(newApp); localStorage.setItem('novaApps',JSON.stringify(userApps)); filterApps(); closeModals(); document.getElementById('newAppName').value=''; document.getElementById('newAppUrl').value=''; document.getElementById('newAppIcon').value=''; showToast('App added');
 }
-const newApp = hasMultiple ? 
-{ name, urls: urls, hasMultipleUrls: true, icon: icon || `https://ui-avatars.com/api/?background=b380ff&color=000&size=80&name=${encodeURIComponent(name.charAt(0))}` } :
-{ name, url: urls[0], icon: icon || `https://ui-avatars.com/api/?background=b380ff&color=000&size=80&name=${encodeURIComponent(name.charAt(0))}` };
-userApps.push(newApp); 
-localStorage.setItem('novaApps', JSON.stringify(userApps)); 
-filterApps(); 
-closeModals();
-document.getElementById('newAppName').value = ''; 
-document.getElementById('newAppUrl').value = ''; 
-document.getElementById('newAppIcon').value = ''; 
-showToast(hasMultiple ? 'Multi-server app added' : 'App added to vault');
-}
-function randomQuote() {
-const quoteEl = document.getElementById('quoteDisplay');
-if (quotes.length > 0) quoteEl.textContent = quotes[Math.floor(Math.random() * quotes.length)];
-else quoteEl.textContent = FALLBACK_QUOTES[Math.floor(Math.random() * FALLBACK_QUOTES.length)];
-}
-function restoreDefaultApps() {
-if (confirm('Restore default apps? This clears your custom vault additions.')) {
-userApps = []; localStorage.setItem('novaApps', JSON.stringify(userApps));
-fetchRemoteData(); showToast('Defaults restored');
-closeModals();
-}
-}
+function randomQuote() { const q=document.getElementById('quoteDisplay'); if(quotes.length) q.textContent=quotes[Math.floor(Math.random()*quotes.length)]; else q.textContent=FALLBACK_QUOTES[Math.floor(Math.random()*FALLBACK_QUOTES.length)]; }
+function restoreDefaultApps() { if(confirm('Restore default apps? This clears custom additions.')){ userApps=[]; localStorage.setItem('novaApps',JSON.stringify(userApps)); fetchRemoteData(); closeModals(); } }
 function exportApps() {
-const dataStr = JSON.stringify(userApps, null, 2);
-const blob = new Blob([dataStr], {type:'application/json'});
-const url = URL.createObjectURL(blob);
-const a = document.createElement('a'); a.href = url; a.download = 'nova-vault-export.json';
-document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
-showToast('Vault exported');
+const dataStr=JSON.stringify(userApps,null,2); const blob=new Blob([dataStr],{type:'application/json'}); const url=URL.createObjectURL(blob);
+const a=document.createElement('a'); a.href=url; a.download='nova-vault-export.json'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); showToast('Exported');
 }
 function importApps(e) {
-const file = e.target.files[0]; if (!file) return;
-const reader = new FileReader();
-reader.onload = function(ev) {
-try {
-const imported = JSON.parse(ev.target.result);
-if (Array.isArray(imported) && imported.every(a => a.name && (a.url || a.urls))) {
-const validNew = imported.filter(app => {
-if (app.urls) return true;
-return !defaultUrls.has(app.url) && !userApps.some(u => u.url === app.url);
-});
-if (validNew.length === 0) showToast('No new apps found (duplicates ignored)');
-else if (confirm(`Import ${validNew.length} new app(s) into vault?`)) {
-userApps = [...userApps, ...validNew];
-localStorage.setItem('novaApps', JSON.stringify(userApps));
-filterApps(); showToast('Import successful');
+const file=e.target.files[0]; if(!file)return;
+const reader=new FileReader(); reader.onload=function(ev){
+try{ const imported=JSON.parse(ev.target.result); if(Array.isArray(imported)&&imported.every(a=>a.name&&(a.url||a.urls))){
+const valid=imported.filter(app=>{ if(app.urls)return true; return !defaultUrls.has(app.url)&&!userApps.some(u=>u.url===app.url); });
+if(valid.length===0) showToast('No new apps (duplicates)'); else if(confirm(`Import ${valid.length} app(s)?`)){ userApps=[...userApps, ...valid]; localStorage.setItem('novaApps',JSON.stringify(userApps)); filterApps(); showToast('Imported'); } } else alert('Invalid format');
+}catch(ex){ alert('Invalid JSON'); } }; reader.readAsText(file); e.target.value='';
 }
-} else alert('Invalid format');
-} catch(e) { alert('Invalid JSON file'); }
-}; reader.readAsText(file); e.target.value = '';
-}
-function handleUrlKey(e) { if (e.key === 'Enter') launch(); }
+function handleUrlKey(e) { if(e.key==='Enter') launch(); }
 function toggleDevFeed() { document.getElementById('devFeedModal').classList.toggle('show'); }
 async function loadDevMessages() {
-const container = document.getElementById('DevMessagesContainer');
-try {
-const res = await fetch("https://raw.githubusercontent.com/TheDevMarcus/verison/refs/heads/main/devlogs");
-if (!res.ok) throw Error(); const logs = await res.json();
-container.innerHTML = logs.map(log => `<div class="log-card" style="border-left-color:${log.color||'var(--primary)'}"><div class="log-title">${log.title}</div><div class="log-msg">${log.message}</div><div style="margin-top:10px; font-size:0.65rem; color:rgba(255,255,255,0.4); display:flex; align-items:center; gap:6px;"><span style="background:${log.color||'var(--primary)'}; width:6px;height:6px;border-radius:50%;display:inline-block;"></span> ${log.author}</div></div>`).join('');
-} catch(e) { container.innerHTML = '<div style="color:var(--text-dim); padding:20px; text-align:center;">🔌 Feed connection failed</div>'; }
+const c=document.getElementById('DevMessagesContainer');
+try{ const r=await fetch("https://raw.githubusercontent.com/TheDevMarcus/verison/refs/heads/main/devlogs"); if(!r.ok)throw Error(); const logs=await r.json(); c.innerHTML=logs.map(l=>`<div class="log-card" style="border-left-color:${l.color||'var(--primary)'}"><div class="log-title">${l.title}</div><div class="log-msg">${l.message}</div><div style="margin-top:8px; font-size:0.65rem; color:rgba(255,255,255,0.4);"><span style="background:${l.color||'var(--primary)'}; width:6px;height:6px;border-radius:50%;display:inline-block;"></span> ${l.author}</div></div>`).join('');
+}catch{ c.innerHTML='<div style="color:var(--text-dim); padding:20px;">🔌 Feed failed</div>'; }
 }
 async function verify() {
-const statusEl = document.getElementById('statusText'), btn = document.getElementById('startBtn'), versionBlockModal = document.getElementById('versionBlockModal');
+const s=document.getElementById('statusText'), b=document.getElementById('startBtn'), v=document.getElementById('versionBlockModal');
 loadDevMessages();
-try {
-const res = await fetch("https://raw.githubusercontent.com/TheDevMarcus/verison/main/verison");
-const v = (await res.text()).trim();
-if (v === "1.0.7") { btn.disabled = false; statusEl.innerText = 'V1.0.7 ONLINE'; }
-else { versionBlockModal.classList.add('show'); document.body.style.overflow = 'hidden'; btn.disabled = true; statusEl.innerText = 'V' + v + ' MISMATCH'; }
-} catch(e) { btn.disabled = false; statusEl.innerText = 'OFFLINE V1.0.7'; }
+try{ const r=await fetch("https://raw.githubusercontent.com/TheDevMarcus/verison/main/verison"); const ver=(await r.text()).trim(); if(ver==="1.0.8"){ b.disabled=false; s.innerText='V1.0.8 ONLINE'; } else { v.classList.add('show'); document.body.style.overflow='hidden'; b.disabled=true; s.innerText='V'+ver+' MISMATCH'; } } catch{ b.disabled=false; s.innerText='OFFLINE V1.0.8'; }
 }
-function openSettings() { document.getElementById('settingsModal').classList.add('show'); document.getElementById('cloak').checked = localStorage.getItem('novaCloak') === 'true'; document.getElementById('cloakTitle').value = localStorage.getItem('novaTitle') || 'Google Docs'; document.getElementById('cloakIcon').value = localStorage.getItem('novaIcon') || ''; toggleStealthSettings(); }
-function toggleStealthSettings() { document.getElementById('stealthConfig').style.display = document.getElementById('cloak').checked ? 'block' : 'none'; }
-function saveSettings() { localStorage.setItem('novaCloak', document.getElementById('cloak').checked); localStorage.setItem('novaTitle', document.getElementById('cloakTitle').value); localStorage.setItem('novaIcon', document.getElementById('cloakIcon').value); closeModals(); showToast('Settings saved'); }
-function applyCloakPreset(title, icon) { document.getElementById('cloakTitle').value = title; document.getElementById('cloakIcon').value = icon; showToast(`${title} selected`); }
-function clearCloakPreset() { document.getElementById('cloakTitle').value = ''; document.getElementById('cloakIcon').value = ''; showToast('Fields cleared'); }
-function closeModals() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('show')); }
+function openSettings() { document.getElementById('settingsModal').classList.add('show'); document.getElementById('cloak').checked=localStorage.getItem('novaCloak')==='true'; document.getElementById('cloakTitle').value=localStorage.getItem('novaTitle')||'Google Docs'; document.getElementById('cloakIcon').value=localStorage.getItem('novaIcon')||''; toggleStealthSettings(); }
+function toggleStealthSettings() { document.getElementById('stealthConfig').style.display=document.getElementById('cloak').checked?'block':'none'; }
+function saveSettings() { localStorage.setItem('novaCloak',document.getElementById('cloak').checked); localStorage.setItem('novaTitle',document.getElementById('cloakTitle').value); localStorage.setItem('novaIcon',document.getElementById('cloakIcon').value); closeModals(); showToast('Settings saved'); }
+function applyCloakPreset(title,icon) { document.getElementById('cloakTitle').value=title; document.getElementById('cloakIcon').value=icon; showToast(title+' selected'); }
+function clearCloakPreset() { document.getElementById('cloakTitle').value=''; document.getElementById('cloakIcon').value=''; showToast('Cleared'); }
+function closeModals() { document.querySelectorAll('.modal, .version-block-modal, .server-select-modal').forEach(m=>m.classList.remove('show')); document.body.style.overflow=''; }
 function openAddAppModal() { document.getElementById('addAppModal').classList.add('show'); }
+function showServerSelector(name,urls) {
+const list=document.getElementById('serverList'); list.innerHTML='';
+urls.forEach((u,i)=>{ const d=document.createElement('div'); d.className='server-option'; d.innerHTML=`<span class="server-number">${i+1}</span><span class="server-url">${u}</span>`; d.onclick=()=>{ document.getElementById('url').value=u; launch(); closeServerModal(); }; list.appendChild(d); });
+document.getElementById('serverModalTitle').innerText=`${name} servers`; document.getElementById('serverSelectModal').classList.add('show');
+}
+function closeServerModal() { document.getElementById('serverSelectModal').classList.remove('show'); }
 function launch() {
-const target = document.getElementById('url').value.trim(); if (!target) return;
-let finalUrl = target.startsWith('http') ? target : 'https://' + target;
-const isCloaked = localStorage.getItem('novaCloak') === 'true';
-const cTitle = localStorage.getItem('novaTitle') || 'Google Docs';
-const cIcon = localStorage.getItem('novaIcon') || 'https://ssl.gstatic.com/docs/doclist/images/infinite_wallpapers/v2/google-docs.ico';
-const win = window.open('about:blank', '_blank');
-const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${isCloaked?cTitle:'NOVA'}</title><link rel="icon" href="${isCloaked?cIcon:'https://i.ibb.co/ZR8kx20q/New-Project-1.png'}"><style>body,html{margin:0;padding:0;overflow:hidden;background:#05030a;}iframe{width:100vw;height:100vh;border:none;}.nav-bar{position:fixed;top:15px;left:15px;height:44px;width:44px;background:rgba(20,15,30,0.8);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.05);border-radius:14px;z-index:9999;transition:0.3s cubic-bezier(0.25,0.8,0.25,1);display:flex;align-items:center;overflow:hidden;}.nav-bar:hover{width:170px;background:rgba(25,18,40,0.9);border-color:rgba(179,128,255,0.3);box-shadow:0 10px 30px rgba(0,0,0,0.5), 0 0 15px rgba(179,128,255,0.2);}.trigger{min-width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:white;}.controls{display:flex;gap:10px;opacity:0;transition:0.2s;padding-right:14px;}.nav-bar:hover .controls{opacity:1;}.btn{position:relative;width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);color:#d0c0f0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:0.2s;}.btn:hover{background:rgba(179,128,255,0.2);color:white;box-shadow:0 0 12px rgba(179,128,255,0.3);}.btn.exit:hover{background:rgba(255,102,178,0.2);box-shadow:0 0 12px rgba(255,102,178,0.4);color:#ffb3d9;}.tooltip{visibility:hidden;position:absolute;background:#000;color:#b380ff;padding:4px 10px;border-radius:6px;font-size:11px;white-space:nowrap;bottom:130%;left:50%;transform:translateX(-50%);border:1px solid rgba(179,128,255,0.2);}.btn:hover .tooltip{visibility:visible;}</style></head><body><div class="nav-bar"><div class="trigger"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div><div class="controls"><button class="btn exit" onclick="window.close()"><span class="tooltip">Close Session</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><button class="btn" onclick="location.reload()"><span class="tooltip">Refresh</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></button><button class="btn hide-btn" onclick="this.closest('.nav-bar').style.display='none'"><span class="tooltip">Hide Menu</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div></div><iframe src="${finalUrl}" allowfullscreen></iframe></body></html>`;
+const t=document.getElementById('url').value.trim(); if(!t)return;
+let final=t.startsWith('http')?t:'https://'+t;
+const cloak=localStorage.getItem('novaCloak')==='true'; const cTitle=localStorage.getItem('novaTitle')||'Google Docs'; const cIcon=localStorage.getItem('novaIcon')||'https://ssl.gstatic.com/docs/doclist/images/infinite_wallpapers/v2/google-docs.ico';
+const win=window.open('about:blank','_blank');
+const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${cloak?cTitle:'NOVA'}</title><link rel="icon" href="${cloak?cIcon:'https://i.ibb.co/ZR8kx20q/New-Project-1.png'}"><style>body,html{margin:0;padding:0;overflow:hidden;background:#05030a;}iframe{width:100vw;height:100vh;border:none;}.nav-bar{position:fixed;top:15px;left:15px;height:44px;width:44px;background:rgba(20,15,30,0.8);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.05);border-radius:14px;z-index:9999;transition:0.2s;display:flex;align-items:center;overflow:hidden;}.nav-bar:hover{width:170px;background:rgba(25,18,40,0.9);border-color:rgba(179,128,255,0.3);}.trigger{min-width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:white;}.controls{display:flex;gap:10px;opacity:0;transition:0.2s;padding-right:14px;}.nav-bar:hover .controls{opacity:1;}.btn{position:relative;width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);color:#d0c0f0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:0.2s;}.btn:hover{background:rgba(179,128,255,0.2);color:white;}.btn.exit:hover{background:rgba(255,102,178,0.2);color:#ffb3d9;}.tooltip{visibility:hidden;position:absolute;background:#000;color:#b380ff;padding:4px 10px;border-radius:6px;font-size:11px;white-space:nowrap;bottom:130%;left:50%;transform:translateX(-50%);border:1px solid rgba(179,128,255,0.2);}.btn:hover .tooltip{visibility:visible;}</style></head><body><div class="nav-bar"><div class="trigger"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div><div class="controls"><button class="btn exit" onclick="window.close()"><span class="tooltip">Close</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><button class="btn" onclick="location.reload()"><span class="tooltip">Reload</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></button><button class="btn hide-btn" onclick="this.closest('.nav-bar').style.display='none'"><span class="tooltip">Hide</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div></div><iframe src="${final}" allowfullscreen></iframe></body></html>`;
 win.document.write(html);
 }
-document.getElementById('patchRedirectBtn').addEventListener('click', function() { window.location.href = 'https://THEONLYNOVA.web.app'; });
-const canvas = document.getElementById('stars-canvas'), ctx = canvas.getContext('2d');
-let stars = [];
-function initStars() {
-canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-stars = [];
-for (let i = 0; i < 150; i++) {
-stars.push({
-x: Math.random() * canvas.width,
-y: Math.random() * canvas.height,
-radius: Math.random() * 1.5 + 0.6,
-speed: Math.random() * 0.02 + 0.01,
-glow: Math.random() * 0.8 + 0.4
-});
-}
-}
-function drawStars() {
-ctx.clearRect(0, 0, canvas.width, canvas.height);
-for (let s of stars) {
-ctx.beginPath();
-ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-ctx.fillStyle = `rgba(255, 255, 255, ${s.glow * 0.7})`;
-ctx.shadowColor = 'rgba(179, 128, 255, 0.6)';
-ctx.shadowBlur = s.radius * 4;
-ctx.fill();
-s.y += s.speed;
-if (s.y > canvas.height) { s.y = 0; s.x = Math.random() * canvas.width; }
-}
-ctx.shadowBlur = 0;
-requestAnimationFrame(drawStars);
-}
-window.addEventListener('resize', () => { initStars(); });
-initStars();
-drawStars();
-verify();
-fetchRemoteData();
+document.getElementById('patchRedirectBtn').addEventListener('click',function(){ window.location.href='https://THEONLYNOVA.web.app'; });
+const canvas=document.getElementById('stars-canvas'), ctx=canvas.getContext('2d'); let stars=[];
+function initStars(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; stars=[]; for(let i=0;i<40;i++) stars.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height, radius:Math.random()*1+0.3, speed:Math.random()*0.008+0.002, glow:Math.random()*0.4+0.1 }); }
+function drawStars(){ ctx.clearRect(0,0,canvas.width,canvas.height); for(let s of stars){ ctx.beginPath(); ctx.arc(s.x,s.y,s.radius,0,Math.PI*2); ctx.fillStyle=`rgba(255,255,255,${s.glow*0.5})`; ctx.shadowColor='rgba(179,128,255,0.3)'; ctx.shadowBlur=s.radius*3; ctx.fill(); s.y+=s.speed; if(s.y>canvas.height){ s.y=0; s.x=Math.random()*canvas.width; } } ctx.shadowBlur=0; requestAnimationFrame(drawStars); }
+window.addEventListener('resize',initStars); initStars(); drawStars();
+verify(); fetchRemoteData();
 </script>
 </body>
 </html>

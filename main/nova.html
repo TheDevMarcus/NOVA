@@ -533,14 +533,14 @@ font-size: 0.75rem;
 font-weight: 500;
 }
 .footer-link:hover { color: var(--primary); }
-.modal, .version-block-modal {
+.modal, .version-block-modal, .server-select-modal {
 position: fixed; inset: 0;
 background: rgba(0,0,0,0.8);
 backdrop-filter: blur(20px);
 display: none; align-items: center; justify-content: center;
 z-index: 2000; padding: 20px;
 }
-.modal.show, .version-block-modal.show { display: flex; }
+.modal.show, .version-block-modal.show, .server-select-modal.show { display: flex; }
 .modal-content {
 background: rgba(20, 15, 30, 0.85);
 border: 1px solid rgba(255,255,255,0.05);
@@ -559,6 +559,46 @@ letter-spacing: 4px;
 margin-bottom: 32px;
 text-align: center;
 color: white;
+}
+.server-list {
+display: flex;
+flex-direction: column;
+gap: 12px;
+margin-bottom: 24px;
+}
+.server-option {
+background: rgba(255,255,255,0.02);
+border: 1px solid rgba(255,255,255,0.04);
+border-radius: 16px;
+padding: 16px 20px;
+display: flex;
+align-items: center;
+gap: 16px;
+cursor: pointer;
+transition: var(--trans-smooth);
+}
+.server-option:hover {
+background: rgba(179,128,255,0.08);
+border-color: rgba(179,128,255,0.3);
+transform: translateX(4px);
+}
+.server-number {
+width: 36px;
+height: 36px;
+background: rgba(179,128,255,0.1);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 700;
+color: var(--primary);
+border: 1px solid rgba(179,128,255,0.3);
+}
+.server-url {
+flex: 1;
+font-size: 0.85rem;
+color: var(--text-dim);
+word-break: break-all;
 }
 .setting-row { margin-bottom: 24px; }
 .setting-label { display: block; font-size: 0.7rem; color: var(--text-dim); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
@@ -683,7 +723,7 @@ h1 { font-size: 2.2rem; }
 <h1>NOVA</h1>
 <div class="status-badge">
 <span class="status-dot"></span>
-<span class="status-text" id="statusText">V1.0.6</span>
+<span class="status-text" id="statusText">V1.0.7</span>
 </div>
 </div>
 <div class="dev-button" onclick="toggleDevFeed()">
@@ -810,8 +850,8 @@ UPDATES
 <input id="newAppName" placeholder="e.g. Retro Bowl">
 </div>
 <div class="setting-row">
-<label class="setting-label">Target URL</label>
-<input id="newAppUrl" placeholder="https://...">
+<label class="setting-label">Target URL (or multiple with commas)</label>
+<input id="newAppUrl" placeholder="https://... or https://link1.com, https://link2.com">
 </div>
 <div class="setting-row">
 <label class="setting-label">Icon URL (Optional)</label>
@@ -819,6 +859,13 @@ UPDATES
 </div>
 <button class="modal-btn primary" onclick="saveNewApp()">ADD TO VAULT</button>
 <button class="modal-btn ghost" onclick="closeModals()">CANCEL</button>
+</div>
+</div>
+<div class="server-select-modal" id="serverSelectModal">
+<div class="modal-content">
+<h2 class="modal-header" id="serverModalTitle">SELECT SERVER</h2>
+<div class="server-list" id="serverList"></div>
+<button class="modal-btn ghost" onclick="closeServerModal()">CANCEL</button>
 </div>
 </div>
 <input type="file" id="importFile" accept=".json" style="display:none;" onchange="importApps(event)">
@@ -893,7 +940,14 @@ if (appsRes.ok) { const appsData = await appsRes.json(); if (Array.isArray(appsD
 if (quotesRes.ok) { const quotesData = await quotesRes.json(); if (Array.isArray(quotesData)) quotes = quotesData; else throw new Error(); } else throw new Error();
 } catch { defaultApps = FALLBACK_DEFAULTS; quotes = FALLBACK_QUOTES; }
 finally {
-defaultUrls = new Set(defaultApps.map(app => app.url));
+defaultApps = defaultApps.map(app => {
+if (app.urls && Array.isArray(app.urls)) {
+return { ...app, hasMultipleUrls: true, urls: app.urls };
+} else {
+return { ...app, hasMultipleUrls: false, url: app.url };
+}
+});
+defaultUrls = new Set(defaultApps.filter(app => !app.hasMultipleUrls).map(app => app.url));
 userApps = userApps.filter(app => !defaultUrls.has(app.url));
 localStorage.setItem('novaApps', JSON.stringify(userApps));
 filterApps(); randomQuote();
@@ -914,21 +968,60 @@ const container = document.getElementById('appsGridContainer');
 if (!container) return;
 let html = '';
 appsArray.forEach((app) => {
+if (app.hasMultipleUrls) {
+html += `<div class="app-card multi-link-app" data-name="${app.name}" data-urls='${JSON.stringify(app.urls)}' data-isdefault="${app.isDefault}">
+<div class="app-icon"><img src="${app.icon}" onerror="this.src='https://ui-avatars.com/api/?background=140f23&color=fff&size=80&name=${encodeURIComponent(app.name.charAt(0))}'"></div>
+<div class="app-name">${app.name} (${app.urls.length} servers)</div>
+${!app.isDefault ? `<div class="app-delete" data-url="${app.url}" onclick="event.stopPropagation(); deleteApp(this, '${app.url}')">✕</div>` : ''}
+</div>`;
+} else {
 html += `<div class="app-card" data-url="${app.url}" data-isdefault="${app.isDefault}">
 <div class="app-icon"><img src="${app.icon}" onerror="this.src='https://ui-avatars.com/api/?background=140f23&color=fff&size=80&name=${encodeURIComponent(app.name.charAt(0))}'"></div>
 <div class="app-name">${app.name}</div>
 ${!app.isDefault ? `<div class="app-delete" data-url="${app.url}" onclick="event.stopPropagation(); deleteApp(this, '${app.url}')">✕</div>` : ''}
 </div>`;
+}
 });
 html += `<div class="add-app-card" onclick="openAddAppModal()"><div class="add-icon">+</div><div class="app-name">Add To Vault</div></div>`;
 container.innerHTML = html;
 container.querySelectorAll('.app-card:not(.add-app-card)').forEach(card => {
 card.addEventListener('click', (e) => {
 if (e.target.classList.contains('app-delete')) return;
+if (card.classList.contains('multi-link-app')) {
+const urls = JSON.parse(card.dataset.urls);
+const appName = card.dataset.name;
+showServerSelector(appName, urls);
+} else {
 const url = card.dataset.url;
 if (url) { document.getElementById('url').value = url; launch(); }
+}
 });
 });
+}
+function showServerSelector(appName, urls) {
+const modal = document.getElementById('serverSelectModal');
+const title = document.getElementById('serverModalTitle');
+const list = document.getElementById('serverList');
+title.textContent = `${appName} - SELECT SERVER`;
+let html = '';
+urls.forEach((url, index) => {
+html += `
+<div class="server-option" onclick="selectServer('${url}')">
+<div class="server-number">${index + 1}</div>
+<div class="server-url">${url}</div>
+</div>
+`;
+});
+list.innerHTML = html;
+modal.classList.add('show');
+}
+function selectServer(url) {
+document.getElementById('url').value = url;
+closeServerModal();
+launch();
+}
+function closeServerModal() {
+document.getElementById('serverSelectModal').classList.remove('show');
 }
 function deleteApp(el, url) {
 el.stopPropagation?.();
@@ -942,13 +1035,28 @@ filterApps(); showToast('App removed');
 }
 }
 function saveNewApp() {
-const name = document.getElementById('newAppName').value.trim(), url = document.getElementById('newAppUrl').value.trim(), icon = document.getElementById('newAppIcon').value.trim();
-if (!name || !url) { showToast('Name & URL required'); return; }
-if (defaultUrls.has(url)) { showToast('This app is already in defaults'); return; }
-if (userApps.some(a => a.url === url)) { showToast('You already added this app'); return; }
-const newApp = { name, url, icon: icon || `https://ui-avatars.com/api/?background=b380ff&color=000&size=80&name=${encodeURIComponent(name.charAt(0))}` };
-userApps.push(newApp); localStorage.setItem('novaApps', JSON.stringify(userApps)); filterApps(); closeModals();
-document.getElementById('newAppName').value = ''; document.getElementById('newAppUrl').value = ''; document.getElementById('newAppIcon').value = ''; showToast('App added to vault');
+const name = document.getElementById('newAppName').value.trim();
+const urlInput = document.getElementById('newAppUrl').value.trim();
+const icon = document.getElementById('newAppIcon').value.trim();
+if (!name || !urlInput) { showToast('Name & URL required'); return; }
+const urls = urlInput.split(',').map(u => u.trim()).filter(u => u);
+if (urls.length === 0) { showToast('Invalid URL(s)'); return; }
+const hasMultiple = urls.length > 1;
+if (!hasMultiple) {
+if (defaultUrls.has(urls[0])) { showToast('This app is already in defaults'); return; }
+if (userApps.some(a => a.url === urls[0])) { showToast('You already added this app'); return; }
+}
+const newApp = hasMultiple ? 
+{ name, urls: urls, hasMultipleUrls: true, icon: icon || `https://ui-avatars.com/api/?background=b380ff&color=000&size=80&name=${encodeURIComponent(name.charAt(0))}` } :
+{ name, url: urls[0], icon: icon || `https://ui-avatars.com/api/?background=b380ff&color=000&size=80&name=${encodeURIComponent(name.charAt(0))}` };
+userApps.push(newApp); 
+localStorage.setItem('novaApps', JSON.stringify(userApps)); 
+filterApps(); 
+closeModals();
+document.getElementById('newAppName').value = ''; 
+document.getElementById('newAppUrl').value = ''; 
+document.getElementById('newAppIcon').value = ''; 
+showToast(hasMultiple ? 'Multi-server app added' : 'App added to vault');
 }
 function randomQuote() {
 const quoteEl = document.getElementById('quoteDisplay');
@@ -976,8 +1084,11 @@ const reader = new FileReader();
 reader.onload = function(ev) {
 try {
 const imported = JSON.parse(ev.target.result);
-if (Array.isArray(imported) && imported.every(a => a.name && a.url)) {
-const validNew = imported.filter(app => !defaultUrls.has(app.url) && !userApps.some(u => u.url === app.url));
+if (Array.isArray(imported) && imported.every(a => a.name && (a.url || a.urls))) {
+const validNew = imported.filter(app => {
+if (app.urls) return true;
+return !defaultUrls.has(app.url) && !userApps.some(u => u.url === app.url);
+});
 if (validNew.length === 0) showToast('No new apps found (duplicates ignored)');
 else if (confirm(`Import ${validNew.length} new app(s) into vault?`)) {
 userApps = [...userApps, ...validNew];
@@ -1004,9 +1115,9 @@ loadDevMessages();
 try {
 const res = await fetch("https://raw.githubusercontent.com/TheDevMarcus/verison/main/verison");
 const v = (await res.text()).trim();
-if (v === "1.0.6") { btn.disabled = false; statusEl.innerText = 'V1.0.6 ONLINE'; }
+if (v === "1.0.7") { btn.disabled = false; statusEl.innerText = 'V1.0.7 ONLINE'; }
 else { versionBlockModal.classList.add('show'); document.body.style.overflow = 'hidden'; btn.disabled = true; statusEl.innerText = 'V' + v + ' MISMATCH'; }
-} catch(e) { btn.disabled = false; statusEl.innerText = 'OFFLINE V1.0.6'; }
+} catch(e) { btn.disabled = false; statusEl.innerText = 'OFFLINE V1.0.7'; }
 }
 function openSettings() { document.getElementById('settingsModal').classList.add('show'); document.getElementById('cloak').checked = localStorage.getItem('novaCloak') === 'true'; document.getElementById('cloakTitle').value = localStorage.getItem('novaTitle') || 'Google Docs'; document.getElementById('cloakIcon').value = localStorage.getItem('novaIcon') || ''; toggleStealthSettings(); }
 function toggleStealthSettings() { document.getElementById('stealthConfig').style.display = document.getElementById('cloak').checked ? 'block' : 'none'; }

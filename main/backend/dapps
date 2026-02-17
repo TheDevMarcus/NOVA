@@ -61,7 +61,21 @@
   },
   {
     "name": "sciencerules",
-    "url": "https://phntmx.world/",
+    "urls": [
+      "https://phntmx.world",
+      "https://sciencerules.buzz",
+      "https://sciencerules.cfd",
+      "https://sciencerules.sbs",
+      "https://sciencerules.online",
+      "https://sciencerules.xyz",
+      "https://sciencerules.lat",
+      "https://sciencerules.site",
+      "https://sciencerules.website",
+      "https://larp.enterprise",
+      "https://elysian.best",
+      "https://librefind.org",
+      "https://kirk.lat"
+    ],
     "icon": "https://img.freepik.com/premium-vector/science-bottle-lab-logo-icon-design-template_586739-3768.jpg"
   },
   {

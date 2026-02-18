@@ -6,7 +6,7 @@
   },
   {
     "name": "Chip's Wordle",
-    "url": "https://chipswordle.web.app",
+    "url": "https://chipswordle.firebaseapp.com",
     "icon": "https://github.com/TheDevMarcus/ChipsWordle/blob/main/images/logo.png?raw=true"
   }
 ]

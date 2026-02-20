@@ -13,5 +13,10 @@
     "name": "BitLife",
     "url": "https://bitlifeonline.github.io/class/index.html",
     "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuaVg-nFFUMI4Ir5GABovV-zaqFWR5g_-yIw&s"
+  },
+  {
+    "name": "Chip's Wordle",
+    "url": "https://chipswordle.firebaseapp.com",
+    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/chipswordle.png?raw=true"
   }
 ]

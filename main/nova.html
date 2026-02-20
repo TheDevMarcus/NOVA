@@ -1218,7 +1218,7 @@ makeDraggable(document.getElementById('adminPanel'), document.getElementById('dr
 async function fetchRemoteData() {
 try {
 const [websitesRes, gamesRes] = await Promise.all([
-fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/dapps'),
+fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/dapps.json'),
 fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/dgames.json')
 ]);
 if (websitesRes.ok) {
@@ -1518,7 +1518,7 @@ async function loadDevMessages() {
 const modalC=document.getElementById('DevMessagesContainer');
 const homeC=document.getElementById('homeRecentLogs');
 try{
-const r=await fetch("https://raw.githubusercontent.com/TheDevMarcus/verison/refs/heads/main/devlogs");
+const r=await fetch("https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/devlogs.json");
 if(!r.ok)throw Error();
 const logs=await r.json();
 const fullHTML = logs.map(l=>`<div class="log-card" style="border-left-color:${l.color||'var(--primary)'}"><div class="log-title">${l.title}</div><div class="log-msg">${l.message}</div><div style="margin-top:8px; font-size:0.65rem; color:rgba(255,255,255,0.4);"><span style="background:${l.color||'var(--primary)'}; width:6px;height:6px;border-radius:50%;display:inline-block;"></span> ${l.author}</div></div>`).join('');
@@ -1537,7 +1537,7 @@ async function verify() {
 const s=document.getElementById('statusText'), b=document.getElementById('startBtn'), v=document.getElementById('versionBlockModal');
 loadDevMessages();
 try{
-const r=await fetch("https://raw.githubusercontent.com/TheDevMarcus/verison/main/verison");
+const r=await fetch("https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/verison.json");
 const ver=(await r.text()).trim();
 if(ver==="2.0"){
 b.disabled=false;

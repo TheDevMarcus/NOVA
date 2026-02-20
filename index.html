@@ -314,7 +314,7 @@ text-align: center;
 <div class="main-panel">
 <div class="distro-header">
 <h1>NOVA</h1>
-<div class="distro-sub">BUILD 1.0.7</div>
+<div class="distro-sub">BUILD V2.0</div>
 </div>
 <div class="card">
 <div class="smooth-antimon"></div>
@@ -409,7 +409,7 @@ if (!res.ok) throw new Error(`HTTP ${res.status}`);
 const blob = await res.blob();
 const a = document.createElement("a");
 a.href = URL.createObjectURL(blob);
-a.download = "nova-v1.0.7.html";
+a.download = "nova-v2.0.html";
 document.body.appendChild(a);
 a.click();
 document.body.removeChild(a);

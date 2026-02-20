@@ -6,6 +6,7 @@
 <title>NOVA</title>
 <link rel="icon" type="image/png" href="https://i.ibb.co/ZR8kx20q/New-Project-1.png">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
 :root {
 --primary: #b380ff;
@@ -782,6 +783,131 @@ cursor: default; display: none; user-select: none; overflow: hidden;
 .panel-content { padding: 18px; display: flex; flex-direction: column; gap: 10px; }
 .panel-item { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.03); border-radius: 14px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: var(--trans-smooth); font-size: 0.85rem; color: var(--text-dim); }
 .panel-item:hover { background: rgba(179,128,255,0.1); border-color: rgba(179,128,255,0.3); color: white; transform: translateX(4px); }
+
+/* ========= GAME FRAME MODAL ========= */
+.game-frame-modal {
+position: fixed;
+inset: 0;
+background: rgba(0,0,0,0.6);
+backdrop-filter: blur(12px);
+z-index: 9999;
+display: none;
+align-items: center;
+justify-content: center;
+padding: 20px;
+}
+.game-frame-modal.show {
+display: flex;
+}
+.game-frame-container {
+background: rgba(15, 10, 24, 0.95);
+border: 1px solid rgba(179,128,255,0.3);
+border-radius: 28px;
+width: 100%;
+max-width: 1000px;
+max-height: 85vh;
+box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+overflow: hidden;
+display: flex;
+flex-direction: column;
+backdrop-filter: blur(10px);
+}
+.game-frame-header {
+padding: 16px 24px;
+background: rgba(255,255,255,0.03);
+border-bottom: 1px solid rgba(179,128,255,0.2);
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.game-frame-title {
+display: flex;
+align-items: center;
+gap: 12px;
+font-weight: 700;
+letter-spacing: 1px;
+color: white;
+}
+.game-frame-title img {
+width: 28px;
+height: 28px;
+border-radius: 8px;
+object-fit: cover;
+background: rgba(0,0,0,0.3);
+}
+.game-frame-controls {
+display: flex;
+gap: 8px;
+}
+.frame-btn {
+width: 40px;
+height: 40px;
+border-radius: 40px;
+background: rgba(255,255,255,0.04);
+border: 1px solid rgba(255,255,255,0.05);
+color: #d0c0f0;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.1rem;
+transition: var(--trans-smooth);
+}
+.frame-btn:hover {
+background: rgba(179,128,255,0.15);
+color: white;
+border-color: rgba(179,128,255,0.4);
+transform: scale(1.05);
+}
+.frame-btn.exit:hover {
+background: rgba(255,102,178,0.2);
+color: #ffb3d9;
+border-color: rgba(255,102,178,0.4);
+}
+#gameIframe {
+width: 100%;
+height: 70vh;
+max-height: 700px;
+border: none;
+background: #000;
+display: block;
+border-bottom-left-radius: 28px;
+border-bottom-right-radius: 28px;
+}
+/* fullscreen behavior – hide header and make iframe fill screen */
+.game-frame-container:fullscreen,
+.game-frame-container:-webkit-full-screen,
+.game-frame-container:-moz-full-screen,
+.game-frame-container:-ms-fullscreen {
+max-width: none;
+max-height: none;
+border-radius: 0;
+width: 100vw;
+height: 100vh;
+}
+.game-frame-container:fullscreen .game-frame-header,
+.game-frame-container:-webkit-full-screen .game-frame-header,
+.game-frame-container:-moz-full-screen .game-frame-header,
+.game-frame-container:-ms-fullscreen .game-frame-header {
+display: none;
+}
+.game-frame-container:fullscreen #gameIframe,
+.game-frame-container:-webkit-full-screen #gameIframe,
+.game-frame-container:-moz-full-screen #gameIframe,
+.game-frame-container:-ms-fullscreen #gameIframe {
+height: 100%;
+border-radius: 0;
+}
+/* fallback class for fullscreen (used with JS) */
+.game-frame-container.fullscreen-active .game-frame-header {
+display: none;
+}
+.game-frame-container.fullscreen-active #gameIframe {
+height: 100%;
+border-radius: 0;
+}
+/* ============================================= */
+
 @keyframes scaleIn { from{ opacity: 0; transform: scale(0.95) translateY(10px); } to{ opacity: 1; transform: scale(1) translateY(0); } }
 @keyframes slideInRight { from{ opacity: 0; transform: translateX(40px); } to{ opacity: 1; transform: translateX(0); } }
 @keyframes fadeInUp { from{ opacity: 0; transform: translate(-50%, 20px); } to{ opacity: 1; transform: translate(-50%, 0); } }
@@ -806,6 +932,8 @@ header { flex-direction: column; gap: 15px; margin-bottom: 20px; }
 .app-filter-input { width: 100%; }
 .app-filter-input:focus { width: 100%; }
 .dev-feed-modal { width: 95%; right: 2.5%; bottom: 20px; }
+.game-frame-container { max-width: 95%; }
+#gameIframe { height: 60vh; }
 }
 @media (max-width: 480px) {
 .apps-grid { grid-template-columns: repeat(2, 1fr); }
@@ -845,7 +973,7 @@ header { flex-direction: column; gap: 15px; margin-bottom: 20px; }
 <div class="sidebar-bottom">
 <div class="status-badge">
 <span class="status-dot"></span>
-<span class="status-text" id="statusText">V1.0.9</span>
+<span class="status-text" id="statusText">V2.0</span>
 </div>
 </div>
 </nav>
@@ -1027,11 +1155,31 @@ header { flex-direction: column; gap: 15px; margin-bottom: 20px; }
 </div>
 </div>
 
+<div class="game-frame-modal" id="gameFrameModal">
+  <div class="game-frame-container">
+    <div class="game-frame-header">
+      <span class="game-frame-title" id="gameFrameTitle">
+        <img id="gameFrameLogo" src="https://i.ibb.co/ZR8kx20q/New-Project-1.png" alt="logo">
+        <span id="gameFrameName">Game</span>
+      </span>
+      <div class="game-frame-controls">
+        <button class="frame-btn" onclick="openGameInNewTab()" title="Open in new tab"><i class="fas fa-external-link-alt"></i></button>
+        <button class="frame-btn" onclick="fullscreenGame()" title="Fullscreen"><i class="fas fa-expand"></i></button>
+        <button class="frame-btn exit" onclick="closeGameFrame()" title="Close"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+    <iframe id="gameIframe" src="" allowfullscreen></iframe>
+  </div>
+</div>
+
 <script>
 let websiteApps = [];
 let gameApps = [];
 let userApps = [];
 let rotationInterval = null;
+let currentGameUrl = '';
+let currentGameName = '';
+let currentGameIcon = '';
 
 try {
 const stored = localStorage.getItem('novaApps');
@@ -1185,13 +1333,13 @@ html += `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(-
 } else {
 appsArray.forEach(app => {
 if (app.hasMultipleUrls) {
-html += `<div class="app-card multi-link-app" data-name="${app.name}" data-urls='${JSON.stringify(app.urls)}'>
+html += `<div class="app-card multi-link-app" data-name="${app.name}" data-urls='${JSON.stringify(app.urls)}' data-icon="${app.icon || ''}">
 <div class="app-icon"><img src="${app.icon}" onerror="this.src='https://ui-avatars.com/api/?background=140f23&color=fff&size=80&name=${encodeURIComponent(app.name.charAt(0))}'"></div>
 <div class="app-name">${app.name} (${app.urls.length} servers)</div>
 ${!app.isDefault?`<div class="app-delete" data-url="${app.url}" onclick="event.stopPropagation(); deleteWebsite(this,'${app.url}')">✕</div>`:''}
 </div>`;
 } else {
-html += `<div class="app-card" data-url="${app.url}">
+html += `<div class="app-card" data-url="${app.url}" data-name="${app.name}" data-icon="${app.icon || ''}">
 <div class="app-icon"><img src="${app.icon}" onerror="this.src='https://ui-avatars.com/api/?background=140f23&color=fff&size=80&name=${encodeURIComponent(app.name.charAt(0))}'"></div>
 <div class="app-name">${app.name}</div>
 ${!app.isDefault?`<div class="app-delete" data-url="${app.url}" onclick="event.stopPropagation(); deleteWebsite(this,'${app.url}')">✕</div>`:''}
@@ -1215,12 +1363,14 @@ c.addEventListener('click', function(e){
 if(e.target.classList.contains('app-delete')) return;
 if(this.classList.contains('multi-link-app')) {
 const u = JSON.parse(this.dataset.urls);
-showServerSelector(this.dataset.name, u);
+showServerSelector(this.dataset.name, u, 'website', this.dataset.icon);
 } else {
 const url = this.dataset.url;
+const name = this.dataset.name;
+const icon = this.dataset.icon;
 if(url) {
 document.getElementById('url').value = url;
-launch();
+launch('website', name, icon);
 }
 }
 });
@@ -1235,13 +1385,13 @@ html += `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(-
 } else {
 appsArray.forEach(app => {
 if (app.hasMultipleUrls) {
-html += `<div class="app-card multi-link-app" data-name="${app.name}" data-urls='${JSON.stringify(app.urls)}'>
+html += `<div class="app-card multi-link-app" data-name="${app.name}" data-urls='${JSON.stringify(app.urls)}' data-icon="${app.icon || ''}">
 <div class="app-icon"><img src="${app.icon}" onerror="this.src='https://ui-avatars.com/api/?background=140f23&color=fff&size=80&name=${encodeURIComponent(app.name.charAt(0))}'"></div>
 <div class="app-name">${app.name} (${app.urls.length} servers)</div>
 ${!app.isDefault?`<div class="app-delete" data-url="${app.url}" onclick="event.stopPropagation(); deleteGame(this,'${app.url}')">✕</div>`:''}
 </div>`;
 } else {
-html += `<div class="app-card" data-url="${app.url}">
+html += `<div class="app-card" data-url="${app.url}" data-name="${app.name}" data-icon="${app.icon || ''}">
 <div class="app-icon"><img src="${app.icon}" onerror="this.src='https://ui-avatars.com/api/?background=140f23&color=fff&size=80&name=${encodeURIComponent(app.name.charAt(0))}'"></div>
 <div class="app-name">${app.name}</div>
 ${!app.isDefault?`<div class="app-delete" data-url="${app.url}" onclick="event.stopPropagation(); deleteGame(this,'${app.url}')">✕</div>`:''}
@@ -1253,8 +1403,8 @@ if (!hasSearch) html += `<div class="add-app-card" onclick="openAddAppModal()"><
 container.innerHTML = html;
 document.querySelectorAll('#gamesGridContainer .app-card:not(.add-app-card)').forEach(c=>c.addEventListener('click',function(e){
 if(e.target.classList.contains('app-delete'))return;
-if(this.classList.contains('multi-link-app')){ const u=JSON.parse(this.dataset.urls); showServerSelector(this.dataset.name,u); }
-else { const url=this.dataset.url; if(url){ document.getElementById('url').value=url; launch(); } }
+if(this.classList.contains('multi-link-app')){ const u=JSON.parse(this.dataset.urls); showServerSelector(this.dataset.name, u, 'game', this.dataset.icon); }
+else { const url=this.dataset.url; const name=this.dataset.name; const icon=this.dataset.icon; if(url){ document.getElementById('url').value=url; launch('game', name, icon); } }
 }));
 }
 
@@ -1269,7 +1419,7 @@ rotationInterval = setInterval(()=>{ imgs[idx].classList.remove('active'); idx=(
 function launchRandomWebsite() {
 let all = []; [...websiteApps, ...userApps.filter(a => a.category === 'website')].forEach(a=>{ if(a.hasMultipleUrls && a.urls) all.push(...a.urls); else if(a.url) all.push(a.url); });
 if(!all.length){ showToast('No websites'); return; }
-document.getElementById('url').value = all[Math.floor(Math.random()*all.length)]; launch();
+document.getElementById('url').value = all[Math.floor(Math.random()*all.length)]; launch('website');
 }
 
 function deleteWebsite(el, url) {
@@ -1389,16 +1539,16 @@ loadDevMessages();
 try{
 const r=await fetch("https://raw.githubusercontent.com/TheDevMarcus/verison/main/verison");
 const ver=(await r.text()).trim();
-if(ver==="1.0.9"){
+if(ver==="2.0"){
 b.disabled=false;
-s.innerText='V1.0.9 ONLINE';
+s.innerText='V2.0 ONLINE';
 } else {
 v.classList.add('show');
 document.body.style.overflow='hidden';
 b.disabled=true;
 s.innerText='V'+ver+' MISMATCH';
 }
-} catch{ b.disabled=false; s.innerText='OFFLINE V1.0.9'; }
+} catch{ b.disabled=false; s.innerText='OFFLINE V2.0'; }
 }
 
 function openSettings() {
@@ -1442,13 +1592,13 @@ function openAddAppModal() {
 document.getElementById('addAppModal').classList.add('show');
 }
 
-function showServerSelector(name,urls) {
+function showServerSelector(name,urls,type,icon) {
 const list=document.getElementById('serverList'); list.innerHTML='';
 urls.forEach((u,i)=>{
 const d=document.createElement('div');
 d.className='server-option';
 d.innerHTML=`<span class="server-number">${i+1}</span><span class="server-url">${u}</span>`;
-d.onclick=()=>{ document.getElementById('url').value=u; launch(); closeServerModal(); };
+d.onclick=()=>{ document.getElementById('url').value=u; launch(type, name, icon); closeServerModal(); };
 list.appendChild(d);
 });
 document.getElementById('serverModalTitle').innerText=`${name} servers`;
@@ -1457,15 +1607,67 @@ document.getElementById('serverSelectModal').classList.add('show');
 
 function closeServerModal() { document.getElementById('serverSelectModal').classList.remove('show'); }
 
-function launch() {
+function openGameFrame(url, name, icon) {
+currentGameUrl = url;
+currentGameName = name || 'Game';
+currentGameIcon = icon || 'https://i.ibb.co/ZR8kx20q/New-Project-1.png';
+document.getElementById('gameFrameName').innerText = currentGameName;
+document.getElementById('gameFrameLogo').src = currentGameIcon;
+document.getElementById('gameIframe').src = url;
+document.getElementById('gameFrameModal').classList.add('show');
+document.body.style.overflow = 'hidden';
+}
+
+function closeGameFrame() {
+document.getElementById('gameFrameModal').classList.remove('show');
+document.getElementById('gameIframe').src = '';
+document.body.style.overflow = '';
+}
+
+function fullscreenGame() {
+const container = document.querySelector('.game-frame-container');
+if (container.requestFullscreen) { container.requestFullscreen(); }
+else if (container.webkitRequestFullscreen) { container.webkitRequestFullscreen(); }
+else if (container.msRequestFullscreen) { container.msRequestFullscreen(); }
+container.classList.add('fullscreen-active');
+}
+
+function openGameInNewTab() {
+closeGameFrame();
+document.getElementById('url').value = currentGameUrl;
+launch('website');
+}
+
+// fullscreen change event to remove the class when exiting
+function onFullscreenChange() {
+const container = document.querySelector('.game-frame-container');
+if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
+container.classList.remove('fullscreen-active');
+}
+}
+document.addEventListener('fullscreenchange', onFullscreenChange);
+document.addEventListener('webkitfullscreenchange', onFullscreenChange);
+document.addEventListener('mozfullscreenchange', onFullscreenChange);
+document.addEventListener('MSFullscreenChange', onFullscreenChange);
+
+function launch(forcedType, appName, appIcon) {
 const t=document.getElementById('url').value.trim(); if(!t)return;
 let final=t.startsWith('http')?t:'https://'+t;
+let type = forcedType;
+if (!type) {
+type = document.getElementById('games-content').classList.contains('active') ? 'game' : 'website';
+}
+
+if (type === 'game') {
+openGameFrame(final, appName, appIcon);
+} else {
 const cloak=localStorage.getItem('novaCloak')==='true';
 const cTitle=localStorage.getItem('novaTitle')||'Google Docs';
 const cIcon=localStorage.getItem('novaIcon')||'https://ssl.gstatic.com/docs/doclist/images/infinite_wallpapers/v2/google-docs.ico';
 const win=window.open('about:blank','_blank');
 const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${cloak?cTitle:'NOVA'}</title><link rel="icon" href="${cloak?cIcon:'https://i.ibb.co/ZR8kx20q/New-Project-1.png'}"><style>body,html{margin:0;padding:0;overflow:hidden;background:#05030a;}iframe{width:100vw;height:100vh;border:none;}.nav-bar{position:fixed;top:15px;left:15px;height:44px;width:44px;background:rgba(20,15,30,0.8);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.05);border-radius:14px;z-index:9999;transition:0.2s;display:flex;align-items:center;overflow:hidden;}.nav-bar:hover{width:170px;background:rgba(25,18,40,0.9);border-color:rgba(179,128,255,0.3);}.trigger{min-width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:white;}.controls{display:flex;gap:10px;opacity:0;transition:0.2s;padding-right:14px;}.nav-bar:hover .controls{opacity:1;}.btn{position:relative;width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);color:#d0c0f0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:0.2s;}.btn:hover{background:rgba(179,128,255,0.2);color:white;}.btn.exit:hover{background:rgba(255,102,178,0.2);color:#ffb3d9;}.tooltip{visibility:hidden;position:absolute;background:#000;color:#b380ff;padding:4px 10px;border-radius:6px;font-size:11px;white-space:nowrap;bottom:130%;left:50%;transform:translateX(-50%);border:1px solid rgba(179,128,255,0.2);}.btn:hover .tooltip{visibility:visible;}</style></head><body><div class="nav-bar"><div class="trigger"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div><div class="controls"><button class="btn exit" onclick="window.close()"><span class="tooltip">Close</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><button class="btn" onclick="location.reload()"><span class="tooltip">Reload</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></button><button class="btn hide-btn" onclick="this.closest('.nav-bar').style.display='none'"><span class="tooltip">Hide</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div></div><iframe src="${final}" allowfullscreen></iframe></body></html>`;
 win.document.write(html);
+}
 }
 
 document.getElementById('patchRedirectBtn').addEventListener('click',function(){ window.location.href='https://THEONLYNOVA.web.app'; });

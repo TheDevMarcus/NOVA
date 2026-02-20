@@ -2,17 +2,17 @@
   {
     "name": "Five Nights at Epstein's",
     "url": "https://freedomgamingzone.github.io/five-nights-at-epsteins/",
-    "icon": "https://hips.hearstapps.com/hmg-prod/images/epstein2-1562608465.jpg?crop=1xw:0.6666666666666666xh;center,top&resize=640:*"
+    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/fnae.png?raw=true"
   },
   {
     "name": "Minecraft",
     "url": "https://theonlynova.web.app/games/minecraft.html",
-    "icon": "https://upload.wikimedia.org/wikipedia/en/thumb/b/b6/Minecraft_2024_cover_art.png/250px-Minecraft_2024_cover_art.png"
+    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/minecraft.png?raw=true"
   },
   {
     "name": "BitLife",
     "url": "https://bitlifeonline.github.io/class/index.html",
-    "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuaVg-nFFUMI4Ir5GABovV-zaqFWR5g_-yIw&s"
+    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/bitlife.png?raw=true"
   },
   {
     "name": "Chip's Wordle",

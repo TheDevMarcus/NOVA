@@ -14,31 +14,6 @@
     "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/55GMS.png?raw=true"
   },
   {
-    "name": "66",
-    "url": "https://66-ez.github.io/",
-    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/66.png?raw=true"
-  },
-  {
-    "name": "Big Tall Small",
-    "url": "https://bigtallsmall.github.io/",
-    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/bigtallsmall.png?raw=true"
-  },
-  {
-    "name": "Class 76",
-    "url": "https://class-76.github.io/",
-    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/Class76.png?raw=true"
-  },
-  {
-    "name": "Cool Games",
-    "url": "https://coolunblockedgames.github.io/",
-    "icon": "https://www.shutterstock.com/image-vector/modern-gear-circuit-vector-icon-600nw-2647106479.jpg"
-  },
-  {
-    "name": "Murder",
-    "url": "https://murder-unblocked.github.io/",
-    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/murder.png?raw=true"
-  },
-  {
     "name": "Noah's Tutoring",
     "urls": [
       "https://thefunnys.pythonanywhere.com/noah",
@@ -61,11 +36,6 @@
     "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/NoahsTutoring.png?raw=true"
   },
   {
-    "name": "Ragdoll Archers",
-    "url": "https://ragdollarchers2.github.io",
-    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/ragdollarchers.png?raw=true"
-  },
-  {
     "name": "sciencerules",
     "urls": [
       "https://phntmx.world",
@@ -85,36 +55,11 @@
     "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/sciencerules.png?raw=true"
   },
   {
-    "name": "Slope",
-    "url": "https://slope-unblocked-10x.github.io/",
-    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/slope.png?raw=true"
-  },
-  {
-    "name": "Slope Online",
-    "url": "http://slope-online.github.io/",
-    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/slope.png?raw=true"
-  },
-  {
-    "name": "Space Wave",
-    "url": "https://spacewavesunblocked.github.io/",
-    "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx5fyTCXIzdGVSBilq6V-27nkSXmQrOVMDHg&s"
-  },
-  {
-    "name": "Tiny Fishing",
-    "url": "https://tiny-fishing-unblock.github.io/",
-    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/tinyfishing.png?raw=true"
-  },
-  {
     "name": "Truffled",
     "urls": [
       "https://peoreftetetjhgh12k3jg.arzamascev.ru",
       "https://mathteachersforhire.shop/"
     ],
     "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/Truffled.png?raw=true"
-  },
-  {
-    "name": "Watermelon Drop",
-    "url": "https://watermelondrop.github.io/",
-    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/watermelondrop.png?raw=true"
   }
 ]

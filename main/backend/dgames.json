@@ -44,4 +44,9 @@
     "url": "https://theonlynova.web.app/games/ragdollarchers.html",
     "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/ragdollarchers.png?raw=true"
   }
+  {
+    "name": "Space Waves",
+    "url": "https://theonlynova.web.app/games/spacewaves.html",
+    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/spacewaves.png?raw=true"
+  }
 ]

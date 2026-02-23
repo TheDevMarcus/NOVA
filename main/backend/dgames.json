@@ -10,11 +10,6 @@
     "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/minecraft.png?raw=true"
   },
   {
-    "name": "BitLife",
-    "url": "https://bitlifeonline.github.io/class/index.html",
-    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/bitlife.png?raw=true"
-  },
-  {
     "name": "Chip's Wordle",
     "url": "https://chipswordle.firebaseapp.com",
     "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/chipswordle.png?raw=true"

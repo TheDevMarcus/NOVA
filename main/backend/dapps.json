@@ -2,17 +2,9 @@
   {
     "name": "1key",
     "urls": [
-      "https://1key.pages.dev/",
-      "https://jsutils.pages.dev/",
       "https://key.vaultnoir.com/",
       "https://jsu.js.org/",
       "https://www.1key.abrdns.com/",
-      "http://local.itafricagroup.com",
-      "https://1key.hotelconsuladoinn.com",
-      "https://edu.tozsugianto.com/",
-      "https://edu.patricksaulo.com",
-      "https://edu.kb-photos.com/",
-      "https://uno-key.github.io"
     ],
     "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/1key.png?raw=true"
   },

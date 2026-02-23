@@ -38,5 +38,10 @@
     "name": "1v1.lol",
     "url": "https://theonlynova.web.app/games/1v1.lol.html",
     "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/1v1.lol.png?raw=true"
+  },
+  {
+    "name": "Ragdoll Archers",
+    "url": "https://theonlynova.web.app/games/ragdollarchers.html",
+    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/ragdollarchers.png?raw=true"
   }
 ]

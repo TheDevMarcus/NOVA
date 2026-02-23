@@ -18,7 +18,10 @@
     "name": "Chip's Wordle",
     "url": "https://chipswordle.firebaseapp.com",
     "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/chipswordle.png?raw=true"
+  },
+  {
+    "name": "Crossy Road",
+    "url": "https://theonlynova.web.app/games/crossyroad.html",
+    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/crossyroad.png?raw=true"
   }
 ]
-
-

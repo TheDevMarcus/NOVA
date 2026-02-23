@@ -57,6 +57,11 @@
   {
     "name": "Granny",
     "url": "https://theonlynova.web.app/games/granny.html",
-    "icon": ""
+    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/granny.png?raw=true"
+  },
+  {
+    "name": "House Of Hazards",
+    "url": "https://theonlynova.web.app/games/houseofhazards.html",
+    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/houseofhazards.png?raw=true"
   }
 ]

@@ -48,7 +48,15 @@
     "name": "Space Waves",
     "url": "https://theonlynova.web.app/games/spacewaves.html",
     "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/spacewaves.png?raw=true"
+  },
+  {
+    "name": "Snow Rider",
+    "url": "https://theonlynova.web.app/games/snowrider.html",
+    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/snowrider.png?raw=true"
+  },
+  {
+    "name": "Granny",
+    "url": "https://theonlynova.web.app/games/granny.html",
+    "icon": ""
   }
 ]
-
-

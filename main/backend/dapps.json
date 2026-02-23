@@ -10,28 +10,24 @@
   },
   {
     "name": "55GMS",
-    "url": "https://v2202412248092306146.luckysrv.de/",
+    "urls": [
+      "https://v2202412248092306146.luckysrv.de/",
+      "http://quiz.htrick.ar"
+    ],
     "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/55GMS.png?raw=true"
   },
   {
     "name": "Noah's Tutoring",
     "urls": [
       "https://thefunnys.pythonanywhere.com/noah",
-      "https://noahsamazingtutoringhelp.github.io/Noahs-Calculus-Tutor/",
-      "https://noahs-calculus-tutor.pages.dev/",
       "https://mrbrowns-us-history.zone.id/",
       "https://writing-workshop.zone.id/",
-      "http://organic-chem-help.run.place/",
-      "http://schoology-assistance.linkpc.net/",
       "http://biologyscience.work.gd/",
-      "http://psychologybrain.linkpc.net/",
       "http://engineeringdesign.publicvm.com/",
-      "https://script.google.com/macros/s/AKfycbzxr0JXwCFcNvPPFtF4uZ5Qt8fmFUwM28CUvw9URrBMOGBoNXwDj2_F3xTIbDH1OH1b/exec",
       "http://habitual-rabbits.surge.sh/",
       "https://unpkg.com/algebra-calculus-calculator@1.0.0/index.html",
       "https://noahs.academy/",
       "https://esm.sh/algebra-calculus-calculator@1.0.0/index.html",
-      "https://noahshub-95085080-7ac51.web.fireapp.com/"
     ],
     "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/NoahsTutoring.png?raw=true"
   },

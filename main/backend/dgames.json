@@ -28,5 +28,10 @@
     "name": "Boxing Random",
     "url": "https://theonlynova.web.app/games/boxingrandom.html",
     "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/boxingrandom.png?raw=true"
+  },
+  {
+    "name": "Happy Wheels",
+    "url": "https://theonlynova.web.app/games/happywheels.html",
+    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/happywheels.png?raw=true"
   }
 ]

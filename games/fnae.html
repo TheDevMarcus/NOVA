@@ -139,12 +139,26 @@
             <div class="foot-note">click to enter</div>
         </div>
     </div>
-    <iframe id="game-frame" src="https://sorry.gang.this.is.a.linewize.7s.com.tr/gamefile/fnae.html" allowfullscreen></iframe>
+    <iframe id="game-frame" src="about:blank" allowfullscreen></iframe>
     <script>
         (function(){
             const entrance = document.getElementById('entrance-screen');
             const gameFrame = document.getElementById('game-frame');
             const enterBtn = document.getElementById('enter-btn');
+            const jsonUrl = "https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/games/truffledurl.json";
+            const gamePath = "/gamefile/fnae.html";
+
+            async function init() {
+                try {
+                    const response = await fetch(jsonUrl);
+                    const data = await response.json();
+                    const baseUrl = data.url || data.baseUrl || (Array.isArray(data) ? data[0] : data);
+                    gameFrame.src = baseUrl.replace(/\/$/, "") + gamePath;
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+
             function revealGame() {
                 entrance.style.opacity = '0';
                 setTimeout(() => {
@@ -152,7 +166,9 @@
                     gameFrame.style.visibility = 'visible';
                 }, 550);
             }
+
             enterBtn.addEventListener('click', revealGame);
+            init();
         })();
     </script>
 </body>

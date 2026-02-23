@@ -46,7 +46,10 @@
   },
   {
     "name": "Rosin",
-    "url": "https://hiii.acmys.cl",
+    "urls": [
+      "https://hiii.acmys.cl",
+      "https://analytics.echofx.com/"
+    ],
     "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/ROSIN.png?raw=true"
   }
 ]

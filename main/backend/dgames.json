@@ -23,5 +23,10 @@
     "name": "Crossy Road",
     "url": "https://theonlynova.web.app/games/crossyroad.html",
     "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/crossyroad.png?raw=true"
+  },
+  {
+    "name": "Boxing Random",
+    "url": "https://theonlynova.web.app/games/boxingrandom.html",
+    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/boxingrandom.png?raw=true"
   }
 ]

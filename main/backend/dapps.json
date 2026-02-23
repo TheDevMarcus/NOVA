@@ -56,5 +56,13 @@
       "https://gullible.online/"
     ],
     "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/demon.png?raw=true"
+  },
+  {
+    "name": "Cherri",
+    "urls": [
+      "https://school.learning.misem.or.id/",
+      "https://studyingtime.fun.debahamondesaviana.cl/"
+    ],
+    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/cherri.png?raw=true"
   }
 ]

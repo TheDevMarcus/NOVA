@@ -33,5 +33,10 @@
     "name": "Happy Wheels",
     "url": "https://theonlynova.web.app/games/happywheels.html",
     "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/happywheels.png?raw=true"
+  },
+  {
+    "name": "1v1.lol",
+    "url": "https://theonlynova.web.app/games/1v1.lol.html",
+    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/1v1.lol.png?raw=true"
   }
 ]

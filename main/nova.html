@@ -996,6 +996,7 @@ document.addEventListener('mousedown', (e) => {
 });
 function toggleParticles() {
     const enabled = document.getElementById('particleToggle').checked;
+    localStorage.setItem('novaParticles', enabled);
     particleCanvas.style.pointerEvents = enabled ? 'none' : 'none';
     if (enabled) { 
         initParticles(); 
@@ -1019,6 +1020,7 @@ function setParticleImage(type) {
     img.crossOrigin = 'anonymous';
     img.onload = () => {
         pCustomImg = img;
+        localStorage.setItem('novaParticleImage', type);
         initParticles();
         showToast('Particle image updated');
     };
@@ -1043,6 +1045,8 @@ function handleCustomParticleUpload(event) {
         const img = new Image();
         img.onload = () => {
             pCustomImg = img;
+            localStorage.setItem('novaParticleImage', 'custom');
+            localStorage.setItem('novaParticleCustomData', e.target.result);
             initParticles();
             showToast('Custom particle image applied');
         };
@@ -1050,24 +1054,59 @@ function handleCustomParticleUpload(event) {
     };
     reader.readAsDataURL(file);
 }
-function resetParticleImage() { pCustomImg = null; initParticles(); showToast('Reset to default dots'); }
+function resetParticleImage() { 
+    pCustomImg = null; 
+    localStorage.removeItem('novaParticleImage');
+    localStorage.removeItem('novaParticleCustomData');
+    initParticles(); 
+    showToast('Reset to default dots'); 
+}
+function loadSavedParticleImage() {
+    const savedType = localStorage.getItem('novaParticleImage');
+    if (savedType && savedType !== 'custom') {
+        setParticleImage(savedType);
+    } else if (savedType === 'custom') {
+        const customData = localStorage.getItem('novaParticleCustomData');
+        if (customData) {
+            const img = new Image();
+            img.onload = () => {
+                pCustomImg = img;
+                initParticles();
+            };
+            img.src = customData;
+        }
+    }
+}
 function toggleWallpaper() {
     const enabled = document.getElementById('wallpaperToggle').checked;
+    localStorage.setItem('novaWallpaperEnabled', enabled);
     document.getElementById('wallpaperControls').style.display = enabled ? 'block' : 'none';
     if (!enabled) {
         pWallpaperImg = null;
+        localStorage.removeItem('novaWallpaperData');
         if (document.getElementById('particleToggle').checked) {
             initParticles();
         } else {
             pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
         }
     } else {
-        if (pWallpaperImg) {
-            if (!document.getElementById('particleToggle').checked) {
+        loadSavedWallpaper();
+    }
+}
+function loadSavedWallpaper() {
+    const savedWallpaper = localStorage.getItem('novaWallpaperData');
+    if (savedWallpaper) {
+        const img = new Image();
+        img.onload = () => {
+            pWallpaperImg = img;
+            if (document.getElementById('particleToggle').checked) {
+                initParticles();
+            } else {
                 pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
                 pCtx.drawImage(pWallpaperImg, 0, 0, particleCanvas.width, particleCanvas.height);
             }
-        }
+        };
+        img.src = savedWallpaper;
     }
 }
 function uploadWallpaper(e) {
@@ -1079,6 +1118,7 @@ function uploadWallpaper(e) {
         img.onload = () => {
             pWallpaperImg = img;
             pCustomImg = null;
+            localStorage.setItem('novaWallpaperData', event.target.result);
             if (document.getElementById('particleToggle').checked) {
                 initParticles();
             } else {
@@ -1099,6 +1139,13 @@ function applyWallpaper() {
     img.onload = () => {
         pWallpaperImg = img;
         pCustomImg = null;
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        const dataUrl = canvas.toDataURL();
+        localStorage.setItem('novaWallpaperData', dataUrl);
         if (document.getElementById('particleToggle').checked) {
             initParticles();
         } else {
@@ -1115,6 +1162,8 @@ function clearWallpaper() {
     document.getElementById('wallpaperToggle').checked = false;
     document.getElementById('wallpaperControls').style.display = 'none';
     document.getElementById('wallpaperUrl').value = '';
+    localStorage.removeItem('novaWallpaperEnabled');
+    localStorage.removeItem('novaWallpaperData');
     if (document.getElementById('particleToggle').checked) {
         initParticles();
     } else {
@@ -1124,6 +1173,7 @@ function clearWallpaper() {
 }
 function setPerformanceMode() {
     performanceMode = document.getElementById('performanceToggle').checked;
+    localStorage.setItem('novaPerf', performanceMode);
     document.getElementById('perfOptions').style.display = performanceMode ? 'block' : 'none';
     if (performanceMode) {
         pLowPerf = true;
@@ -1600,6 +1650,13 @@ const perfEnabled = localStorage.getItem('novaPerf') === 'true';
 document.getElementById('performanceToggle').checked = perfEnabled;
 performanceMode = perfEnabled;
 document.getElementById('perfOptions').style.display = perfEnabled ? 'block' : 'none';
+const wallpaperEnabled = localStorage.getItem('novaWallpaperEnabled') === 'true';
+document.getElementById('wallpaperToggle').checked = wallpaperEnabled;
+document.getElementById('wallpaperControls').style.display = wallpaperEnabled ? 'block' : 'none';
+if (wallpaperEnabled) {
+loadSavedWallpaper();
+}
+loadSavedParticleImage();
 }
 function toggleLayout() {
 const enabled = document.getElementById('layoutToggle').checked;
@@ -1622,6 +1679,10 @@ localStorage.removeItem('novaTitle');
 localStorage.removeItem('novaIcon');
 localStorage.removeItem('novaPerf');
 localStorage.removeItem('novaCustomColors');
+localStorage.removeItem('novaWallpaperEnabled');
+localStorage.removeItem('novaWallpaperData');
+localStorage.removeItem('novaParticleImage');
+localStorage.removeItem('novaParticleCustomData');
 customColorsActive = false;
 document.body.setAttribute('data-theme', 'amber');
 document.body.classList.remove('layout-sidebar');
@@ -1662,6 +1723,13 @@ if (themeName === 'iluv animegirls') {
     img.onload = () => {
         pWallpaperImg = img;
         pCustomImg = null;
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        const dataUrl = canvas.toDataURL();
+        localStorage.setItem('novaWallpaperData', dataUrl);
         document.getElementById('wallpaperToggle').checked = true;
         document.getElementById('wallpaperControls').style.display = 'block';
         if (document.getElementById('particleToggle').checked) {
@@ -1678,6 +1746,13 @@ if (themeName === 'iluv animegirls') {
     img.onload = () => {
         pWallpaperImg = img;
         pCustomImg = null;
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        const dataUrl = canvas.toDataURL();
+        localStorage.setItem('novaWallpaperData', dataUrl);
         document.getElementById('wallpaperToggle').checked = true;
         document.getElementById('wallpaperControls').style.display = 'block';
         if (document.getElementById('particleToggle').checked) {
@@ -1690,6 +1765,7 @@ if (themeName === 'iluv animegirls') {
     img.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2PEn4LP8oQ_a6Ki04olr-TJ-dfr04EXKbNA&s';
 } else {
     pWallpaperImg = null;
+    localStorage.removeItem('novaWallpaperData');
     document.getElementById('wallpaperToggle').checked = false;
     document.getElementById('wallpaperControls').style.display = 'none';
     if (document.getElementById('particleToggle').checked) {

@@ -15,5 +15,5 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          projectId: theonlynova # Replace with your actual Firebase Project ID
+          projectId: thenovav2 # Replace with your actual Firebase Project ID
           channelId: live

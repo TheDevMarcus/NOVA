@@ -974,7 +974,7 @@ function toggleParticles() {
 function changeParticleLib() { pCurrentLib = document.getElementById('particleLib').value; initParticles(); }
 function setParticleImage(type) {
   if(type === 'custom') { document.getElementById('customParticleUpload').click(); return; }
-  const urls = { dayton:'https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/dayton.png', eli:'https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/eli.png', payton:'https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/kirkpayton.png?raw=true' };
+  const urls = { dayton:'https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/dayton.png', eli:'https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/eli.png', payton:'https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/kirkpayton.png?raw=true' };
   if(!urls[type]) return;
   const img = new Image(); img.crossOrigin = 'anonymous';
   img.onload = () => { pCustomImg = img; localStorage.setItem('novaParticleImage', type); initParticles(); showToast('Particle image updated'); };

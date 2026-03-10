@@ -1,1 +1,11 @@
-
+{
+  "version": "2.3",
+  "changelog": [
+    {
+      "title": "We're back",
+      "message": "NOVA is back, but with a catch, we will now be dependent on you guys to report any broken links by pressing the broken link button",
+      "author": "Chip Hill",
+      "color": "#ff8c42"
+    }
+  ]
+}

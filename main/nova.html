@@ -144,6 +144,10 @@ body.layout-sidebar .main-wrapper{margin-left:var(--sidebar-w);padding-top:0;}
 .top-nav-item:hover{color:var(--txt-s);background:var(--p-dim);}
 .top-nav-item.active{color:var(--p);background:var(--p-dim);border-color:var(--border-h);}
 .top-nav-item.active::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:60%;height:2px;background:var(--p);border-radius:2px;}
+.top-nav-item.beta-tab-item{border-color:rgba(168,127,255,0.2);color:rgba(168,127,255,0.7);}
+.top-nav-item.beta-tab-item:hover{color:#a87fff;background:rgba(168,127,255,0.1);}
+.top-nav-item.beta-tab-item.active{color:#a87fff;background:rgba(168,127,255,0.12);border-color:rgba(168,127,255,0.3);}
+.top-nav-item.beta-tab-item.active::after{background:#a87fff;}
 .top-nav-right{margin-left:auto;display:flex;align-items:center;gap:12px;}
 .version-badge{
   font-family:'JetBrains Mono',monospace;
@@ -196,6 +200,9 @@ body.layout-sidebar .main-wrapper{margin-left:var(--sidebar-w);padding-top:0;}
   border:1px solid var(--border-h);
 }
 .nav-item:hover::after{opacity:1;transform:translateX(0);}
+.nav-item.beta-nav-item{border-color:rgba(168,127,255,0.15);color:rgba(168,127,255,0.6);}
+.nav-item.beta-nav-item:hover{background:rgba(168,127,255,0.1);color:#a87fff;}
+.nav-item.beta-nav-item.active{background:rgba(168,127,255,0.12);color:#a87fff;border-color:rgba(168,127,255,0.3);}
 .sidebar-bottom{margin-top:auto;display:flex;flex-direction:column;gap:8px;align-items:center;}
 .main-wrapper{
   min-height:100vh;position:relative;z-index:20;
@@ -324,6 +331,10 @@ body.layout-sidebar .main-wrapper{margin-left:var(--sidebar-w);padding-top:0;}
 .s-nav-btn i{width:16px;text-align:center;color:var(--p);font-size:0.85rem;}
 .s-nav-btn:hover{background:rgba(255,255,255,0.04);color:var(--txt);}
 .s-nav-btn.active{background:var(--p-dim);color:var(--p);}
+.s-nav-btn.beta-btn i{color:#a87fff;}
+.s-nav-btn.beta-btn{color:rgba(168,127,255,0.7);}
+.s-nav-btn.beta-btn:hover{color:#a87fff;background:rgba(168,127,255,0.08);}
+.s-nav-btn.beta-btn.active{background:rgba(168,127,255,0.12);color:#a87fff;}
 .settings-main{flex:1;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;overflow-y:auto;}
 .settings-section{display:none;flex-direction:column;gap:20px;animation:fadeUp 0.25s forwards;}
 .settings-section.active{display:flex;}
@@ -367,13 +378,14 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
 .particle-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
 .particle-item{background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:10px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;transition:all 0.2s;}
 .particle-item:hover{background:var(--p-dim);border-color:var(--border-h);}
+.particle-item.active-particle{border-color:var(--p);background:var(--p-dim);}
 .particle-ico{width:44px;height:44px;border-radius:8px;overflow:hidden;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;}
 .particle-ico img{width:100%;height:100%;object-fit:cover;}
 .particle-name{font-size:0.65rem;color:var(--txt-d);text-align:center;line-height:1.3;}
 .modal,.server-modal,.version-modal{position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(20px);display:none;align-items:center;justify-content:center;z-index:2000;padding:20px;}
 .modal.show,.server-modal.show,.version-modal.show{display:flex;}
 .modal-box{background:rgba(14,8,0,0.92);border:1px solid var(--border-h);border-radius:22px;padding:36px;max-width:460px;width:100%;max-height:85vh;overflow-y:auto;animation:scaleIn 0.25s var(--ease);box-shadow:0 30px 60px rgba(0,0,0,0.8);}
-@keyframes scaleIn{from{opacity:0;transform:scale(0.95)translateY(10px);}to{opacity:1;transform:scale(1)translateY(0);}}
+@keyframes scaleIn{from{opacity:0;transform:scale(0.95) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
 .modal-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:0.12em;text-align:center;margin-bottom:28px;}
 .modal-field{margin-bottom:18px;}
 .modal-label{font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--txt-d);display:block;margin-bottom:6px;}
@@ -424,8 +436,6 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
 .footer-links{display:flex;gap:20px;}
 .footer-link{color:var(--footer-c);text-decoration:none;transition:color 0.2s;opacity:0.7;font-size:0.68rem;font-weight:600;}
 .footer-link:hover{color:var(--p);opacity:1;}
-
-/* Offline Gate */
 #offlineGate{
   position:fixed;inset:0;background:var(--bg0);
   background-image:radial-gradient(ellipse 80% 50% at 50% 50%, color-mix(in srgb, var(--p) 6%, transparent), transparent);
@@ -455,8 +465,6 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
   color:#ff8080;letter-spacing:0.08em;
 }
 .offline-dot{width:8px;height:8px;background:#ff5555;border-radius:50%;box-shadow:0 0 8px #ff5555;animation:vdot 1.5s infinite;}
-
-/* Bootloader */
 #bootScreen{
   position:fixed;inset:0;background:#000;
   z-index:99998;display:flex;align-items:center;justify-content:center;
@@ -474,9 +482,81 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
 .boot-status{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--txt-d);letter-spacing:0.12em;}
 .boot-bar-wrap{width:200px;height:2px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
 .boot-bar{height:100%;background:var(--p);border-radius:2px;width:0%;transition:width 0.4s ease;}
+.beta-badge{font-size:0.55rem;font-weight:800;letter-spacing:0.1em;background:linear-gradient(135deg,#a87fff,#e066ff);color:#000;padding:2px 6px;border-radius:4px;vertical-align:middle;margin-left:4px;}
+.s-block-beta{background:linear-gradient(135deg,rgba(168,127,255,0.06),rgba(224,102,255,0.03));border:1px solid rgba(168,127,255,0.15);border-radius:14px;padding:20px;}
+.beta-feature-row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid rgba(168,127,255,0.08);}
+.beta-feature-row:last-child{border-bottom:none;padding-bottom:0;}
+.beta-feature-row:first-child{padding-top:0;}
+.beta-feature-name{font-size:0.85rem;font-weight:600;color:var(--txt);margin-bottom:2px;}
+.beta-feature-desc{font-size:0.72rem;color:var(--txt-d);}
+
+#playground-content{
+  display:none;
+  flex-direction:column;
+  flex:1;
+  position:relative;
+  overflow:hidden;
+}
+#playground-content.active{
+  display:flex;
+  animation:fadeUp 0.35s var(--ease) forwards;
+}
+.playground-canvas-wrap{
+  flex:1;
+  position:relative;
+  overflow:hidden;
+  margin:-28px -36px -20px;
+}
+body.layout-sidebar .playground-canvas-wrap{
+  margin:-0px -36px -20px;
+  margin-left:-36px;
+}
+#playgroundCanvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+}
+.playground-hud{
+  position:absolute;
+  bottom:32px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(24px);
+  border:1px solid var(--border-h);
+  border-radius:50px;
+  padding:10px 20px;
+  z-index:10;
+  flex-wrap:wrap;
+  justify-content:center;
+  white-space:nowrap;
+}
+.pg-btn{
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);
+  color:var(--txt-d);padding:8px 16px;border-radius:24px;
+  cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:600;
+  font-size:0.76rem;letter-spacing:0.06em;transition:all 0.2s;
+  display:flex;align-items:center;gap:6px;
+}
+.pg-btn:hover{background:var(--p-dim);border-color:var(--border-h);color:var(--txt);}
+.pg-btn.active-pg{background:var(--p-dim);border-color:var(--p);color:var(--p);}
+.pg-sep{width:1px;height:24px;background:rgba(255,255,255,0.1);flex-shrink:0;}
+.pg-label{font-size:0.68rem;color:var(--txt-d);letter-spacing:0.1em;font-family:'JetBrains Mono',monospace;}
+.pg-color-btn{width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);cursor:pointer;transition:all 0.2s;flex-shrink:0;}
+.pg-color-btn:hover{transform:scale(1.2);border-color:rgba(255,255,255,0.5);}
+.pg-color-btn.active-color{border-color:#fff;box-shadow:0 0 8px rgba(255,255,255,0.5);}
+.pg-img-btn{width:32px;height:32px;border-radius:8px;overflow:hidden;border:2px solid rgba(255,255,255,0.1);cursor:pointer;transition:all 0.2s;flex-shrink:0;background:rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;}
+.pg-img-btn img{width:100%;height:100%;object-fit:cover;}
+.pg-img-btn:hover{border-color:var(--p);transform:scale(1.1);}
+.pg-img-btn.active-pg-img{border-color:var(--p);box-shadow:0 0 8px var(--p-glow);}
 
 @media(max-width:900px){.home-grid{grid-template-columns:1fr;}.settings-wrap{flex-direction:column;}.settings-nav{width:100%;flex-direction:row;overflow-x:auto;flex-wrap:nowrap;}.s-nav-btn{flex-shrink:0;}}
-@media(max-width:640px){.main-wrapper{padding:14px;}.apps-grid{grid-template-columns:repeat(2,1fr);}.vault-controls{flex-direction:column;align-items:flex-start;width:100%;}.filter-input,.filter-input:focus{width:100%;}.url-bar{flex-direction:column;border-radius:16px;padding:14px;}.url-bar input{width:100%;}.launch-btn{width:100%;}.top-nav-item span{display:none;}.top-nav{padding:0 14px;gap:4px;}}
+@media(max-width:640px){.main-wrapper{padding:14px;}.apps-grid{grid-template-columns:repeat(2,1fr);}.vault-controls{flex-direction:column;align-items:flex-start;width:100%;}.filter-input,.filter-input:focus{width:100%;}.url-bar{flex-direction:column;border-radius:16px;padding:14px;}.url-bar input{width:100%;}.launch-btn{width:100%;}.top-nav-item span{display:none;}.top-nav{padding:0 14px;gap:4px;}.playground-canvas-wrap{margin:-14px;}}
 @media(max-width:400px){.apps-grid{grid-template-columns:repeat(2,1fr);}.home-stats{flex-direction:column;}}
 </style>
 </head>
@@ -519,6 +599,10 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
       <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       <span>Settings</span>
     </div>
+    <div class="top-nav-item beta-tab-item" id="tnav-playground" onclick="switchTab('playground')" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+      <span>Playground <span class="beta-badge">BETA</span></span>
+    </div>
   </div>
   <div class="top-nav-right">
     <div class="version-badge"><div class="v-dot"></div><span id="versionText">V2.3</span></div>
@@ -539,6 +623,9 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
   <div class="nav-item" id="snav-settings" data-label="Settings" onclick="switchTab('settings')">
     <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
   </div>
+  <div class="nav-item beta-nav-item" id="snav-playground" data-label="Playground (BETA)" onclick="switchTab('playground')" style="display:none;">
+    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+  </div>
   <div class="sidebar-bottom">
     <div class="v-dot"></div>
   </div>
@@ -548,7 +635,7 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
   <div class="main-header">
     <div class="search-bar" id="globalSearchBar" style="display:none;">
       <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" id="globalSearch" placeholder="Search the vault..." autocomplete="off" oninput="debouncedFilter()" onkeyup="checkAdmin(event)">
+      <input type="text" id="globalSearch" placeholder="Search the vault..." autocomplete="off" oninput="handleGlobalSearch()" onkeyup="checkAdmin(event)">
     </div>
   </div>
 
@@ -648,7 +735,6 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
     <div class="settings-wrap">
       <div class="settings-nav">
         <button class="s-nav-btn active" onclick="switchSTab('s-general')"><i class="fas fa-sliders-h"></i> General</button>
-        <button class="s-nav-btn" onclick="switchSTab('s-cloak')"><i class="fas fa-mask"></i> Cloaking</button>
         <button class="s-nav-btn" onclick="switchSTab('s-theme')"><i class="fas fa-palette"></i> Themes</button>
         <button class="s-nav-btn" onclick="switchSTab('s-particles')"><i class="fas fa-atom"></i> Particles</button>
         <button class="s-nav-btn" onclick="switchSTab('s-wallpaper')"><i class="fas fa-image"></i> Wallpaper</button>
@@ -656,6 +742,7 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
         <button class="s-nav-btn" onclick="switchSTab('s-perf')"><i class="fas fa-tachometer-alt"></i> Performance</button>
         <button class="s-nav-btn" onclick="switchSTab('s-data')"><i class="fas fa-database"></i> Data</button>
         <button class="s-nav-btn" onclick="switchSTab('s-import')"><i class="fas fa-file-export"></i> Import/Export</button>
+        <button class="s-nav-btn beta-btn" onclick="switchSTab('s-beta')"><i class="fas fa-flask"></i> Beta</button>
       </div>
       <div class="settings-main">
 
@@ -669,32 +756,6 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
           </div>
           <button class="s-btn danger" onclick="resetToDefaults()" style="width:100%;margin-bottom:10px;"><i class="fas fa-undo"></i> RESET TO DEFAULTS</button>
           <button class="s-btn primary" onclick="saveSettings()" style="width:100%;">SAVE SETTINGS</button>
-        </div>
-
-        <div id="s-cloak" class="settings-section">
-          <div class="s-header">Cloaking</div>
-          <div class="s-block">
-            <div class="s-row" style="margin-bottom:0;">
-              <div><div class="s-block-title" style="margin:0;">CLOAK MODE</div><div class="s-sub">Disguise tab appearance</div></div>
-              <label class="toggle-sw"><input type="checkbox" id="cloakToggle" onchange="toggleStealth()"><span class="toggle-slider"></span></label>
-            </div>
-            <div id="stealthCfg" style="display:none;margin-top:20px;">
-              <div class="s-label">Tab Title</div>
-              <input id="cloakTitle" class="s-input" placeholder="Google Docs">
-              <div class="s-label">Favicon URL</div>
-              <input id="cloakIcon" class="s-input" placeholder="https://...">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin:16px 0 10px;">
-                <span class="s-block-title" style="margin:0;">QUICK PRESETS</span>
-                <button onclick="clearCloak()" style="background:rgba(255,255,255,0.04);border:none;color:var(--txt-d);padding:4px 12px;border-radius:6px;cursor:pointer;font-size:0.72rem;">CLEAR</button>
-              </div>
-              <div class="presets-row">
-                <div class="preset-item" onclick="applyPreset('Google Docs','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_ZPKzisg9Sj2CKJUElIL_ckUnkwcARCP6Ew&s')"><div class="preset-ico"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_ZPKzisg9Sj2CKJUElIL_ckUnkwcARCP6Ew&s"></div><span class="preset-name">Docs</span></div>
-                <div class="preset-item" onclick="applyPreset('Google Classroom','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUXXjHfy9EvwxExTgh1S7R8rbtaOwUOqGFEg&s')"><div class="preset-ico"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUXXjHfy9EvwxExTgh1S7R8rbtaOwUOqGFEg&s"></div><span class="preset-name">Classroom</span></div>
-                <div class="preset-item" onclick="applyPreset('Google Drive','https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png')"><div class="preset-ico"><img src="https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png"></div><span class="preset-name">Drive</span></div>
-              </div>
-            </div>
-          </div>
-          <button class="s-btn primary" onclick="saveSettings()" style="width:100%;">SAVE</button>
         </div>
 
         <div id="s-theme" class="settings-section">
@@ -741,11 +802,13 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
                 <option value="gravity">Singularity</option>
               </select>
               <div class="s-label" style="margin-top:14px;">Particle Images</div>
-              <div class="particle-grid">
-                <div class="particle-item" onclick="setParticleImage('dayton')"><div class="particle-ico"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/dayton.png"></div><span class="particle-name">Dayton</span></div>
-                <div class="particle-item" onclick="setParticleImage('eli')"><div class="particle-ico"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/eli.png"></div><span class="particle-name">Eli</span></div>
-                <div class="particle-item" onclick="setParticleImage('payton')"><div class="particle-ico"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/kirkpayton.png"></div><span class="particle-name">Payton/Kirk</span></div>
-                <div class="particle-item" onclick="setParticleImage('custom')"><div class="particle-ico"><i class="fas fa-upload" style="font-size:18px;color:var(--txt-d);"></i></div><span class="particle-name">Custom</span></div>
+              <div class="particle-grid" id="particleImageGrid">
+                <div class="particle-item" id="pimg-dayton" onclick="setParticleImage('dayton')"><div class="particle-ico"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/dayton.png"></div><span class="particle-name">Dayton</span></div>
+                <div class="particle-item" id="pimg-eli" onclick="setParticleImage('eli')"><div class="particle-ico"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/eli.png"></div><span class="particle-name">Eli</span></div>
+                <div class="particle-item" id="pimg-payton" onclick="setParticleImage('payton')"><div class="particle-ico"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/kirkpayton.png"></div><span class="particle-name">Payton/Kirk</span></div>
+                <div class="particle-item" id="pimg-hitler" onclick="setParticleImage('hitler')"><div class="particle-ico"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/ISTHATHITLER.png"></div><span class="particle-name">Is That Hitler</span></div>
+                <div class="particle-item active-particle" id="pimg-dots" onclick="resetParticleImage()"><div class="particle-ico" style="display:flex;align-items:center;justify-content:center;"><span style="font-size:20px;">●</span></div><span class="particle-name">Dots (Default)</span></div>
+                <div class="particle-item" id="pimg-custom" onclick="setParticleImage('custom')"><div class="particle-ico"><i class="fas fa-upload" style="font-size:18px;color:var(--txt-d);"></i></div><span class="particle-name">Custom</span></div>
               </div>
               <div style="display:flex;gap:8px;margin-top:10px;">
                 <button class="s-btn" onclick="document.getElementById('customParticleUpload').click()" style="flex:1;"><i class="fas fa-upload"></i> Upload</button>
@@ -837,6 +900,58 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
           </div>
         </div>
 
+        <div id="s-beta" class="settings-section">
+          <div class="s-header" style="background:linear-gradient(135deg,#a87fff,#e066ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 12px rgba(168,127,255,0.4));">
+            Beta Features <span class="beta-badge" style="-webkit-text-fill-color:#000;">BETA</span>
+          </div>
+          <div style="background:rgba(168,127,255,0.06);border:1px solid rgba(168,127,255,0.2);border-radius:12px;padding:14px 16px;margin-bottom:4px;">
+            <p style="color:rgba(168,127,255,0.8);font-size:0.78rem;line-height:1.6;"><i class="fas fa-flask" style="margin-right:6px;"></i>Beta features are experimental and may be unstable. Enable at your own risk.</p>
+          </div>
+          <div class="s-block-beta">
+            <div class="beta-feature-row">
+              <div>
+                <div class="beta-feature-name">Playground Tab</div>
+                <div class="beta-feature-desc">Adds a Playground tab to navigation. Fullscreen particle canvas with interactive controls.</div>
+              </div>
+              <label class="toggle-sw"><input type="checkbox" id="betaPlaygroundToggle" onchange="toggleBetaPlayground()"><span class="toggle-slider" style="background:rgba(168,127,255,0.15);"></span></label>
+            </div>
+          </div>
+          <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(168,127,255,0.08);border-radius:12px;padding:16px;margin-top:4px;">
+            <div style="font-size:0.7rem;color:rgba(168,127,255,0.5);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">More beta features coming soon...</div>
+            <div style="height:2px;background:linear-gradient(90deg,rgba(168,127,255,0.3),transparent);border-radius:2px;"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="playground-content" class="tab-content">
+    <div class="playground-canvas-wrap">
+      <canvas id="playgroundCanvas"></canvas>
+      <div class="playground-hud">
+        <span class="pg-label">PHYSICS</span>
+        <button class="pg-btn active-pg" id="pgPhys-dayton_classic" onclick="setPgPhys('dayton_classic')">Classic</button>
+        <button class="pg-btn" id="pgPhys-dayton_fluid" onclick="setPgPhys('dayton_fluid')">Fluid</button>
+        <button class="pg-btn" id="pgPhys-gravity" onclick="setPgPhys('gravity')">Singularity</button>
+        <div class="pg-sep"></div>
+        <span class="pg-label">IMAGE</span>
+        <div class="pg-img-btn active-pg-img" id="pgImg-dots" onclick="setPgImage('dots')" title="Dots" style="font-size:14px;color:var(--txt-d);">●</div>
+        <div class="pg-img-btn" id="pgImg-dayton" onclick="setPgImage('dayton')" title="Dayton"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/dayton.png" onerror="this.style.display='none'"></div>
+        <div class="pg-img-btn" id="pgImg-eli" onclick="setPgImage('eli')" title="Eli"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/eli.png" onerror="this.style.display='none'"></div>
+        <div class="pg-img-btn" id="pgImg-payton" onclick="setPgImage('payton')" title="Payton/Kirk"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/kirkpayton.png" onerror="this.style.display='none'"></div>
+        <div class="pg-img-btn" id="pgImg-hitler" onclick="setPgImage('hitler')" title="Is That Hitler"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/ISTHATHITLER.png" onerror="this.style.display='none'"></div>
+        <div class="pg-sep"></div>
+        <span class="pg-label">COLOR</span>
+        <div class="pg-color-btn active-color" style="background:#ff8c42;" onclick="setPgColor('#ff8c42')" title="Amber"></div>
+        <div class="pg-color-btn" style="background:#a87fff;" onclick="setPgColor('#a87fff')" title="Purple"></div>
+        <div class="pg-color-btn" style="background:#38b6ff;" onclick="setPgColor('#38b6ff')" title="Ocean"></div>
+        <div class="pg-color-btn" style="background:#ff3d3d;" onclick="setPgColor('#ff3d3d')" title="Crimson"></div>
+        <div class="pg-color-btn" style="background:#00ff88;" onclick="setPgColor('#00ff88')" title="Green"></div>
+        <div class="pg-color-btn" style="background:#fff;" onclick="setPgColor('#ffffff')" title="White"></div>
+        <input type="color" id="pgCustomColor" value="#ff8c42" onchange="setPgColor(this.value)" style="width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);cursor:pointer;background:transparent;padding:0;" title="Custom color">
+        <div class="pg-sep"></div>
+        <button class="pg-btn" onclick="clearPgParticles()" title="Reset positions"><i class="fas fa-redo" style="font-size:11px;"></i> Reset</button>
       </div>
     </div>
   </div>
@@ -936,6 +1051,20 @@ let currentParticleColor = '#ff8c42';
 let pTime = 0;
 let customColorsActive = false;
 let remotePatchUrl = null;
+let femboyUnlocked = false;
+let femboyImg = null;
+
+let pgCustomImg = null;
+let pgColor = '#ff8c42';
+let pgPhys = 'dayton_classic';
+let pgParticles = [];
+let pgBlocks = [];
+let pgMouse = { x: -2000, y: -2000, vx: 0, vy: 0, lx: 0, ly: 0, speed: 0, r: 0, tr: 100 };
+let pgTime = 0;
+let pgAnimId = null;
+let pgActive = false;
+let pgCurrentImgKey = 'dots';
+let pgInitialized = false;
 
 function debounce(fn, delay) {
   let t; return function(...args) { clearTimeout(t); t = setTimeout(() => fn.apply(this, args), delay); };
@@ -967,7 +1096,7 @@ function drawStars() {
   requestAnimationFrame(drawStars);
 }
 
-const debouncedResize = debounce(() => { initStars(); resizeParticleCanvas(); }, 200);
+const debouncedResize = debounce(() => { initStars(); resizeParticleCanvas(); if(pgActive) resizePgCanvas(); }, 200);
 window.addEventListener('resize', debouncedResize);
 
 const pCanvas = document.getElementById('particle-canvas');
@@ -1036,11 +1165,28 @@ function animateParticles() {
 }
 
 document.addEventListener('mousemove', e => {
-  pMouse.vx = e.clientX - pMouse.lx; pMouse.vy = e.clientY - pMouse.ly;
-  pMouse.speed = Math.sqrt(pMouse.vx**2 + pMouse.vy**2);
-  pMouse.x = e.clientX; pMouse.y = e.clientY; pMouse.lx = e.clientX; pMouse.ly = e.clientY;
+  if(pgActive) {
+    pgMouse.vx = e.clientX - pgMouse.lx; pgMouse.vy = e.clientY - pgMouse.ly;
+    pgMouse.speed = Math.sqrt(pgMouse.vx**2 + pgMouse.vy**2);
+    pgMouse.x = e.clientX; pgMouse.y = e.clientY; pgMouse.lx = e.clientX; pgMouse.ly = e.clientY;
+  } else {
+    pMouse.vx = e.clientX - pMouse.lx; pMouse.vy = e.clientY - pMouse.ly;
+    pMouse.speed = Math.sqrt(pMouse.vx**2 + pMouse.vy**2);
+    pMouse.x = e.clientX; pMouse.y = e.clientY; pMouse.lx = e.clientX; pMouse.ly = e.clientY;
+  }
 });
+
 document.addEventListener('mousedown', e => {
+  if(pgActive) {
+    const pgC = document.getElementById('playgroundCanvas');
+    if(!pgC) return;
+    for(let i = 0; i < 14; i++) pgBlocks.push(new PgBlock(e.clientX, e.clientY));
+    for(const p of pgParticles) {
+      const dx = e.clientX - p.x, dy = e.clientY - p.y, d = Math.sqrt(dx*dx+dy*dy);
+      if(d < 160) { const a = Math.atan2(dy,dx); p.vx -= Math.cos(a)*36; p.vy -= Math.sin(a)*36; }
+    }
+    return;
+  }
   if(!document.getElementById('particleToggle')?.checked) return;
   if(pWallpaperImg || performanceMode) return;
   for(let i = 0; i < 10; i++) pBlocks.push(new Block(e.clientX, e.clientY));
@@ -1057,30 +1203,42 @@ function toggleParticles() {
   if(en) initParticles(); else { pCtx.clearRect(0,0,pCanvas.width,pCanvas.height); if(pWallpaperImg) pCtx.drawImage(pWallpaperImg,0,0,pCanvas.width,pCanvas.height); }
 }
 function changeParticleLib() { pCurrentLib = document.getElementById('particleLib').value; initParticles(); }
+
+function updateParticleItemActive(id) {
+  document.querySelectorAll('.particle-item').forEach(el => el.classList.remove('active-particle'));
+  const el = document.getElementById('pimg-'+id);
+  if(el) el.classList.add('active-particle');
+}
+
 function setParticleImage(type) {
   if(type === 'custom') { document.getElementById('customParticleUpload').click(); return; }
-  const urls = { dayton:'https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/dayton.png', eli:'https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/eli.png', payton:'https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/kirkpayton.png?raw=true' };
+  const urls = {
+    dayton:'https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/dayton.png',
+    eli:'https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/eli.png',
+    payton:'https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/kirkpayton.png?raw=true',
+    hitler:'https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/ISTHATHITLER.png'
+  };
   if(!urls[type]) return;
   const img = new Image(); img.crossOrigin = 'anonymous';
-  img.onload = () => { pCustomImg = img; localStorage.setItem('novaParticleImage', type); initParticles(); showToast('Particle image updated'); };
+  img.onload = () => { pCustomImg = img; localStorage.setItem('novaParticleImage', type); initParticles(); updateParticleItemActive(type); showToast('Particle image updated'); };
   img.onerror = () => showToast('Failed to load');
   img.src = urls[type];
 }
 function handleCustomParticle(e) {
   const file = e.target.files[0]; if(!file) return;
   const r = new FileReader(); r.onload = ev => {
-    const img = new Image(); img.onload = () => { pCustomImg = img; localStorage.setItem('novaParticleImage','custom'); localStorage.setItem('novaParticleCustomData', ev.target.result); initParticles(); showToast('Custom particle applied'); };
+    const img = new Image(); img.onload = () => { pCustomImg = img; localStorage.setItem('novaParticleImage','custom'); localStorage.setItem('novaParticleCustomData', ev.target.result); initParticles(); updateParticleItemActive('custom'); showToast('Custom particle applied'); };
     img.src = ev.target.result;
   }; r.readAsDataURL(file);
 }
-function resetParticleImage() { pCustomImg = null; localStorage.removeItem('novaParticleImage'); localStorage.removeItem('novaParticleCustomData'); initParticles(); showToast('Reset to dots'); }
+function resetParticleImage() { pCustomImg = null; localStorage.removeItem('novaParticleImage'); localStorage.removeItem('novaParticleCustomData'); initParticles(); updateParticleItemActive('dots'); showToast('Reset to dots'); }
 function loadSavedParticleImage() {
   const type = localStorage.getItem('novaParticleImage');
   if(type && type !== 'custom') setParticleImage(type);
   else if(type === 'custom') {
     const data = localStorage.getItem('novaParticleCustomData');
-    if(data) { const img = new Image(); img.onload = () => { pCustomImg = img; initParticles(); }; img.src = data; }
-  }
+    if(data) { const img = new Image(); img.onload = () => { pCustomImg = img; initParticles(); updateParticleItemActive('custom'); }; img.src = data; }
+  } else { updateParticleItemActive('dots'); }
 }
 
 function toggleWallpaper() {
@@ -1137,6 +1295,52 @@ function showToast(msg) {
   setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'all 0.2s'; setTimeout(() => t.remove(), 200); }, 2000);
 }
 
+function handleGlobalSearch() {
+  const val = document.getElementById('globalSearch').value;
+  if(val.toLowerCase() === 'femboy') triggerFemboyEgg();
+  debouncedFilter();
+}
+
+function triggerFemboyEgg() {
+  if(femboyUnlocked) return;
+  femboyUnlocked = true;
+  const url = 'https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/ISTHATAFEMBOY.png';
+  const img = new Image(); img.crossOrigin = 'anonymous';
+  img.onload = () => {
+    femboyImg = img;
+    pCustomImg = img;
+    initParticles();
+    showToast('🏳️‍⚧️ Is that a femboy??');
+    if(pgActive) { pgCustomImg = img; initPgParticles(); }
+    const pimgGrid = document.getElementById('particleImageGrid');
+    if(pimgGrid && !document.getElementById('pimg-femboy')) {
+      const div = document.createElement('div');
+      div.className = 'particle-item active-particle';
+      div.id = 'pimg-femboy';
+      div.onclick = () => { pCustomImg = femboyImg; initParticles(); updateParticleItemActive('femboy'); showToast('femboy mode'); };
+      div.innerHTML = `<div class="particle-ico"><img src="${url}"></div><span class="particle-name">Is That A Femboy</span>`;
+      pimgGrid.insertBefore(div, pimgGrid.lastElementChild);
+    }
+    updateParticleItemActive('femboy');
+    if(!document.getElementById('pgImg-femboy')) addFemboyToPgHud(url);
+  };
+  img.onerror = () => showToast('femboy not found 💀');
+  img.src = url;
+}
+
+function addFemboyToPgHud(url) {
+  if(document.getElementById('pgImg-femboy')) return;
+  const lastSep = document.querySelector('.playground-hud .pg-sep:last-of-type');
+  if(!lastSep) return;
+  const btn = document.createElement('div');
+  btn.className = 'pg-img-btn';
+  btn.id = 'pgImg-femboy';
+  btn.title = 'Is That A Femboy';
+  btn.onclick = () => setPgImage('femboy');
+  btn.innerHTML = `<img src="${url}" onerror="this.style.display='none'">`;
+  lastSep.parentNode.insertBefore(btn, lastSep);
+}
+
 function checkAdmin(e) {
   if(e.target.value.toLowerCase().includes('fakeadmin')) { document.getElementById('adminPanel').classList.add('show'); e.target.value = ''; }
 }
@@ -1146,20 +1350,166 @@ function makeDraggable(el, handle) {
   handle.onmousedown = e => { e.preventDefault(); p3=e.clientX; p4=e.clientY; document.onmouseup=()=>{document.onmouseup=null;document.onmousemove=null;}; document.onmousemove=e=>{p1=p3-e.clientX;p2=p4-e.clientY;p3=e.clientX;p4=e.clientY;el.style.top=(el.offsetTop-p2)+"px";el.style.left=(el.offsetLeft-p1)+"px";}; };
 }
 
+function toggleBetaPlayground() {
+  const en = document.getElementById('betaPlaygroundToggle').checked;
+  localStorage.setItem('novaBetaPlayground', en);
+  const tnavEl = document.getElementById('tnav-playground');
+  const snavEl = document.getElementById('snav-playground');
+  if(tnavEl) tnavEl.style.display = en ? 'flex' : 'none';
+  if(snavEl) snavEl.style.display = en ? 'flex' : 'none';
+  showToast(en ? 'Playground tab enabled' : 'Playground tab removed');
+}
+
+function resizePgCanvas() {
+  const c = document.getElementById('playgroundCanvas');
+  if(!c) return;
+  const wrap = c.parentElement;
+  c.width = wrap.offsetWidth || window.innerWidth;
+  c.height = wrap.offsetHeight || window.innerHeight;
+}
+
+class PgParticle {
+  constructor(x, y) {
+    this.bx = x; this.by = y; this.x = x; this.y = y;
+    this.vx = 0; this.vy = 0;
+    this.size = pgCustomImg ? 72 : 2.6;
+  }
+  update() {
+    const dx = pgMouse.x - this.x, dy = pgMouse.y - this.y;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    const wx = Math.sin(pgTime*1.1 + this.by*0.01) * 14;
+    const wy = Math.cos(pgTime*1.1 + this.bx*0.01) * 14;
+    if(pgPhys === 'dayton_classic') {
+      if(dist < pgMouse.r) { const f = (pgMouse.r-dist)/pgMouse.r; const a = Math.atan2(dy,dx); this.vx -= Math.cos(a)*(f*(13+pgMouse.speed*0.35)); this.vy -= Math.sin(a)*(f*(13+pgMouse.speed*0.35)); }
+      this.vx += (this.bx+wx-this.x)*0.07; this.vy += (this.by+wy-this.y)*0.07;
+    } else if(pgPhys === 'dayton_fluid') {
+      if(dist < 90) { const p = (90-dist)/90; this.vx += pgMouse.vx*p*0.45; this.vy += pgMouse.vy*p*0.45; }
+      this.vx += (this.bx+wx-this.x)*0.04; this.vy += (this.by+wy-this.y)*0.04;
+    } else {
+      if(dist < 220 && pgMouse.speed > 0.5) { const p = (220-dist)/220; this.vx += dx*p*0.028; this.vy += dy*p*0.028; }
+      this.vx += (this.bx+wx-this.x)*0.055; this.vy += (this.by+wy-this.y)*0.055;
+    }
+    this.vx *= 0.86; this.vy *= 0.86; this.x += this.vx; this.y += this.vy;
+  }
+  draw(ctx) {
+    if(pgCustomImg) { ctx.drawImage(pgCustomImg, this.x-this.size/2, this.y-this.size/2, this.size, this.size); }
+    else { ctx.fillStyle = pgColor; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill(); }
+  }
+}
+
+class PgBlock {
+  constructor(x,y) { this.x=x; this.y=y; this.size=Math.random()*8+4; this.vx=(Math.random()-0.5)*22; this.vy=(Math.random()-0.5)*22; this.life=1; }
+  update() { this.x+=this.vx; this.y+=this.vy; this.vy+=0.38; this.life-=0.028; }
+  draw(ctx) { ctx.save(); ctx.globalAlpha=this.life; ctx.fillStyle=pgColor; ctx.fillRect(this.x-this.size/2, this.y-this.size/2, this.size, this.size); ctx.restore(); }
+}
+
+function initPgParticles() {
+  const c = document.getElementById('playgroundCanvas'); if(!c) return;
+  pgParticles = [];
+  const gap = pgCustomImg ? 88 : 30;
+  for(let y = 0; y < c.height+gap; y+=gap) for(let x = 0; x < c.width+gap; x+=gap) pgParticles.push(new PgParticle(x,y));
+}
+
+function animatePg() {
+  if(!pgActive) return;
+  const c = document.getElementById('playgroundCanvas'); if(!c) return;
+  const ctx = c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  if(pgMouse.speed > 1) pgMouse.r += (pgMouse.tr - pgMouse.r)*0.1; else pgMouse.r *= 0.9;
+  pgTime += 0.013; pgMouse.speed *= 0.92;
+  for(const p of pgParticles) { p.update(); p.draw(ctx); }
+  for(let i = pgBlocks.length-1; i >= 0; i--) { pgBlocks[i].update(); pgBlocks[i].draw(ctx); if(pgBlocks[i].life <= 0) pgBlocks.splice(i,1); }
+  pgAnimId = requestAnimationFrame(animatePg);
+}
+
+function startPgTab() {
+  pgActive = true;
+  resizePgCanvas();
+  initPgParticles();
+  if(!pgAnimId) animatePg();
+  if(femboyImg && !document.getElementById('pgImg-femboy')) {
+    addFemboyToPgHud('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/ISTHATAFEMBOY.png');
+  }
+}
+
+function stopPgTab() {
+  pgActive = false;
+  if(pgAnimId) { cancelAnimationFrame(pgAnimId); pgAnimId = null; }
+  pgParticles = []; pgBlocks = [];
+  const c = document.getElementById('playgroundCanvas');
+  if(c) { const ctx = c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height); }
+}
+
+function setPgPhys(lib) {
+  pgPhys = lib;
+  document.querySelectorAll('[id^="pgPhys-"]').forEach(b => b.classList.remove('active-pg'));
+  const el = document.getElementById('pgPhys-'+lib);
+  if(el) el.classList.add('active-pg');
+}
+
+const pgImageUrls = {
+  dayton: 'https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/dayton.png',
+  eli: 'https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/eli.png',
+  payton: 'https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/kirkpayton.png',
+  hitler: 'https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/ISTHATHITLER.png',
+  femboy: 'https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/ISTHATAFEMBOY.png'
+};
+
+function setPgImage(key) {
+  pgCurrentImgKey = key;
+  document.querySelectorAll('[id^="pgImg-"]').forEach(b => b.classList.remove('active-pg-img'));
+  const el = document.getElementById('pgImg-'+key);
+  if(el) el.classList.add('active-pg-img');
+  if(key === 'dots') { pgCustomImg = null; initPgParticles(); return; }
+  if(key === 'femboy' && femboyImg) { pgCustomImg = femboyImg; initPgParticles(); return; }
+  if(pgImageUrls[key]) {
+    const img = new Image(); img.crossOrigin = 'anonymous';
+    img.onload = () => { pgCustomImg = img; initPgParticles(); };
+    img.onerror = () => { pgCustomImg = null; initPgParticles(); showToast('Image load failed'); };
+    img.src = pgImageUrls[key];
+  }
+}
+
+function setPgColor(color) {
+  pgColor = color;
+  document.querySelectorAll('.pg-color-btn').forEach(b => b.classList.remove('active-color'));
+  const match = [...document.querySelectorAll('.pg-color-btn')].find(b => {
+    const bg = b.style.background;
+    return bg === color || bg.replace(/\s/g,'') === color;
+  });
+  if(match) match.classList.add('active-color');
+  document.getElementById('pgCustomColor').value = color;
+}
+
+function clearPgParticles() { initPgParticles(); pgBlocks = []; }
+
 function switchTab(tab) {
+  const wasPlayground = pgActive;
+  if(wasPlayground && tab !== 'playground') stopPgTab();
+
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   document.querySelectorAll('.nav-item,.top-nav-item').forEach(i => i.classList.remove('active'));
   document.getElementById(tab+'-content').classList.add('active');
   ['tnav-','snav-'].forEach(pfx => { const el = document.getElementById(pfx+tab); if(el) el.classList.add('active'); });
+
   const sb = document.getElementById('globalSearchBar');
   const urlW = document.getElementById('urlBarWebsites');
   const urlG = document.getElementById('urlBarGames');
-  sb.style.display = (tab === 'home' || tab === 'settings') ? 'none' : 'flex';
+  const footer = document.querySelector('.footer');
+
+  sb.style.display = (tab === 'home' || tab === 'settings' || tab === 'playground') ? 'none' : 'flex';
   urlW.style.display = tab === 'websites' ? 'flex' : 'none';
   urlG.style.display = tab === 'games' ? 'flex' : 'none';
+  if(footer) footer.style.display = tab === 'playground' ? 'none' : 'flex';
+
   if(tab === 'settings') loadSettingsView();
-  if(tab !== 'home' && tab !== 'settings') filterApps();
+  if(tab !== 'home' && tab !== 'settings' && tab !== 'playground') filterApps();
+
+  if(tab === 'playground') {
+    setTimeout(() => startPgTab(), 50);
+  }
 }
+
 function switchSTab(id) {
   document.querySelectorAll('.settings-section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.s-nav-btn').forEach(b => b.classList.remove('active'));
@@ -1191,9 +1541,7 @@ async function fetchPatchUrl() {
   } catch(e) { remotePatchUrl = null; }
 }
 
-function openBrokenLinkReport() {
-  window.open('https://forms.gle/VxC42rWMcSWdfbar9', '_blank');
-}
+function openBrokenLinkReport() { window.open('https://forms.gle/VxC42rWMcSWdfbar9', '_blank'); }
 
 function updateStats() {
   const allG = gameApps.length + userApps.filter(a => a.category === 'game').length;
@@ -1347,11 +1695,8 @@ function launch(forcedType, appName, appIcon, forcedUrl) {
     if(!url.startsWith('http')) url = 'https://'+url;
   }
   if(type === 'game') { openGameFrame(url, appName, appIcon); return; }
-  const cloak = localStorage.getItem('novaCloak') === 'true';
-  const cTitle = localStorage.getItem('novaTitle') || 'Google Docs';
-  const cIcon = localStorage.getItem('novaIcon') || 'https://www.google.com/favicon.ico';
   const win = window.open('about:blank','_blank');
-  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${cloak?cTitle:'NOVA'}</title><link rel="icon" href="${cloak?cIcon:'https://i.ibb.co/ZR8kx20q/New-Project-1.png'}"><style>*{margin:0;padding:0;}body{background:#000;overflow:hidden;}iframe{width:100vw;height:100vh;border:none;}.nb{position:fixed;top:12px;left:12px;height:40px;width:40px;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.06);border-radius:10px;z-index:9999;display:flex;align-items:center;overflow:hidden;transition:0.25s;}.nb:hover{width:160px;border-color:rgba(255,140,66,0.3);}.trigger{min-width:40px;height:40px;display:flex;align-items:center;justify-content:center;}.ctrls{display:flex;gap:8px;opacity:0;transition:0.2s;padding-right:12px;}.nb:hover .ctrls{opacity:1;}.b{width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:#ccc;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:0.2s;font-size:13px;}.b:hover{background:rgba(255,140,66,0.2);color:#fff;}.ex:hover{background:rgba(255,80,80,0.2);color:#f88;}</style></head><body><div class="nb"><div class="trigger"><svg width="16" height="16" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></div><div class="ctrls"><button class="b ex" onclick="window.close()">✕</button><button class="b" onclick="location.reload()">↺</button></div></div><iframe src="${url}" allowfullscreen></iframe></body></html>`);
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>NOVA</title><link rel="icon" href="https://i.ibb.co/ZR8kx20q/New-Project-1.png"><style>*{margin:0;padding:0;}body{background:#000;overflow:hidden;}iframe{width:100vw;height:100vh;border:none;}.nb{position:fixed;top:12px;left:12px;height:40px;width:40px;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.06);border-radius:10px;z-index:9999;display:flex;align-items:center;overflow:hidden;transition:0.25s;}.nb:hover{width:160px;border-color:rgba(255,140,66,0.3);}.trigger{min-width:40px;height:40px;display:flex;align-items:center;justify-content:center;}.ctrls{display:flex;gap:8px;opacity:0;transition:0.2s;padding-right:12px;}.nb:hover .ctrls{opacity:1;}.b{width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:#ccc;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:0.2s;font-size:13px;}.b:hover{background:rgba(255,140,66,0.2);color:#fff;}.ex:hover{background:rgba(255,80,80,0.2);color:#f88;}</style></head><body><div class="nb"><div class="trigger"><svg width="16" height="16" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></div><div class="ctrls"><button class="b ex" onclick="window.close()">✕</button><button class="b" onclick="location.reload()">↺</button></div></div><iframe src="${url}" allowfullscreen></iframe></body></html>`);
 }
 
 function openGameFrame(url, name, icon) {
@@ -1400,9 +1745,7 @@ async function checkOnlineStatus() {
     if(!res.ok) return false;
     const data = await res.json();
     return (data.status || '').toLowerCase() === 'online';
-  } catch(e) {
-    return false;
-  }
+  } catch(e) { return false; }
 }
 
 async function fetchChangelog() {
@@ -1412,21 +1755,15 @@ async function fetchChangelog() {
     let verData;
     const rawText = await vRes.text();
     try { verData = JSON.parse(rawText); } catch { verData = { version: rawText.trim() }; }
-
     const ver = verData.version || verData;
     const verStr = typeof ver === 'string' ? ver.trim() : JSON.stringify(ver);
-
     let logs = null;
     if(verData.changelog && Array.isArray(verData.changelog) && verData.changelog.length > 0) logs = verData.changelog;
     else if(verData.logs && Array.isArray(verData.logs) && verData.logs.length > 0) logs = verData.logs;
-
     renderLogs(logs);
-
-    const enabled = document.getElementById('startBtnW');
-    const enabled2 = document.getElementById('startBtnG');
     if(verStr === '2.3') {
-      if(enabled) enabled.disabled = false;
-      if(enabled2) enabled2.disabled = false;
+      document.getElementById('startBtnW').disabled = false;
+      document.getElementById('startBtnG').disabled = false;
       document.getElementById('versionText').textContent = 'V'+verStr;
       document.getElementById('sysVer').textContent = 'V'+verStr;
       document.getElementById('sysStatus').textContent = 'Online — V'+verStr;
@@ -1436,8 +1773,7 @@ async function fetchChangelog() {
       if(remotePatchUrl) {
         document.getElementById('patchBtn').style.display = 'block';
         document.getElementById('patchBtn').textContent = 'INSTALL PATCH';
-        const note = document.getElementById('patchNote');
-        note.style.display = 'none';
+        document.getElementById('patchNote').style.display = 'none';
       } else {
         document.getElementById('patchBtn').style.display = 'none';
         const note = document.getElementById('patchNote');
@@ -1473,21 +1809,11 @@ function renderLogs(logs) {
 }
 
 document.getElementById('patchBtn').addEventListener('click', () => {
-  if(remotePatchUrl) {
-    window.location.href = remotePatchUrl;
-  } else {
-    const note = document.getElementById('patchNote');
-    note.style.display = 'block';
-    note.textContent = 'No patch URL is available right now. Check back later.';
-  }
+  if(remotePatchUrl) { window.location.href = remotePatchUrl; }
+  else { const note = document.getElementById('patchNote'); note.style.display = 'block'; note.textContent = 'No patch URL is available right now. Check back later.'; }
 });
 
 function loadSettingsView() {
-  const cloakOn = localStorage.getItem('novaCloak') === 'true';
-  document.getElementById('cloakToggle').checked = cloakOn;
-  document.getElementById('cloakTitle').value = localStorage.getItem('novaTitle') || 'Google Docs';
-  document.getElementById('cloakIcon').value = localStorage.getItem('novaIcon') || '';
-  toggleStealth();
   const theme = localStorage.getItem('novaTheme') || 'amber';
   applyThemeVars(theme);
   document.querySelectorAll('.theme-card').forEach(el => { el.classList.remove('active'); if(el.dataset.theme === theme) el.classList.add('active'); });
@@ -1508,34 +1834,8 @@ function loadSettingsView() {
   if(wallOn) loadSavedWallpaper();
   loadSavedParticleImage();
   resetCustomColors();
-}
-
-function toggleStealth() { document.getElementById('stealthCfg').style.display = document.getElementById('cloakToggle').checked ? 'block' : 'none'; }
-function applyPreset(title, icon) { document.getElementById('cloakTitle').value=title; document.getElementById('cloakIcon').value=icon; showToast(title+' selected'); }
-function clearCloak() { document.getElementById('cloakTitle').value=''; document.getElementById('cloakIcon').value=''; showToast('Cleared'); }
-
-function saveSettings() {
-  localStorage.setItem('novaCloak', document.getElementById('cloakToggle').checked);
-  localStorage.setItem('novaTitle', document.getElementById('cloakTitle').value);
-  localStorage.setItem('novaIcon', document.getElementById('cloakIcon').value);
-  localStorage.setItem('novaParticles', document.getElementById('particleToggle').checked);
-  localStorage.setItem('novaPerf', document.getElementById('perfToggle').checked);
-  showToast('Settings saved');
-}
-
-function changeTheme(name) {
-  if(customColorsActive && !confirm('Custom colors active. Override?')) return;
-  customColorsActive = false; localStorage.removeItem('novaCustomColors');
-  applyThemeVars(name);
-  localStorage.setItem('novaTheme', name);
-  document.querySelectorAll('.theme-card').forEach(el => { el.classList.remove('active'); if(el.dataset.theme===name) el.classList.add('active'); });
-  updateParticleColor();
-  pWallpaperImg = null; localStorage.removeItem('novaWallpaperData');
-  document.getElementById('wallpaperToggle').checked = false;
-  document.getElementById('wallpaperControls').style.display = 'none';
-  if(document.getElementById('particleToggle').checked) initParticles(); else pCtx.clearRect(0,0,pCanvas.width,pCanvas.height);
-  resetCustomColors();
-  showToast('Theme: '+name);
+  const betaPg = localStorage.getItem('novaBetaPlayground') === 'true';
+  document.getElementById('betaPlaygroundToggle').checked = betaPg;
 }
 
 function applyThemeVars(name) { document.body.setAttribute('data-theme', name); }
@@ -1568,19 +1868,40 @@ function resetCustomColors() {
   document.getElementById('customAccent').value = v[1];
   document.getElementById('customBg0').value = v[2];
 }
+function saveSettings() {
+  localStorage.setItem('novaParticles', document.getElementById('particleToggle').checked);
+  localStorage.setItem('novaPerf', document.getElementById('perfToggle').checked);
+  showToast('Settings saved');
+}
+function changeTheme(name) {
+  if(customColorsActive && !confirm('Custom colors active. Override?')) return;
+  customColorsActive = false; localStorage.removeItem('novaCustomColors');
+  applyThemeVars(name);
+  localStorage.setItem('novaTheme', name);
+  document.querySelectorAll('.theme-card').forEach(el => { el.classList.remove('active'); if(el.dataset.theme===name) el.classList.add('active'); });
+  updateParticleColor();
+  pWallpaperImg = null; localStorage.removeItem('novaWallpaperData');
+  document.getElementById('wallpaperToggle').checked = false;
+  document.getElementById('wallpaperControls').style.display = 'none';
+  if(document.getElementById('particleToggle').checked) initParticles(); else pCtx.clearRect(0,0,pCanvas.width,pCanvas.height);
+  resetCustomColors();
+  showToast('Theme: '+name);
+}
 function resetToDefaults() {
   if(!confirm('Reset all settings?')) return;
-  ['novaTheme','novaLayout','novaParticles','novaCloak','novaTitle','novaIcon','novaPerf','novaCustomColors','novaWallpaperEnabled','novaWallpaperData','novaParticleImage','novaParticleCustomData'].forEach(k => localStorage.removeItem(k));
+  ['novaTheme','novaLayout','novaParticles','novaPerf','novaCustomColors','novaWallpaperEnabled','novaWallpaperData','novaParticleImage','novaParticleCustomData','novaBetaPlayground'].forEach(k => localStorage.removeItem(k));
   customColorsActive = false; pCustomImg = null; pWallpaperImg = null;
   document.documentElement.style.cssText = '';
   document.body.setAttribute('data-theme','amber');
   document.body.classList.remove('layout-sidebar');
   performanceMode = false;
+  document.getElementById('tnav-playground').style.display = 'none';
+  document.getElementById('snav-playground').style.display = 'none';
   loadSettingsView(); initParticles(); initStars();
   showToast('Reset complete');
 }
 function exportAllSettings() {
-  const s = { novaTheme:localStorage.getItem('novaTheme')||'amber', novaLayout:localStorage.getItem('novaLayout')||'top', novaParticles:localStorage.getItem('novaParticles')!=='false', novaCloak:localStorage.getItem('novaCloak')==='true', novaTitle:localStorage.getItem('novaTitle')||'', novaIcon:localStorage.getItem('novaIcon')||'', novaPerf:localStorage.getItem('novaPerf')==='true' };
+  const s = { novaTheme:localStorage.getItem('novaTheme')||'amber', novaLayout:localStorage.getItem('novaLayout')||'top', novaParticles:localStorage.getItem('novaParticles')!=='false', novaPerf:localStorage.getItem('novaPerf')==='true', novaBetaPlayground:localStorage.getItem('novaBetaPlayground')==='true' };
   const a = document.createElement('a'); a.href='data:application/json,'+encodeURIComponent(JSON.stringify(s,null,2)); a.download='nova-settings.json'; a.click(); showToast('Exported');
 }
 function importAllSettings(e) {
@@ -1625,8 +1946,13 @@ function dismissBootScreen() {
   const wallOn = localStorage.getItem('novaWallpaperEnabled') === 'true';
   if(wallOn) loadSavedWallpaper();
 
-  setBootProgress(20, 'CHECKING STATUS...');
+  const betaPg = localStorage.getItem('novaBetaPlayground') === 'true';
+  if(betaPg) {
+    document.getElementById('tnav-playground').style.display = 'flex';
+    document.getElementById('snav-playground').style.display = 'flex';
+  }
 
+  setBootProgress(20, 'CHECKING STATUS...');
   const isOnline = await checkOnlineStatus();
 
   if(!isOnline) {
@@ -1640,16 +1966,14 @@ function dismissBootScreen() {
     }, 800);
     return;
   }
-   setBootProgress(50, 'FETCHING PATCH INFO...');
-  await fetchPatchUrl();
 
+  setBootProgress(50, 'FETCHING PATCH INFO...');
+  await fetchPatchUrl();
   setBootProgress(70, 'LOADING VAULT...');
   await fetchChangelog();
   fetchRemoteData();
-
   setBootProgress(100, 'READY');
   setTimeout(dismissBootScreen, 400);
-
   typeWriter();
 })();
 </script>

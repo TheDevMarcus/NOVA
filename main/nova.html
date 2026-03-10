@@ -3,1979 +3,445 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>NOVA</title>
-<link rel="icon" type="image/png" href="https://i.ibb.co/ZR8kx20q/New-Project-1.png">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<title>NOVA · distribution</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
 <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 :root {
-  --p: #ff8c42;
-  --p-dim: rgba(255,140,66,0.12);
-  --p-glow: rgba(255,140,66,0.45);
-  --p-mid: rgba(255,140,66,0.3);
-  --acc: #ffb347;
-  --acc-glow: rgba(255,179,71,0.4);
-  --bg0: #070400;
-  --bg1: #0e0800;
-  --bg2: #181000;
-  --card: rgba(30,18,5,0.6);
-  --glass: rgba(40,25,8,0.35);
-  --border: rgba(255,140,66,0.08);
-  --border-h: rgba(255,140,66,0.28);
-  --txt: #fff;
-  --txt-s: #ffe8c8;
-  --txt-d: #b8905a;
-  --sidebar-w: 72px;
-  --topbar-h: 64px;
-  --ease: cubic-bezier(0.25,0.8,0.25,1);
-  --footer-c: rgba(255,140,66,0.4);
+    --primary: #ff8c00;
+    --primary-glow: rgba(255, 140, 0, 0.6);
+    --primary-deep: #e03c00;
+    --bg-deep: #0a0300;
+    --glass-bg: rgba(20, 8, 0, 0.6);
+    --glass-border: rgba(255, 140, 0, 0.15);
+    --glass-border-hover: rgba(255, 140, 0, 0.35);
+    --text-dim: #ffd1a8;
+    --trans-smooth: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
-body[data-theme="nova"] {
-  --p: #a87fff;
-  --p-dim: rgba(168,127,255,0.12);
-  --p-glow: rgba(168,127,255,0.45);
-  --p-mid: rgba(168,127,255,0.3);
-  --acc: #e066ff;
-  --acc-glow: rgba(224,102,255,0.4);
-  --bg0: #03020a;
-  --bg1: #080514;
-  --bg2: #100a1e;
-  --card: rgba(20,12,38,0.6);
-  --glass: rgba(28,18,50,0.35);
-  --border: rgba(168,127,255,0.08);
-  --border-h: rgba(168,127,255,0.28);
-  --txt-s: #ddd0ff;
-  --txt-d: #8a72b8;
-  --footer-c: rgba(168,127,255,0.4);
-}
-body[data-theme="ocean"] {
-  --p: #38b6ff;
-  --p-dim: rgba(56,182,255,0.12);
-  --p-glow: rgba(56,182,255,0.45);
-  --p-mid: rgba(56,182,255,0.3);
-  --acc: #00e5ff;
-  --acc-glow: rgba(0,229,255,0.4);
-  --bg0: #000810;
-  --bg1: #00101e;
-  --bg2: #001828;
-  --card: rgba(0,18,34,0.6);
-  --glass: rgba(0,25,45,0.35);
-  --border: rgba(56,182,255,0.08);
-  --border-h: rgba(56,182,255,0.28);
-  --txt-s: #b3e8ff;
-  --txt-d: #5a9ab8;
-  --footer-c: rgba(56,182,255,0.4);
-}
-body[data-theme="crimson"] {
-  --p: #ff3d3d;
-  --p-dim: rgba(255,61,61,0.12);
-  --p-glow: rgba(255,61,61,0.45);
-  --p-mid: rgba(255,61,61,0.3);
-  --acc: #ff6b35;
-  --acc-glow: rgba(255,107,53,0.4);
-  --bg0: #0f0000;
-  --bg1: #1a0000;
-  --bg2: #250000;
-  --card: rgba(35,0,0,0.6);
-  --glass: rgba(45,5,5,0.35);
-  --border: rgba(255,61,61,0.08);
-  --border-h: rgba(255,61,61,0.28);
-  --txt-s: #ffcccc;
-  --txt-d: #b87070;
-  --footer-c: rgba(255,61,61,0.4);
-}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-::-webkit-scrollbar{width:4px;height:4px;}
-::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:var(--p-mid);border-radius:4px;}
-html{height:-webkit-fill-available;}
-body{
-  width:100%;min-height:100vh;
-  background:var(--bg0);
-  background-image:
-    radial-gradient(ellipse 80% 50% at 70% -10%, color-mix(in srgb, var(--p) 8%, transparent), transparent),
-    radial-gradient(ellipse 60% 40% at -10% 80%, color-mix(in srgb, var(--acc) 5%, transparent), transparent);
-  font-family:'Space Grotesk',sans-serif;
-  color:var(--txt);
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-  transition:background 0.5s var(--ease), color 0.3s;
-  position:relative;
-}
-#stars-canvas,#particle-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
-#stars-canvas{opacity:0.12;}
-#particle-canvas{opacity:0.85;z-index:1;}
-body .sidebar{display:none;}
-body .top-nav{display:flex;}
-body .main-wrapper{margin-left:0;padding-top:calc(var(--topbar-h) + 24px);}
-body.layout-sidebar .top-nav{display:none;}
-body.layout-sidebar .sidebar{display:flex;}
-body.layout-sidebar .main-wrapper{margin-left:var(--sidebar-w);padding-top:0;}
-.top-nav{
-  position:fixed;top:0;left:0;right:0;
-  height:var(--topbar-h);
-  background:rgba(0,0,0,0.6);
-  backdrop-filter:blur(24px);
-  border-bottom:1px solid var(--border);
-  z-index:200;
-  display:flex;align-items:center;
-  padding:0 28px;gap:8px;
-}
-.top-nav-logo{
-  font-family:'Syne',sans-serif;
-  font-size:1.4rem;font-weight:800;
-  letter-spacing:0.3em;
-  background:linear-gradient(135deg,#fff 0%,var(--p) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  margin-right:16px;
-  filter:drop-shadow(0 0 12px var(--p-glow));
-}
-.top-nav-items{display:flex;gap:4px;flex:1;align-items:center;}
-.top-nav-item{
-  display:flex;align-items:center;gap:8px;
-  padding:8px 16px;border-radius:10px;
-  color:var(--txt-d);cursor:pointer;
-  transition:all 0.2s var(--ease);
-  font-size:0.85rem;font-weight:600;letter-spacing:0.05em;
-  border:1px solid transparent;
-  position:relative;
-}
-.top-nav-item svg{width:16px;height:16px;stroke:currentColor;flex-shrink:0;}
-.top-nav-item:hover{color:var(--txt-s);background:var(--p-dim);}
-.top-nav-item.active{color:var(--p);background:var(--p-dim);border-color:var(--border-h);}
-.top-nav-item.active::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:60%;height:2px;background:var(--p);border-radius:2px;}
-.top-nav-item.beta-tab-item{border-color:rgba(168,127,255,0.2);color:rgba(168,127,255,0.7);}
-.top-nav-item.beta-tab-item:hover{color:#a87fff;background:rgba(168,127,255,0.1);}
-.top-nav-item.beta-tab-item.active{color:#a87fff;background:rgba(168,127,255,0.12);border-color:rgba(168,127,255,0.3);}
-.top-nav-item.beta-tab-item.active::after{background:#a87fff;}
-.top-nav-right{margin-left:auto;display:flex;align-items:center;gap:12px;}
-.version-badge{
-  font-family:'JetBrains Mono',monospace;
-  font-size:0.7rem;font-weight:500;
-  color:var(--p);
-  background:var(--p-dim);
-  border:1px solid var(--border-h);
-  padding:5px 12px;border-radius:6px;
-  display:flex;align-items:center;gap:6px;
-}
-.v-dot{width:6px;height:6px;background:var(--p);border-radius:50%;box-shadow:0 0 8px var(--p);animation:vdot 2.5s infinite;}
-@keyframes vdot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.7);}}
-.sidebar{
-  width:var(--sidebar-w);height:100vh;
-  position:fixed;top:0;left:0;
-  background:rgba(0,0,0,0.55);
-  backdrop-filter:blur(24px);
-  border-right:1px solid var(--border);
-  z-index:200;
-  display:flex;flex-direction:column;
-  align-items:center;padding:20px 0;gap:8px;
-}
-.sidebar-logo{
-  font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;letter-spacing:0.3em;
-  background:linear-gradient(135deg,#fff 0%,var(--p) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 0 10px var(--p-glow));
-  margin-bottom:16px;writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);
-}
-.nav-item{
-  width:48px;height:48px;
-  border-radius:14px;
-  display:flex;align-items:center;justify-content:center;
-  color:var(--txt-d);cursor:pointer;
-  transition:all 0.2s var(--ease);
-  border:1px solid transparent;position:relative;
-}
-.nav-item svg{width:20px;height:20px;stroke:currentColor;}
-.nav-item:hover{background:var(--p-dim);color:var(--txt-s);}
-.nav-item.active{background:var(--p-dim);color:var(--p);border-color:var(--border-h);}
-.nav-item::after{
-  content:attr(data-label);
-  position:absolute;left:calc(100% + 12px);
-  background:rgba(0,0,0,0.9);
-  color:white;padding:6px 12px;border-radius:8px;
-  font-size:0.75rem;font-weight:600;letter-spacing:0.05em;
-  white-space:nowrap;pointer-events:none;
-  opacity:0;transform:translateX(-4px);
-  transition:all 0.15s;
-  border:1px solid var(--border-h);
-}
-.nav-item:hover::after{opacity:1;transform:translateX(0);}
-.nav-item.beta-nav-item{border-color:rgba(168,127,255,0.15);color:rgba(168,127,255,0.6);}
-.nav-item.beta-nav-item:hover{background:rgba(168,127,255,0.1);color:#a87fff;}
-.nav-item.beta-nav-item.active{background:rgba(168,127,255,0.12);color:#a87fff;border-color:rgba(168,127,255,0.3);}
-.sidebar-bottom{margin-top:auto;display:flex;flex-direction:column;gap:8px;align-items:center;}
-.main-wrapper{
-  min-height:100vh;position:relative;z-index:20;
-  padding:28px 36px 20px;
-  display:flex;flex-direction:column;
-  transition:margin 0.3s var(--ease);
-}
-.main-header{display:flex;align-items:center;gap:16px;margin-bottom:32px;}
-.search-bar{
-  flex:1;max-width:640px;
-  background:var(--glass);
-  backdrop-filter:blur(20px);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:0 16px;
-  display:flex;align-items:center;gap:12px;
-  transition:all 0.25s var(--ease);
-  box-shadow:0 8px 24px rgba(0,0,0,0.4);
-  height:48px;
-}
-.search-bar:focus-within{border-color:var(--border-h);box-shadow:0 8px 32px rgba(0,0,0,0.5),0 0 0 3px var(--p-dim);}
-.search-bar svg{width:16px;height:16px;stroke:var(--txt-d);flex-shrink:0;transition:stroke 0.2s;}
-.search-bar:focus-within svg{stroke:var(--p);}
-.search-bar input{flex:1;background:transparent;border:none;color:var(--txt);font-family:'Space Grotesk',sans-serif;font-size:0.9rem;outline:none;}
-.search-bar input::placeholder{color:rgba(255,255,255,0.2);}
-.tab-content{display:none;flex:1;flex-direction:column;}
-.tab-content.active{display:flex;animation:fadeUp 0.35s var(--ease) forwards;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-.home-grid{display:grid;grid-template-columns:1fr 340px;gap:28px;flex:1;}
-.home-left{display:flex;flex-direction:column;justify-content:center;gap:32px;}
-.hero-text{position:relative;}
-.nova-wordmark{
-  font-family:'Syne',sans-serif;font-size:clamp(4rem,10vw,8rem);font-weight:800;
-  letter-spacing:0.15em;line-height:1;
-  background:linear-gradient(135deg,#fff 0%,var(--p) 50%,var(--acc) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 0 30px var(--p-glow));
-  position:relative;
-}
-.nova-wordmark::after{
-  content:'NOVA';
-  position:absolute;inset:0;
-  background:linear-gradient(135deg,transparent 40%,var(--p-glow) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  filter:blur(30px);
-  pointer-events:none;
-}
-.tagline{font-size:1.1rem;color:var(--txt-d);font-weight:400;display:flex;align-items:center;gap:8px;height:2rem;margin-top:12px;}
-.cursor-char{color:var(--p);animation:blink 1s step-end infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
-.home-stats{display:flex;gap:20px;flex-wrap:wrap;}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 24px;flex:1;transition:all 0.25s var(--ease);min-width:80px;}
-.stat-card:hover{border-color:var(--border-h);transform:translateY(-2px);}
-.stat-card.clickable{cursor:pointer;}
-.stat-card.clickable:hover{border-color:var(--border-h);box-shadow:0 8px 24px var(--p-dim);}
-.stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--p);line-height:1;}
-.stat-num.icon-num{font-size:1.4rem;display:flex;align-items:center;justify-content:flex-start;}
-.stat-num.icon-num i{font-size:1.3rem;color:var(--p);}
-.stat-label{font-size:0.7rem;color:var(--txt-d);margin-top:4px;letter-spacing:0.1em;text-transform:uppercase;}
-.changelog-panel{background:var(--card);border:1px solid var(--border);border-radius:20px;display:flex;flex-direction:column;overflow:hidden;}
-.panel-top{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.panel-title{font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;letter-spacing:0.15em;color:var(--txt-s);display:flex;align-items:center;gap:8px;}
-.panel-title svg{width:14px;height:14px;stroke:var(--p);}
-.view-all-btn{font-size:0.7rem;font-weight:700;letter-spacing:0.08em;color:var(--p);background:var(--p-dim);border:1px solid var(--border-h);padding:5px 12px;border-radius:6px;cursor:pointer;transition:all 0.2s;}
-.view-all-btn:hover{background:var(--p);color:#000;}
-.log-list{display:flex;flex-direction:column;padding:16px;gap:10px;flex:1;overflow-y:auto;}
-.log-entry{background:rgba(0,0,0,0.3);border-radius:12px;padding:14px 16px;border-left:2px solid var(--p);transition:all 0.2s var(--ease);border-top:1px solid rgba(255,255,255,0.02);border-right:1px solid rgba(255,255,255,0.02);border-bottom:1px solid rgba(255,255,255,0.02);}
-.log-entry:hover{background:var(--p-dim);transform:translateX(3px);}
-.log-entry-title{font-size:0.82rem;font-weight:600;color:var(--txt);margin-bottom:6px;letter-spacing:0.02em;}
-.log-entry-msg{font-size:0.75rem;color:var(--txt-d);line-height:1.6;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
-.log-entry-author{margin-top:8px;font-size:0.62rem;color:rgba(255,255,255,0.3);letter-spacing:0.06em;display:flex;align-items:center;gap:5px;}
-.log-dot{width:5px;height:5px;border-radius:50%;background:var(--p);}
-.none-state{padding:32px 16px;text-align:center;color:var(--txt-d);font-size:0.8rem;letter-spacing:0.08em;font-family:'JetBrains Mono',monospace;}
-.vault-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
-.vault-title-row{display:flex;align-items:center;gap:12px;}
-.vault-title{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;letter-spacing:0.08em;}
-.count-pill{background:var(--p-dim);border:1px solid var(--border-h);color:var(--p);font-size:0.72rem;font-weight:700;padding:4px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace;}
-.vault-controls{display:flex;gap:10px;align-items:center;}
-.ctrl-group{display:flex;align-items:center;gap:8px;background:var(--glass);border:1px solid var(--border);padding:8px 14px;border-radius:10px;}
-.ctrl-group span{font-size:0.7rem;color:var(--txt-d);letter-spacing:0.08em;}
-.ctrl-group select{background:transparent;border:none;color:var(--txt);font-size:0.82rem;font-weight:600;font-family:'Space Grotesk',sans-serif;outline:none;cursor:pointer;}
-.ctrl-group select option{background:#0e0800;color:#fff;}
-.filter-wrap{position:relative;}
-.filter-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--txt-d);z-index:1;transition:stroke 0.2s;}
-.filter-wrap:focus-within svg{stroke:var(--p);}
-.filter-input{background:var(--glass);border:1px solid var(--border);border-radius:10px;padding:9px 14px 9px 34px;color:var(--txt);font-size:0.85rem;font-family:'Space Grotesk',sans-serif;width:190px;transition:all 0.25s var(--ease);outline:none;}
-.filter-input:focus{border-color:var(--border-h);width:230px;box-shadow:0 0 0 3px var(--p-dim);}
-.apps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:16px;padding-bottom:30px;}
-.loading-state{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:12px;color:var(--txt-d);height:200px;font-size:0.85rem;}
-.spin{width:24px;height:24px;border:2px solid var(--p-dim);border-top-color:var(--p);border-radius:50%;animation:spin 0.7s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.app-card{background:var(--card);border:1px solid var(--border);border-radius:18px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.25s var(--ease);position:relative;overflow:hidden;padding:10px;}
-.app-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,var(--p-dim),transparent 70%);opacity:0;transition:opacity 0.25s;}
-.app-card:hover::before{opacity:1;}
-.app-card:hover{border-color:var(--border-h);transform:translateY(-5px);box-shadow:0 16px 32px rgba(0,0,0,0.5),0 0 20px var(--p-dim);}
-.app-icon{width:100%;height:100%;border-radius:12px;overflow:hidden;background:rgba(0,0,0,0.3);}
-.app-icon img{width:100%;height:100%;object-fit:cover;transition:transform 0.3s;}
-.app-card:hover .app-icon img{transform:scale(1.06);}
-.app-name{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,0.95),rgba(0,0,0,0.6) 60%,transparent);padding:28px 10px 10px;font-size:0.72rem;font-weight:600;letter-spacing:0.03em;text-align:center;opacity:0;transition:opacity 0.2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;z-index:2;}
-.app-card:hover .app-name{opacity:1;}
-.app-del{position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;background:rgba(255,80,80,0.2);border:1px solid rgba(255,80,80,0.3);color:#ff8080;font-size:11px;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(0.7);transition:all 0.2s;cursor:pointer;z-index:3;}
-.app-card:hover .app-del{opacity:1;transform:scale(1);}
-.app-del:hover{background:rgba(255,80,80,0.5);color:#fff;}
-.random-card{background:linear-gradient(145deg,var(--p-dim),rgba(0,0,0,0.3));border:1px solid var(--border-h);border-radius:18px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;padding:10px;transition:all 0.25s var(--ease);}
-.random-card:hover{transform:translateY(-5px);box-shadow:0 16px 32px var(--p-glow);}
-.random-label{position:absolute;top:10px;left:10px;background:var(--p);color:#000;font-size:0.6rem;font-weight:800;letter-spacing:0.12em;padding:3px 10px;border-radius:4px;z-index:5;}
-.random-icon-cont{width:100%;height:100%;border-radius:12px;overflow:hidden;position:relative;}
-.random-icon-cont img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.5s;}
-.random-icon-cont img.active{opacity:1;}
-.random-card .app-name{opacity:0.8;position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,0.9),transparent);padding:24px 10px 10px;font-size:0.7rem;font-weight:700;text-align:center;z-index:2;}
-.add-card{background:transparent;border:1.5px dashed rgba(255,255,255,0.1);border-radius:18px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:all 0.25s var(--ease);}
-.add-card:hover{border-color:var(--p);background:var(--p-dim);transform:translateY(-5px);}
-.add-icon{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--txt-d);transition:all 0.2s;}
-.add-card:hover .add-icon{color:var(--p);background:var(--p-dim);}
-.add-label{font-size:0.68rem;color:var(--txt-d);font-weight:600;letter-spacing:0.05em;}
-.url-bar{margin-top:20px;display:flex;align-items:center;gap:12px;background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:14px;padding:8px 8px 8px 20px;transition:all 0.25s var(--ease);}
-.url-bar:focus-within{border-color:var(--border-h);box-shadow:0 0 0 3px var(--p-dim);}
-.url-bar input{flex:1;background:transparent;border:none;color:var(--txt);font-family:'JetBrains Mono',monospace;font-size:0.85rem;outline:none;padding:8px 0;}
-.url-bar input::placeholder{color:rgba(255,255,255,0.18);}
-.launch-btn{background:linear-gradient(135deg,var(--p),color-mix(in srgb,var(--p) 60%,#000));border:none;padding:12px 28px;border-radius:10px;color:#000;font-weight:700;font-size:0.82rem;letter-spacing:0.1em;cursor:pointer;transition:all 0.25s var(--ease);text-transform:uppercase;font-family:'Space Grotesk',sans-serif;white-space:nowrap;}
-.launch-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 20px var(--p-glow);}
-.launch-btn:disabled{opacity:0.25;cursor:not-allowed;}
-.settings-wrap{display:flex;gap:24px;flex:1;min-height:500px;}
-.settings-nav{width:200px;flex-shrink:0;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:4px;}
-.s-nav-btn{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;background:transparent;border:none;color:var(--txt-d);text-align:left;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.82rem;cursor:pointer;transition:all 0.2s;letter-spacing:0.02em;}
-.s-nav-btn i{width:16px;text-align:center;color:var(--p);font-size:0.85rem;}
-.s-nav-btn:hover{background:rgba(255,255,255,0.04);color:var(--txt);}
-.s-nav-btn.active{background:var(--p-dim);color:var(--p);}
-.s-nav-btn.beta-btn i{color:#a87fff;}
-.s-nav-btn.beta-btn{color:rgba(168,127,255,0.7);}
-.s-nav-btn.beta-btn:hover{color:#a87fff;background:rgba(168,127,255,0.08);}
-.s-nav-btn.beta-btn.active{background:rgba(168,127,255,0.12);color:#a87fff;}
-.settings-main{flex:1;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;overflow-y:auto;}
-.settings-section{display:none;flex-direction:column;gap:20px;animation:fadeUp 0.25s forwards;}
-.settings-section.active{display:flex;}
-.s-header{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:0.1em;color:var(--txt);padding-bottom:16px;border-bottom:1px solid var(--border);}
-.s-block{background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:14px;padding:20px;}
-.s-block-title{font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--txt-d);margin-bottom:14px;}
-.s-input{width:100%;padding:12px 16px;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.06);border-radius:10px;color:var(--txt);font-family:'Space Grotesk',sans-serif;font-size:0.88rem;transition:all 0.2s;margin-bottom:12px;outline:none;}
-.s-input:focus{border-color:var(--border-h);box-shadow:0 0 0 3px var(--p-dim);}
-.s-btn{padding:11px 20px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:var(--txt);font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.82rem;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;justify-content:center;gap:8px;}
-.s-btn:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.12);}
-.s-btn.danger{color:#ff8080;background:rgba(255,80,80,0.06);border-color:rgba(255,80,80,0.2);}
-.s-btn.danger:hover{background:rgba(255,80,80,0.14);}
-.s-btn.primary{background:linear-gradient(135deg,var(--p),color-mix(in srgb,var(--p) 60%,#000));border:none;color:#000;font-weight:700;}
-.s-btn.primary:hover{transform:translateY(-1px);box-shadow:0 6px 18px var(--p-glow);}
-.s-row{display:flex;justify-content:space-between;align-items:center;gap:16px;}
-.s-label{display:block;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--txt-d);margin-bottom:8px;}
-.s-sub{font-size:0.75rem;color:var(--txt-d);margin-top:2px;}
-.s-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;}
-.toggle-sw{position:relative;display:inline-block;width:46px;height:24px;}
-.toggle-sw input{opacity:0;width:0;height:0;}
-.toggle-slider{position:absolute;cursor:pointer;inset:0;background:rgba(255,255,255,0.08);border-radius:24px;transition:0.3s;}
-.toggle-slider::before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:0.3s;}
-input:checked+.toggle-slider{background:var(--p);}
-input:checked+.toggle-slider::before{transform:translateX(22px);}
-.theme-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;}
-.theme-card{height:100px;border-radius:12px;border:2px solid transparent;cursor:pointer;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:12px;font-weight:700;font-size:0.82rem;color:#fff;transition:all 0.2s;}
-.theme-card::before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.85),rgba(0,0,0,0.1));z-index:1;}
-.theme-card span{position:relative;z-index:2;}
-.theme-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,0.5);}
-.theme-card.active{border-color:var(--p);box-shadow:0 0 0 1px var(--p),0 8px 24px var(--p-glow);}
-.t-amber{background:linear-gradient(135deg,#ff8c42,#0e0800);}
-.t-nova{background:linear-gradient(135deg,#a87fff,#03020a);}
-.t-ocean{background:linear-gradient(135deg,#38b6ff,#000810);}
-.t-crimson{background:linear-gradient(135deg,#ff3d3d,#0f0000);}
-.presets-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-.preset-item{background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:12px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:all 0.2s;}
-.preset-item:hover{background:var(--p-dim);border-color:var(--border-h);}
-.preset-ico{width:32px;height:32px;border-radius:8px;overflow:hidden;}
-.preset-ico img{width:100%;height:100%;object-fit:cover;}
-.preset-name{font-size:0.68rem;color:var(--txt-d);}
-.particle-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
-.particle-item{background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:10px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;transition:all 0.2s;}
-.particle-item:hover{background:var(--p-dim);border-color:var(--border-h);}
-.particle-item.active-particle{border-color:var(--p);background:var(--p-dim);}
-.particle-ico{width:44px;height:44px;border-radius:8px;overflow:hidden;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;}
-.particle-ico img{width:100%;height:100%;object-fit:cover;}
-.particle-name{font-size:0.65rem;color:var(--txt-d);text-align:center;line-height:1.3;}
-.modal,.server-modal,.version-modal{position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(20px);display:none;align-items:center;justify-content:center;z-index:2000;padding:20px;}
-.modal.show,.server-modal.show,.version-modal.show{display:flex;}
-.modal-box{background:rgba(14,8,0,0.92);border:1px solid var(--border-h);border-radius:22px;padding:36px;max-width:460px;width:100%;max-height:85vh;overflow-y:auto;animation:scaleIn 0.25s var(--ease);box-shadow:0 30px 60px rgba(0,0,0,0.8);}
-@keyframes scaleIn{from{opacity:0;transform:scale(0.95) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
-.modal-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:0.12em;text-align:center;margin-bottom:28px;}
-.modal-field{margin-bottom:18px;}
-.modal-label{font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--txt-d);display:block;margin-bottom:6px;}
-.modal-input{width:100%;padding:12px 16px;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.06);border-radius:10px;color:var(--txt);font-family:'Space Grotesk',sans-serif;outline:none;font-size:0.88rem;transition:all 0.2s;}
-.modal-input:focus{border-color:var(--border-h);box-shadow:0 0 0 3px var(--p-dim);}
-.modal-input option{background:#0e0800;color:#fff;}
-.m-btn{width:100%;padding:13px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);color:var(--txt);margin-bottom:10px;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.85rem;letter-spacing:0.05em;transition:all 0.2s;}
-.m-btn:hover{background:rgba(255,255,255,0.08);}
-.m-btn.primary{background:linear-gradient(135deg,var(--p),color-mix(in srgb,var(--p) 60%,#000));border:none;color:#000;font-weight:700;margin-top:14px;}
-.m-btn.primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px var(--p-glow);}
-.m-btn.ghost{background:transparent;border:none;color:var(--txt-d);}
-.m-btn.ghost:hover{color:var(--txt);background:rgba(255,255,255,0.04);}
-.m-btn.danger{color:#ff8080;background:rgba(255,80,80,0.06);border-color:rgba(255,80,80,0.2);}
-.server-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
-.server-opt{background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:10px;padding:13px 16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all 0.2s;}
-.server-opt:hover{background:var(--p-dim);border-color:var(--border-h);transform:translateX(3px);}
-.server-num{width:32px;height:32px;background:var(--p-dim);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:0.8rem;font-weight:700;color:var(--p);border:1px solid var(--border-h);flex-shrink:0;}
-.server-url{flex:1;font-size:0.78rem;color:var(--txt-d);word-break:break-all;font-family:'JetBrains Mono',monospace;}
-.dev-feed{position:fixed;bottom:24px;right:24px;width:min(460px,90vw);max-height:80vh;background:rgba(10,6,0,0.95);backdrop-filter:blur(24px);border:1px solid var(--border-h);border-radius:18px;z-index:2000;display:none;flex-direction:column;overflow:hidden;animation:slideRight 0.3s var(--ease);box-shadow:0 24px 48px rgba(0,0,0,0.8);}
-.dev-feed.show{display:flex;}
-@keyframes slideRight{from{opacity:0;transform:translateX(30px);}to{opacity:1;transform:translateX(0);}}
-.dev-feed-head{padding:16px 20px;background:rgba(255,255,255,0.02);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.dev-feed-title{font-size:0.8rem;font-weight:700;letter-spacing:0.1em;color:var(--txt-s);display:flex;align-items:center;gap:8px;}
-.dev-feed-title svg{width:14px;height:14px;stroke:var(--p);}
-.close-btn{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.04);border:none;color:var(--txt-d);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;font-size:14px;}
-.close-btn:hover{background:rgba(255,255,255,0.1);color:var(--p);transform:rotate(90deg);}
-.dev-feed-body{padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
-.dev-feed-body .log-entry-msg{display:block;-webkit-line-clamp:unset;overflow:visible;}
-.game-modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(16px);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;}
-.game-modal.show{display:flex;}
-.game-container{background:rgba(10,6,0,0.96);border:1px solid var(--border-h);border-radius:22px;width:100%;max-width:1000px;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 60px rgba(0,0,0,0.9);}
-.game-head{padding:14px 20px;background:rgba(255,255,255,0.02);border-bottom:1px solid var(--border-h);display:flex;justify-content:space-between;align-items:center;}
-.game-title{display:flex;align-items:center;gap:10px;font-weight:700;font-size:0.9rem;letter-spacing:0.04em;}
-.game-title img{width:26px;height:26px;border-radius:7px;object-fit:cover;}
-.game-controls{display:flex;gap:6px;}
-.gctrl-btn{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:var(--txt-d);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.95rem;transition:all 0.2s;}
-.gctrl-btn:hover{background:var(--p-dim);color:var(--txt);border-color:var(--border-h);}
-.gctrl-btn.exit:hover{background:rgba(255,80,80,0.2);border-color:rgba(255,80,80,0.3);color:#ff8080;}
-#gameIframe{width:100%;height:68vh;max-height:680px;border:none;background:#000;display:block;}
-.admin-panel{position:fixed;top:100px;left:100px;width:280px;background:rgba(10,6,0,0.95);backdrop-filter:blur(20px);border:1px solid var(--border-h);border-radius:18px;z-index:10000;display:none;overflow:hidden;user-select:none;box-shadow:0 20px 40px rgba(0,0,0,0.8);}
-.admin-panel.show{display:block;}
-.admin-head{padding:14px 16px;background:rgba(255,255,255,0.02);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;cursor:move;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;color:var(--p);}
-.admin-body{padding:14px;display:flex;flex-direction:column;gap:8px;}
-.admin-item{background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all 0.2s;font-size:0.8rem;color:var(--txt-d);}
-.admin-item:hover{background:var(--p-dim);border-color:var(--border-h);color:var(--txt);}
-.admin-item svg{width:16px;height:16px;stroke:currentColor;flex-shrink:0;}
-.footer{display:flex;justify-content:space-between;align-items:center;padding:16px 0 0;border-top:1px solid var(--border);margin-top:auto;font-size:0.7rem;letter-spacing:0.1em;color:var(--footer-c);}
-.footer-links{display:flex;gap:20px;}
-.footer-link{color:var(--footer-c);text-decoration:none;transition:color 0.2s;opacity:0.7;font-size:0.68rem;font-weight:600;}
-.footer-link:hover{color:var(--p);opacity:1;}
-#offlineGate{
-  position:fixed;inset:0;background:var(--bg0);
-  background-image:radial-gradient(ellipse 80% 50% at 50% 50%, color-mix(in srgb, var(--p) 6%, transparent), transparent);
-  z-index:99999;display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:0;
-}
-.offline-box{
-  display:flex;flex-direction:column;align-items:center;gap:20px;
-  background:var(--card);border:1px solid var(--border-h);
-  border-radius:24px;padding:48px 52px;max-width:440px;width:90%;
-  box-shadow:0 30px 60px rgba(0,0,0,0.8);
-  animation:scaleIn 0.3s var(--ease);
-}
-.offline-icon{font-size:52px;line-height:1;filter:grayscale(0.3);}
-.offline-title{
-  font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;
-  letter-spacing:0.15em;
-  background:linear-gradient(135deg,#fff 0%,var(--p) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.offline-sub{font-size:0.88rem;color:var(--txt-d);text-align:center;line-height:1.7;max-width:320px;}
-.offline-badge{
-  display:flex;align-items:center;gap:8px;
-  background:rgba(255,80,80,0.1);border:1px solid rgba(255,80,80,0.3);
-  border-radius:10px;padding:10px 20px;
-  font-family:'JetBrains Mono',monospace;font-size:0.78rem;font-weight:600;
-  color:#ff8080;letter-spacing:0.08em;
-}
-.offline-dot{width:8px;height:8px;background:#ff5555;border-radius:50%;box-shadow:0 0 8px #ff5555;animation:vdot 1.5s infinite;}
-#bootScreen{
-  position:fixed;inset:0;background:#000;
-  z-index:99998;display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:24px;
-  transition:opacity 0.5s ease;
-}
-.boot-logo{
-  font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;letter-spacing:0.4em;
-  background:linear-gradient(135deg,#fff 0%,var(--p) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 0 30px var(--p-glow));
-  animation:bootPulse 1.2s ease infinite;
-}
-@keyframes bootPulse{0%,100%{filter:drop-shadow(0 0 20px var(--p-glow));}50%{filter:drop-shadow(0 0 50px var(--p-glow));}}
-.boot-status{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--txt-d);letter-spacing:0.12em;}
-.boot-bar-wrap{width:200px;height:2px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
-.boot-bar{height:100%;background:var(--p);border-radius:2px;width:0%;transition:width 0.4s ease;}
-.beta-badge{font-size:0.55rem;font-weight:800;letter-spacing:0.1em;background:linear-gradient(135deg,#a87fff,#e066ff);color:#000;padding:2px 6px;border-radius:4px;vertical-align:middle;margin-left:4px;}
-.s-block-beta{background:linear-gradient(135deg,rgba(168,127,255,0.06),rgba(224,102,255,0.03));border:1px solid rgba(168,127,255,0.15);border-radius:14px;padding:20px;}
-.beta-feature-row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid rgba(168,127,255,0.08);}
-.beta-feature-row:last-child{border-bottom:none;padding-bottom:0;}
-.beta-feature-row:first-child{padding-top:0;}
-.beta-feature-name{font-size:0.85rem;font-weight:600;color:var(--txt);margin-bottom:2px;}
-.beta-feature-desc{font-size:0.72rem;color:var(--txt-d);}
 
-#playground-content{
-  display:none;
-  flex-direction:column;
-  flex:1;
-  position:relative;
-  overflow:hidden;
+body {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 50% 100%, #200800 0%, #050100 100%);
+    font-family: 'Outfit', sans-serif;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    position: relative;
+    overflow-x: hidden;
 }
-#playground-content.active{
-  display:flex;
-  animation:fadeUp 0.35s var(--ease) forwards;
-}
-.playground-canvas-wrap{
-  flex:1;
-  position:relative;
-  overflow:hidden;
-  margin:-28px -36px -20px;
-}
-body.layout-sidebar .playground-canvas-wrap{
-  margin:-0px -36px -20px;
-  margin-left:-36px;
-}
-#playgroundCanvas{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:block;
-}
-.playground-hud{
-  position:absolute;
-  bottom:32px;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  align-items:center;
-  gap:12px;
-  background:rgba(0,0,0,0.7);
-  backdrop-filter:blur(24px);
-  border:1px solid var(--border-h);
-  border-radius:50px;
-  padding:10px 20px;
-  z-index:10;
-  flex-wrap:wrap;
-  justify-content:center;
-  white-space:nowrap;
-}
-.pg-btn{
-  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);
-  color:var(--txt-d);padding:8px 16px;border-radius:24px;
-  cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:600;
-  font-size:0.76rem;letter-spacing:0.06em;transition:all 0.2s;
-  display:flex;align-items:center;gap:6px;
-}
-.pg-btn:hover{background:var(--p-dim);border-color:var(--border-h);color:var(--txt);}
-.pg-btn.active-pg{background:var(--p-dim);border-color:var(--p);color:var(--p);}
-.pg-sep{width:1px;height:24px;background:rgba(255,255,255,0.1);flex-shrink:0;}
-.pg-label{font-size:0.68rem;color:var(--txt-d);letter-spacing:0.1em;font-family:'JetBrains Mono',monospace;}
-.pg-color-btn{width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);cursor:pointer;transition:all 0.2s;flex-shrink:0;}
-.pg-color-btn:hover{transform:scale(1.2);border-color:rgba(255,255,255,0.5);}
-.pg-color-btn.active-color{border-color:#fff;box-shadow:0 0 8px rgba(255,255,255,0.5);}
-.pg-img-btn{width:32px;height:32px;border-radius:8px;overflow:hidden;border:2px solid rgba(255,255,255,0.1);cursor:pointer;transition:all 0.2s;flex-shrink:0;background:rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;}
-.pg-img-btn img{width:100%;height:100%;object-fit:cover;}
-.pg-img-btn:hover{border-color:var(--p);transform:scale(1.1);}
-.pg-img-btn.active-pg-img{border-color:var(--p);box-shadow:0 0 8px var(--p-glow);}
 
-@media(max-width:900px){.home-grid{grid-template-columns:1fr;}.settings-wrap{flex-direction:column;}.settings-nav{width:100%;flex-direction:row;overflow-x:auto;flex-wrap:nowrap;}.s-nav-btn{flex-shrink:0;}}
-@media(max-width:640px){.main-wrapper{padding:14px;}.apps-grid{grid-template-columns:repeat(2,1fr);}.vault-controls{flex-direction:column;align-items:flex-start;width:100%;}.filter-input,.filter-input:focus{width:100%;}.url-bar{flex-direction:column;border-radius:16px;padding:14px;}.url-bar input{width:100%;}.launch-btn{width:100%;}.top-nav-item span{display:none;}.top-nav{padding:0 14px;gap:4px;}.playground-canvas-wrap{margin:-14px;}}
-@media(max-width:400px){.apps-grid{grid-template-columns:repeat(2,1fr);}.home-stats{flex-direction:column;}}
+#ember-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.wrapper {
+    position: relative;
+    z-index: 30;
+    max-width: 420px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.distro-header {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.distro-header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    letter-spacing: 10px;
+    background: linear-gradient(180deg, #ffffff 0%, #ffcda8 60%, #ff8c00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 15px var(--primary-glow));
+    animation: logoFloat 4s infinite alternate ease-in-out;
+    line-height: 1;
+}
+
+@keyframes logoFloat {
+    0% { transform: translateY(0); filter: drop-shadow(0 0 10px rgba(255,100,0,0.4)); }
+    100% { transform: translateY(-3px); filter: drop-shadow(0 0 25px rgba(255,140,0,0.7)); }
+}
+
+.distro-sub {
+    font-size: 0.65rem;
+    letter-spacing: 4px;
+    color: var(--text-dim);
+    background: rgba(0,0,0,0.5);
+    padding: 0.3rem 1rem;
+    border-radius: 30px;
+    display: inline-block;
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border);
+    margin-top: 0.5rem;
+}
+
+.card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 1.8rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: var(--trans-smooth);
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.card:hover {
+    border-color: var(--glass-border-hover);
+    box-shadow: 0 25px 50px -15px rgba(0,0,0,0.9), 0 0 30px rgba(255, 100, 0, 0.1);
+}
+
+.tag {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 0.3rem 1rem;
+    border-radius: 30px;
+    background: rgba(255, 140, 0, 0.08);
+    color: var(--primary);
+    border: 1px solid rgba(255, 140, 0, 0.2);
+    display: inline-block;
+    margin-bottom: 0.8rem;
+}
+
+.card h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+}
+
+.card p {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin: 0 auto 1.2rem;
+    font-weight: 300;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #ff7b00, #d92b00);
+    color: white;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: var(--trans-smooth);
+    box-shadow: 0 8px 20px rgba(200, 50, 0, 0.3), inset 0 2px 0 rgba(255,255,255,0.2);
+    font-family: 'Outfit', sans-serif;
+    position: relative;
+    z-index: 5;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #ff9433, #f03d00);
+    box-shadow: 0 12px 25px rgba(220, 70, 0, 0.5), inset 0 2px 0 rgba(255,255,255,0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 10px rgba(150, 40, 0, 0.4);
+}
+
+#status {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #ffcda8;
+    letter-spacing: 1.5px;
+    background: rgba(10, 3, 0, 0.6);
+    padding: 0.6rem 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.tutorial-section {
+    background: rgba(15, 5, 0, 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.tutorial-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: white;
+}
+
+.tutorial-title svg {
+    stroke: var(--primary);
+    width: 16px;
+    height: 16px;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+}
+
+.step:last-child {
+    margin-bottom: 0;
+}
+
+.step-number {
+    width: 18px;
+    height: 18px;
+    background: rgba(255, 140, 0, 0.15);
+    border: 1px solid rgba(255, 140, 0, 0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.step-text strong { color: white; }
+
+.footer-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 140, 0, 0.1);
+}
+
+.footer-note {
+    color: rgba(255,255,255,0.2);
+    font-size: 0.55rem;
+    letter-spacing: 3px;
+}
+
+.btn-report {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: var(--trans-smooth);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-report:hover {
+    color: var(--primary);
+    text-shadow: 0 0 8px var(--primary-glow);
+}
+
+.smooth-antimon {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), #ffea00, var(--primary), transparent);
+    filter: blur(2px);
+    opacity: 0.8;
+    animation: slideAntimon 4s infinite linear;
+}
+
+@keyframes slideAntimon {
+    0% { transform: translateX(-100%); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateX(100%); opacity: 0; }
+}
 </style>
 </head>
-<body data-theme="amber">
+<body>
+<canvas id="ember-canvas"></canvas>
 
-<canvas id="stars-canvas"></canvas>
-<canvas id="particle-canvas"></canvas>
-
-<div id="bootScreen">
-  <div class="boot-logo">NOVA</div>
-  <div class="boot-bar-wrap"><div class="boot-bar" id="bootBar"></div></div>
-  <div class="boot-status" id="bootStatus">INITIALIZING...</div>
-</div>
-
-<div id="offlineGate" style="display:none;">
-  <div class="offline-box">
-    <div class="offline-icon">🚫</div>
-    <div class="offline-title">NOVA OFFLINE</div>
-    <div class="offline-badge"><div class="offline-dot"></div>SERVICE UNAVAILABLE</div>
-    <div class="offline-sub">NOVA is currently offline for maintenance or has been taken down. Please check back later.</div>
-  </div>
-</div>
-
-<nav class="top-nav" id="topNav">
-  <div class="top-nav-logo">NOVA</div>
-  <div class="top-nav-items">
-    <div class="top-nav-item active" id="tnav-home" onclick="switchTab('home')">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      <span>Home</span>
+<div class="wrapper">
+    <div class="distro-header">
+        <h1>NOVA</h1>
+        <div class="distro-sub">BUILD V<span id="build-version">...</span></div>
     </div>
-    <div class="top-nav-item" id="tnav-websites" onclick="switchTab('websites')">
-      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-      <span>Websites</span>
+
+    <div class="card">
+        <div class="smooth-antimon"></div>
+        <span class="tag">🔥 STABLE 🔥</span>
+        <h2>core bundle</h2>
+        <p>Signed cryptographic bundle · NOVA-<span id="bundle-version">...</span></p>
+        <button class="btn-primary" id="downloadBtn" onclick="downloadApp()">⬇ DOWNLOAD NOW</button>
     </div>
-    <div class="top-nav-item" id="tnav-games" onclick="switchTab('games')">
-      <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01M16 12h.01M8 12h.01"/></svg>
-      <span>Games</span>
+
+    <div id="status">⚡ READY ⚡</div>
+
+    <div class="tutorial-section">
+        <div class="tutorial-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4M12 8h.01"></path>
+            </svg>
+            <span>HOW TO OPEN</span>
+        </div>
+        <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-text"><strong>Download</strong> the file above</div>
+        </div>
+        <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-text">Open your <strong>Downloads folder</strong></div>
+        </div>
+        <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-text"><strong>Double click</strong> the file to launch</div>
+        </div>
     </div>
-    <div class="top-nav-item" id="tnav-settings" onclick="switchTab('settings')">
-      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      <span>Settings</span>
-    </div>
-    <div class="top-nav-item beta-tab-item" id="tnav-playground" onclick="switchTab('playground')" style="display:none;">
-      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-      <span>Playground <span class="beta-badge">BETA</span></span>
-    </div>
-  </div>
-  <div class="top-nav-right">
-    <div class="version-badge"><div class="v-dot"></div><span id="versionText">V2.3</span></div>
-  </div>
-</nav>
 
-<nav class="sidebar" id="sideNav">
-  <div class="sidebar-logo">NOVA</div>
-  <div class="nav-item active" id="snav-home" data-label="Home" onclick="switchTab('home')">
-    <svg viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-  </div>
-  <div class="nav-item" id="snav-websites" data-label="Websites" onclick="switchTab('websites')">
-    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-  </div>
-  <div class="nav-item" id="snav-games" data-label="Games" onclick="switchTab('games')">
-    <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01M16 12h.01M8 12h.01"/></svg>
-  </div>
-  <div class="nav-item" id="snav-settings" data-label="Settings" onclick="switchTab('settings')">
-    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-  </div>
-  <div class="nav-item beta-nav-item" id="snav-playground" data-label="Playground (BETA)" onclick="switchTab('playground')" style="display:none;">
-    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-  </div>
-  <div class="sidebar-bottom">
-    <div class="v-dot"></div>
-  </div>
-</nav>
-
-<div class="main-wrapper">
-  <div class="main-header">
-    <div class="search-bar" id="globalSearchBar" style="display:none;">
-      <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" id="globalSearch" placeholder="Search the vault..." autocomplete="off" oninput="handleGlobalSearch()" onkeyup="checkAdmin(event)">
-    </div>
-  </div>
-
-  <div id="home-content" class="tab-content active">
-    <div class="home-grid">
-      <div class="home-left">
-        <div class="hero-text">
-          <div class="nova-wordmark">NOVA</div>
-          <div class="tagline">
-            <span id="typewriterText"></span><span class="cursor-char">|</span>
-          </div>
-        </div>
-        <div class="home-stats">
-          <div class="stat-card">
-            <div class="stat-num" id="statGames">–</div>
-            <div class="stat-label">Games</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-num" id="statSites">–</div>
-            <div class="stat-label">Websites</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-num" id="statVer">2.3</div>
-            <div class="stat-label">Version</div>
-          </div>
-          <div class="stat-card clickable" onclick="openBrokenLinkReport()" title="Report a broken link">
-            <div class="stat-num icon-num"><i class="fas fa-link-slash"></i></div>
-            <div class="stat-label">Report Broken Link</div>
-          </div>
-        </div>
-      </div>
-      <div class="changelog-panel">
-        <div class="panel-top">
-          <div class="panel-title">
-            <svg viewBox="0 0 24 24" fill="none"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            CHANGELOG
-          </div>
-          <button class="view-all-btn" onclick="toggleDevFeed()">VIEW ALL</button>
-        </div>
-        <div class="log-list" id="homeLogList"></div>
-      </div>
-    </div>
-  </div>
-
-  <div id="websites-content" class="tab-content">
-    <div class="vault-header">
-      <div class="vault-title-row">
-        <div class="vault-title">WEBSITES</div>
-        <span class="count-pill" id="websiteCount">0</span>
-      </div>
-      <div class="vault-controls">
-        <div class="ctrl-group">
-          <span>SORT</span>
-          <select id="sortWebsites" onchange="filterWebsites()"><option value="name">A–Z</option></select>
-        </div>
-        <div class="filter-wrap">
-          <svg viewBox="0 0 24 24" fill="none"><polygon points="22 3 2 3 10 13 10 21 14 18 14 13 22 3"/></svg>
-          <input type="text" id="websiteFilter" class="filter-input" placeholder="Filter..." autocomplete="off" oninput="debouncedFilterWebsites()">
-        </div>
-      </div>
-    </div>
-    <div class="apps-grid" id="websitesGrid"><div class="loading-state"><div class="spin"></div> LOADING...</div></div>
-    <div class="url-bar" id="urlBarWebsites" style="display:none;">
-      <input id="urlWebsites" placeholder="Enter URL..." autocomplete="off" onkeydown="if(event.key==='Enter')launch('website')">
-      <button id="startBtnW" class="launch-btn" onclick="launch('website')" disabled>LAUNCH</button>
-    </div>
-  </div>
-
-  <div id="games-content" class="tab-content">
-    <div class="vault-header">
-      <div class="vault-title-row">
-        <div class="vault-title">GAMES</div>
-        <span class="count-pill" id="gameCount">0</span>
-      </div>
-      <div class="vault-controls">
-        <div class="ctrl-group">
-          <span>SORT</span>
-          <select id="sortGames" onchange="filterGames()"><option value="name">A–Z</option></select>
-        </div>
-        <div class="filter-wrap">
-          <svg viewBox="0 0 24 24" fill="none"><polygon points="22 3 2 3 10 13 10 21 14 18 14 13 22 3"/></svg>
-          <input type="text" id="gameFilter" class="filter-input" placeholder="Filter..." autocomplete="off" oninput="debouncedFilterGames()">
-        </div>
-      </div>
-    </div>
-    <div class="apps-grid" id="gamesGrid"><div class="loading-state"><div class="spin"></div> INITIALIZING...</div></div>
-    <div class="url-bar" id="urlBarGames" style="display:none;">
-      <input id="urlGames" placeholder="Enter game URL..." autocomplete="off" onkeydown="if(event.key==='Enter')launch('game')">
-      <button id="startBtnG" class="launch-btn" onclick="launch('game')" disabled>LAUNCH</button>
-    </div>
-  </div>
-
-  <div id="settings-content" class="tab-content">
-    <div class="vault-header">
-      <div class="vault-title-row"><div class="vault-title">CONFIGURATION</div></div>
-    </div>
-    <div class="settings-wrap">
-      <div class="settings-nav">
-        <button class="s-nav-btn active" onclick="switchSTab('s-general')"><i class="fas fa-sliders-h"></i> General</button>
-        <button class="s-nav-btn" onclick="switchSTab('s-theme')"><i class="fas fa-palette"></i> Themes</button>
-        <button class="s-nav-btn" onclick="switchSTab('s-particles')"><i class="fas fa-atom"></i> Particles</button>
-        <button class="s-nav-btn" onclick="switchSTab('s-wallpaper')"><i class="fas fa-image"></i> Wallpaper</button>
-        <button class="s-nav-btn" onclick="switchSTab('s-layout')"><i class="fas fa-columns"></i> Layout</button>
-        <button class="s-nav-btn" onclick="switchSTab('s-perf')"><i class="fas fa-tachometer-alt"></i> Performance</button>
-        <button class="s-nav-btn" onclick="switchSTab('s-data')"><i class="fas fa-database"></i> Data</button>
-        <button class="s-nav-btn" onclick="switchSTab('s-import')"><i class="fas fa-file-export"></i> Import/Export</button>
-        <button class="s-nav-btn beta-btn" onclick="switchSTab('s-beta')"><i class="fas fa-flask"></i> Beta</button>
-      </div>
-      <div class="settings-main">
-
-        <div id="s-general" class="settings-section active">
-          <div class="s-header">General</div>
-          <div class="s-block">
-            <div class="s-row">
-              <div><div class="s-block-title">SYSTEM</div><div class="s-sub" id="sysStatus">Checking...</div></div>
-              <div class="version-badge"><div class="v-dot"></div><span id="sysVer">V2.3</span></div>
-            </div>
-          </div>
-          <button class="s-btn danger" onclick="resetToDefaults()" style="width:100%;margin-bottom:10px;"><i class="fas fa-undo"></i> RESET TO DEFAULTS</button>
-          <button class="s-btn primary" onclick="saveSettings()" style="width:100%;">SAVE SETTINGS</button>
-        </div>
-
-        <div id="s-theme" class="settings-section">
-          <div class="s-header">Themes</div>
-          <div class="s-block">
-            <div class="s-block-title">COLOR THEMES</div>
-            <div class="theme-grid">
-              <div class="theme-card t-amber active" data-theme="amber" onclick="changeTheme('amber')"><span>Amber Honey</span></div>
-              <div class="theme-card t-nova" data-theme="nova" onclick="changeTheme('nova')"><span>Nova Purple</span></div>
-              <div class="theme-card t-ocean" data-theme="ocean" onclick="changeTheme('ocean')"><span>Deep Ocean</span></div>
-              <div class="theme-card t-crimson" data-theme="crimson" onclick="changeTheme('crimson')"><span>Crimson</span></div>
-            </div>
-          </div>
-          <div class="s-block">
-            <div class="s-block-title">CUSTOM COLORS</div>
-            <div class="s-label">Primary Color</div>
-            <input type="color" id="customPrimary" class="s-input" value="#ff8c42" style="height:46px;padding:4px;">
-            <div class="s-label">Accent Color</div>
-            <input type="color" id="customAccent" class="s-input" value="#ffb347" style="height:46px;padding:4px;">
-            <div class="s-label">Background Deep</div>
-            <input type="color" id="customBg0" class="s-input" value="#070400" style="height:46px;padding:4px;">
-            <div style="background:rgba(255,140,66,0.06);border-left:2px solid var(--p);padding:12px 16px;border-radius:8px;margin:12px 0;">
-              <p style="color:var(--txt-d);font-size:0.78rem;"><i class="fas fa-info-circle"></i> Custom colors override the selected theme.</p>
-            </div>
-            <div style="display:flex;gap:8px;">
-              <button class="s-btn primary" onclick="applyCustomColors()" style="flex:1;">APPLY</button>
-              <button class="s-btn" onclick="resetCustomColors()" style="flex:1;">RESET</button>
-            </div>
-          </div>
-        </div>
-
-        <div id="s-particles" class="settings-section">
-          <div class="s-header">Particle System</div>
-          <div class="s-block">
-            <div class="s-row" style="margin-bottom:0;">
-              <div><div class="s-block-title" style="margin:0;">PARTICLES</div><div class="s-sub">Interactive background</div></div>
-              <label class="toggle-sw"><input type="checkbox" id="particleToggle" onchange="toggleParticles()" checked><span class="toggle-slider"></span></label>
-            </div>
-            <div id="particleControls" style="margin-top:20px;">
-              <div class="s-label">Physics Preset</div>
-              <select id="particleLib" class="s-input" onchange="changeParticleLib()">
-                <option value="dayton_classic">Dayton Classic</option>
-                <option value="dayton_fluid">Fluid Ripple</option>
-                <option value="gravity">Singularity</option>
-              </select>
-              <div class="s-label" style="margin-top:14px;">Particle Images</div>
-              <div class="particle-grid" id="particleImageGrid">
-                <div class="particle-item" id="pimg-dayton" onclick="setParticleImage('dayton')"><div class="particle-ico"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/dayton.png"></div><span class="particle-name">Dayton</span></div>
-                <div class="particle-item" id="pimg-eli" onclick="setParticleImage('eli')"><div class="particle-ico"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/eli.png"></div><span class="particle-name">Eli</span></div>
-                <div class="particle-item" id="pimg-payton" onclick="setParticleImage('payton')"><div class="particle-ico"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/kirkpayton.png"></div><span class="particle-name">Payton/Kirk</span></div>
-                <div class="particle-item" id="pimg-hitler" onclick="setParticleImage('hitler')"><div class="particle-ico"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/ISTHATHITLER.png"></div><span class="particle-name">Is That Hitler</span></div>
-                <div class="particle-item active-particle" id="pimg-dots" onclick="resetParticleImage()"><div class="particle-ico" style="display:flex;align-items:center;justify-content:center;"><span style="font-size:20px;">●</span></div><span class="particle-name">Dots (Default)</span></div>
-                <div class="particle-item" id="pimg-custom" onclick="setParticleImage('custom')"><div class="particle-ico"><i class="fas fa-upload" style="font-size:18px;color:var(--txt-d);"></i></div><span class="particle-name">Custom</span></div>
-              </div>
-              <div style="display:flex;gap:8px;margin-top:10px;">
-                <button class="s-btn" onclick="document.getElementById('customParticleUpload').click()" style="flex:1;"><i class="fas fa-upload"></i> Upload</button>
-                <button class="s-btn" onclick="resetParticleImage()" style="flex:1;">Reset Dots</button>
-              </div>
-              <input type="file" id="customParticleUpload" accept="image/*" style="display:none;" onchange="handleCustomParticle(event)">
-            </div>
-          </div>
-        </div>
-
-        <div id="s-wallpaper" class="settings-section">
-          <div class="s-header">Wallpaper</div>
-          <div class="s-block">
-            <div class="s-row" style="margin-bottom:0;">
-              <div><div class="s-block-title" style="margin:0;">WALLPAPER</div><div class="s-sub">Full background image</div></div>
-              <label class="toggle-sw"><input type="checkbox" id="wallpaperToggle" onchange="toggleWallpaper()"><span class="toggle-slider"></span></label>
-            </div>
-            <div id="wallpaperControls" style="display:none;margin-top:20px;">
-              <div class="s-label">URL</div>
-              <input type="text" id="wallpaperUrl" class="s-input" placeholder="https://...">
-              <input type="file" id="wallpaperUpload" accept="image/*" style="display:none;" onchange="uploadWallpaper(event)">
-              <div style="display:flex;gap:8px;margin-top:4px;">
-                <button class="s-btn" onclick="document.getElementById('wallpaperUpload').click()" style="flex:1;">Choose File</button>
-                <button class="s-btn primary" onclick="applyWallpaper()" style="flex:1;">Apply</button>
-                <button class="s-btn danger" onclick="clearWallpaper()" style="flex:1;">Clear</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="s-layout" class="settings-section">
-          <div class="s-header">Layout</div>
-          <div class="s-block">
-            <div class="s-row">
-              <div><div class="s-block-title" style="margin-bottom:4px;">NAVIGATION STYLE</div><div class="s-sub">OFF = Top bar &nbsp;·&nbsp; ON = Sidebar</div></div>
-              <label class="toggle-sw"><input type="checkbox" id="layoutToggle" onchange="toggleLayout()"><span class="toggle-slider"></span></label>
-            </div>
-          </div>
-        </div>
-
-        <div id="s-perf" class="settings-section">
-          <div class="s-header">Performance</div>
-          <div class="s-block">
-            <div class="s-row">
-              <div><div class="s-block-title" style="margin-bottom:4px;">PERFORMANCE MODE</div><div class="s-sub">Reduce effects for speed</div></div>
-              <label class="toggle-sw"><input type="checkbox" id="perfToggle" onchange="setPerfMode()"><span class="toggle-slider"></span></label>
-            </div>
-            <div id="perfOptions" style="display:none;margin-top:20px;">
-              <div class="s-label">Particle Count</div>
-              <select id="particleReduction" class="s-input" onchange="initParticles()">
-                <option value="1">Normal (100%)</option>
-                <option value="2">Medium (50%)</option>
-                <option value="3">Low (25%)</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div id="s-data" class="settings-section">
-          <div class="s-header">Data</div>
-          <div class="s-block">
-            <div class="s-block-title">APP LIBRARY</div>
-            <div class="s-actions">
-              <button class="s-btn" onclick="exportApps()"><i class="fas fa-file-export"></i> Export Apps</button>
-              <button class="s-btn" onclick="document.getElementById('importFile').click()"><i class="fas fa-file-import"></i> Import Apps</button>
-              <button class="s-btn danger" onclick="restoreDefaultApps()"><i class="fas fa-trash-restore"></i> Restore Defaults</button>
-            </div>
-          </div>
-          <div class="s-block">
-            <div class="s-block-title">COOKIES</div>
-            <div class="s-actions">
-              <button class="s-btn" onclick="exportCookies()"><i class="fas fa-cookie-bite"></i> Export</button>
-              <button class="s-btn" onclick="document.getElementById('importCookiesFile').click()"><i class="fas fa-upload"></i> Import</button>
-              <button class="s-btn danger" onclick="clearCookies()"><i class="fas fa-eraser"></i> Clear</button>
-            </div>
-          </div>
-        </div>
-
-        <div id="s-import" class="settings-section">
-          <div class="s-header">Import / Export</div>
-          <div class="s-block">
-            <div class="s-block-title">FULL CONFIGURATION</div>
-            <p style="color:var(--txt-d);font-size:0.8rem;margin-bottom:16px;">Export or import all settings as a JSON file.</p>
-            <div style="display:flex;gap:8px;">
-              <button class="s-btn" onclick="exportAllSettings()" style="flex:1;"><i class="fas fa-download"></i> Export</button>
-              <button class="s-btn" onclick="document.getElementById('importSettingsFile').click()" style="flex:1;"><i class="fas fa-upload"></i> Import</button>
-            </div>
-            <input type="file" id="importSettingsFile" accept=".json" style="display:none;" onchange="importAllSettings(event)">
-          </div>
-        </div>
-
-        <div id="s-beta" class="settings-section">
-          <div class="s-header" style="background:linear-gradient(135deg,#a87fff,#e066ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 12px rgba(168,127,255,0.4));">
-            Beta Features <span class="beta-badge" style="-webkit-text-fill-color:#000;">BETA</span>
-          </div>
-          <div style="background:rgba(168,127,255,0.06);border:1px solid rgba(168,127,255,0.2);border-radius:12px;padding:14px 16px;margin-bottom:4px;">
-            <p style="color:rgba(168,127,255,0.8);font-size:0.78rem;line-height:1.6;"><i class="fas fa-flask" style="margin-right:6px;"></i>Beta features are experimental and may be unstable. Enable at your own risk.</p>
-          </div>
-          <div class="s-block-beta">
-            <div class="beta-feature-row">
-              <div>
-                <div class="beta-feature-name">Playground Tab</div>
-                <div class="beta-feature-desc">Adds a Playground tab to navigation. Fullscreen particle canvas with interactive controls.</div>
-              </div>
-              <label class="toggle-sw"><input type="checkbox" id="betaPlaygroundToggle" onchange="toggleBetaPlayground()"><span class="toggle-slider" style="background:rgba(168,127,255,0.15);"></span></label>
-            </div>
-          </div>
-          <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(168,127,255,0.08);border-radius:12px;padding:16px;margin-top:4px;">
-            <div style="font-size:0.7rem;color:rgba(168,127,255,0.5);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">More beta features coming soon...</div>
-            <div style="height:2px;background:linear-gradient(90deg,rgba(168,127,255,0.3),transparent);border-radius:2px;"></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <div id="playground-content" class="tab-content">
-    <div class="playground-canvas-wrap">
-      <canvas id="playgroundCanvas"></canvas>
-      <div class="playground-hud">
-        <span class="pg-label">PHYSICS</span>
-        <button class="pg-btn active-pg" id="pgPhys-dayton_classic" onclick="setPgPhys('dayton_classic')">Classic</button>
-        <button class="pg-btn" id="pgPhys-dayton_fluid" onclick="setPgPhys('dayton_fluid')">Fluid</button>
-        <button class="pg-btn" id="pgPhys-gravity" onclick="setPgPhys('gravity')">Singularity</button>
-        <div class="pg-sep"></div>
-        <span class="pg-label">IMAGE</span>
-        <div class="pg-img-btn active-pg-img" id="pgImg-dots" onclick="setPgImage('dots')" title="Dots" style="font-size:14px;color:var(--txt-d);">●</div>
-        <div class="pg-img-btn" id="pgImg-dayton" onclick="setPgImage('dayton')" title="Dayton"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/dayton.png" onerror="this.style.display='none'"></div>
-        <div class="pg-img-btn" id="pgImg-eli" onclick="setPgImage('eli')" title="Eli"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/eli.png" onerror="this.style.display='none'"></div>
-        <div class="pg-img-btn" id="pgImg-payton" onclick="setPgImage('payton')" title="Payton/Kirk"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/kirkpayton.png" onerror="this.style.display='none'"></div>
-        <div class="pg-img-btn" id="pgImg-hitler" onclick="setPgImage('hitler')" title="Is That Hitler"><img src="https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/ISTHATHITLER.png" onerror="this.style.display='none'"></div>
-        <div class="pg-sep"></div>
-        <span class="pg-label">COLOR</span>
-        <div class="pg-color-btn active-color" style="background:#ff8c42;" onclick="setPgColor('#ff8c42')" title="Amber"></div>
-        <div class="pg-color-btn" style="background:#a87fff;" onclick="setPgColor('#a87fff')" title="Purple"></div>
-        <div class="pg-color-btn" style="background:#38b6ff;" onclick="setPgColor('#38b6ff')" title="Ocean"></div>
-        <div class="pg-color-btn" style="background:#ff3d3d;" onclick="setPgColor('#ff3d3d')" title="Crimson"></div>
-        <div class="pg-color-btn" style="background:#00ff88;" onclick="setPgColor('#00ff88')" title="Green"></div>
-        <div class="pg-color-btn" style="background:#fff;" onclick="setPgColor('#ffffff')" title="White"></div>
-        <input type="color" id="pgCustomColor" value="#ff8c42" onchange="setPgColor(this.value)" style="width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);cursor:pointer;background:transparent;padding:0;" title="Custom color">
-        <div class="pg-sep"></div>
-        <button class="pg-btn" onclick="clearPgParticles()" title="Reset positions"><i class="fas fa-redo" style="font-size:11px;"></i> Reset</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer">
-    <span id="footerCredit">MADE BY CHIP HILL</span>
     <div class="footer-links">
-      <a href="https://forms.gle/BbSnAHsfeimzL8gs5" target="_blank" class="footer-link">SUGGESTION</a>
-      <a href="https://forms.gle/WxxgfjxjA5tq3HAU7" target="_blank" class="footer-link">BUG REPORT</a>
+        <div class="footer-note">CHIP HILL · DISTRIBUTION</div>
+        <a href="report.html" class="btn-report">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            Report Issue
+        </a>
     </div>
-  </div>
 </div>
-
-<div class="modal" id="addAppModal">
-  <div class="modal-box">
-    <div class="modal-title">ADD APP</div>
-    <div class="modal-field"><label class="modal-label">Name</label><input id="newAppName" class="modal-input" placeholder="e.g. Retro Bowl"></div>
-    <div class="modal-field"><label class="modal-label">URL (comma-separate for multiple)</label><input id="newAppUrl" class="modal-input" placeholder="https://..."></div>
-    <div class="modal-field"><label class="modal-label">Icon URL (optional)</label><input id="newAppIcon" class="modal-input" placeholder="https://..."></div>
-    <div class="modal-field"><label class="modal-label">Category</label><select id="newAppCat" class="modal-input"><option value="website">Website</option><option value="game">Game</option></select></div>
-    <button class="m-btn primary" onclick="saveNewApp()">ADD TO VAULT</button>
-    <button class="m-btn ghost" onclick="closeModals()">CANCEL</button>
-  </div>
-</div>
-
-<div class="server-modal" id="serverModal">
-  <div class="modal-box">
-    <div class="modal-title" id="serverModalTitle">SELECT SERVER</div>
-    <div class="server-list" id="serverList"></div>
-    <button class="m-btn ghost" onclick="closeServerModal()">CANCEL</button>
-  </div>
-</div>
-
-<div class="version-modal" id="versionModal">
-  <div class="modal-box" style="text-align:center;padding:50px 30px;">
-    <div style="font-size:56px;margin-bottom:16px;">⚠️</div>
-    <div class="modal-title" style="color:var(--p);">SYSTEM MISMATCH</div>
-    <p style="color:var(--txt-d);margin-bottom:28px;" id="versionErrMsg">NOVA client update required.</p>
-    <button class="m-btn primary" id="patchBtn">INSTALL PATCH</button>
-    <p style="color:var(--txt-d);font-size:0.72rem;margin-top:12px;" id="patchNote" style="display:none;"></p>
-  </div>
-</div>
-
-<div class="dev-feed" id="devFeed">
-  <div class="dev-feed-head">
-    <div class="dev-feed-title">
-      <svg viewBox="0 0 24 24" fill="none"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-      DEV LOGS
-    </div>
-    <button class="close-btn" onclick="toggleDevFeed()">✕</button>
-  </div>
-  <div class="dev-feed-body" id="devFeedBody"></div>
-</div>
-
-<div class="admin-panel" id="adminPanel">
-  <div class="admin-head" id="adminDragHandle">
-    <span>SYSTEM ADMIN</span>
-    <button style="background:transparent;border:none;color:var(--txt-d);cursor:pointer;font-size:14px;" onclick="document.getElementById('adminPanel').classList.remove('show')">✕</button>
-  </div>
-  <div class="admin-body">
-    <div class="admin-item" onclick="showToast('Banned: generic_user_01')"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg> Ban User</div>
-    <div class="admin-item" onclick="showToast('Coins granted (jk)')"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg> Grant Coins</div>
-    <div class="admin-item" onclick="showToast('Lobby emptied.')"><svg viewBox="0 0 24 24" fill="none"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Kick All</div>
-    <div class="admin-item" style="border-color:rgba(255,80,80,0.3);" onclick="showToast('Server wiped (jk, still here)')"><svg stroke="#ff8080" viewBox="0 0 24 24" fill="none"><polygon points="3 6 21 6 19 18 5 18 3 6"/><line x1="10" y1="11" x2="14" y2="11"/></svg><span style="color:#ff8080;">Wipe Server</span></div>
-  </div>
-</div>
-
-<div class="game-modal" id="gameModal">
-  <div class="game-container">
-    <div class="game-head">
-      <span class="game-title">
-        <img id="gameFrameIcon" src="https://i.ibb.co/ZR8kx20q/New-Project-1.png">
-        <span id="gameFrameName">Game</span>
-      </span>
-      <div class="game-controls">
-        <button class="gctrl-btn" onclick="openGameNewTab()" title="New tab"><i class="fas fa-external-link-alt"></i></button>
-        <button class="gctrl-btn" onclick="fullscreenGame()" title="Fullscreen"><i class="fas fa-expand"></i></button>
-        <button class="gctrl-btn exit" onclick="closeGameFrame()" title="Close"><i class="fas fa-times"></i></button>
-      </div>
-    </div>
-    <iframe id="gameIframe" src="" allowfullscreen></iframe>
-  </div>
-</div>
-
-<input type="file" id="importFile" accept=".json" style="display:none;" onchange="importApps(event)">
-<input type="file" id="importCookiesFile" accept=".txt,.json" style="display:none;" onchange="importCookies(event)">
 
 <script>
-let websiteApps = [], gameApps = [], userApps = [];
-let currentGameUrl = '', currentGameName = '', currentGameIcon = '';
-let rotationInterval = null;
-let pCustomImg = null, pWallpaperImg = null;
-let pCurrentLib = 'dayton_classic';
-let performanceMode = false;
-let particleReductionFactor = 1;
-let currentParticleColor = '#ff8c42';
-let pTime = 0;
-let customColorsActive = false;
-let remotePatchUrl = null;
-let femboyUnlocked = false;
-let femboyImg = null;
-
-let pgCustomImg = null;
-let pgColor = '#ff8c42';
-let pgPhys = 'dayton_classic';
-let pgParticles = [];
-let pgBlocks = [];
-let pgMouse = { x: -2000, y: -2000, vx: 0, vy: 0, lx: 0, ly: 0, speed: 0, r: 0, tr: 100 };
-let pgTime = 0;
-let pgAnimId = null;
-let pgActive = false;
-let pgCurrentImgKey = 'dots';
-let pgInitialized = false;
-
-function debounce(fn, delay) {
-  let t; return function(...args) { clearTimeout(t); t = setTimeout(() => fn.apply(this, args), delay); };
-}
-const debouncedFilter = debounce(filterApps, 180);
-const debouncedFilterWebsites = debounce(filterWebsites, 180);
-const debouncedFilterGames = debounce(filterGames, 180);
-
-try { const s = localStorage.getItem('novaApps'); userApps = s ? JSON.parse(s) : []; if(!Array.isArray(userApps)) userApps = []; } catch(e) { userApps = []; }
-
-const starsCanvas = document.getElementById('stars-canvas');
-const sCtx = starsCanvas.getContext('2d');
-let stars = [];
-function initStars() {
-  starsCanvas.width = window.innerWidth; starsCanvas.height = window.innerHeight;
-  stars = [];
-  const count = performanceMode ? 20 : 50;
-  for(let i = 0; i < count; i++) {
-    stars.push({ x: Math.random()*starsCanvas.width, y: Math.random()*starsCanvas.height, r: Math.random()*1.1+0.2, s: Math.random()*0.005+0.001, g: Math.random()*0.3+0.08 });
-  }
-}
-function drawStars() {
-  sCtx.clearRect(0, 0, starsCanvas.width, starsCanvas.height);
-  for(const s of stars) {
-    sCtx.beginPath(); sCtx.arc(s.x, s.y, s.r, 0, Math.PI*2);
-    sCtx.fillStyle = `rgba(255,255,255,${s.g})`; sCtx.fill();
-    s.y += s.s; if(s.y > starsCanvas.height) { s.y = 0; s.x = Math.random()*starsCanvas.width; }
-  }
-  requestAnimationFrame(drawStars);
-}
-
-const debouncedResize = debounce(() => { initStars(); resizeParticleCanvas(); if(pgActive) resizePgCanvas(); }, 200);
-window.addEventListener('resize', debouncedResize);
-
-const pCanvas = document.getElementById('particle-canvas');
-const pCtx = pCanvas.getContext('2d');
-let pParticles = [], pBlocks = [];
-const pMouse = { x: -2000, y: -2000, vx: 0, vy: 0, lx: 0, ly: 0, speed: 0, r: 0, tr: 100 };
-
-function getThemeColor() { return getComputedStyle(document.body).getPropertyValue('--p').trim(); }
-function updateParticleColor() { currentParticleColor = getThemeColor(); }
-function resizeParticleCanvas() { pCanvas.width = window.innerWidth; pCanvas.height = window.innerHeight; initParticles(); }
-
-class Particle {
-  constructor(x, y) { this.bx = x; this.by = y; this.x = x; this.y = y; this.vx = 0; this.vy = 0; this.size = pCustomImg ? 70 : 2.3; }
-  update() {
-    if(pWallpaperImg) return;
-    const dx = pMouse.x - this.x, dy = pMouse.y - this.y;
-    const dist = Math.sqrt(dx*dx + dy*dy);
-    const wx = performanceMode ? 0 : Math.sin(pTime*1.1 + this.by*0.01) * 12;
-    const wy = performanceMode ? 0 : Math.cos(pTime*1.1 + this.bx*0.01) * 12;
-    if(pCurrentLib === 'dayton_classic') {
-      if(dist < pMouse.r) { const f = (pMouse.r-dist)/pMouse.r; const a = Math.atan2(dy,dx); this.vx -= Math.cos(a)*(f*(11+pMouse.speed*0.3)); this.vy -= Math.sin(a)*(f*(11+pMouse.speed*0.3)); }
-      this.vx += (this.bx+wx-this.x)*0.07; this.vy += (this.by+wy-this.y)*0.07;
-    } else if(pCurrentLib === 'dayton_fluid') {
-      if(dist < 80) { const p = (80-dist)/80; this.vx += pMouse.vx*p*0.4; this.vy += pMouse.vy*p*0.4; }
-      this.vx += (this.bx+wx-this.x)*0.04; this.vy += (this.by+wy-this.y)*0.04;
-    } else {
-      if(dist < 200 && pMouse.speed > 0.5) { const p = (200-dist)/200; this.vx += dx*p*0.025; this.vy += dy*p*0.025; }
-      this.vx += (this.bx+wx-this.x)*0.055; this.vy += (this.by+wy-this.y)*0.055;
+let currentVersion = "2.0";
+async function fetchNovaVersion() {
+    try {
+        const res = await fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/verison.json');
+        if (!res.ok) throw new Error('Network response was not ok');
+        const text = await res.text();
+        try {
+            const parsed = JSON.parse(text);
+            currentVersion = parsed.version || parsed;
+        } catch (e) {
+            currentVersion = text.trim();
+        }
+    } catch (error) {
+        console.warn("Using default version fallback.");
     }
-    this.vx *= 0.86; this.vy *= 0.86; this.x += this.vx; this.y += this.vy;
-  }
-  draw() {
-    if(pWallpaperImg) { pCtx.drawImage(pWallpaperImg, 0, 0, pCanvas.width, pCanvas.height); return; }
-    if(pCustomImg) { pCtx.drawImage(pCustomImg, this.x-this.size/2, this.y-this.size/2, this.size, this.size); }
-    else { pCtx.fillStyle = currentParticleColor; pCtx.beginPath(); pCtx.arc(this.x, this.y, this.size, 0, Math.PI*2); pCtx.fill(); }
-  }
+    document.getElementById('build-version').innerText = currentVersion;
+    document.getElementById('bundle-version').innerText = currentVersion;
 }
-class Block {
-  constructor(x,y) { this.x=x; this.y=y; this.size=Math.random()*7+3; this.vx=(Math.random()-0.5)*18; this.vy=(Math.random()-0.5)*18; this.life=1; }
-  update() { this.x+=this.vx; this.y+=this.vy; this.vy+=0.35; this.life-=0.03; }
-  draw() { pCtx.save(); pCtx.globalAlpha=this.life; pCtx.fillStyle=currentParticleColor; pCtx.fillRect(this.x-this.size/2, this.y-this.size/2, this.size, this.size); pCtx.restore(); }
-}
+fetchNovaVersion();
 
-function initParticles() {
-  if(!document.getElementById('particleToggle')?.checked) return;
-  pParticles = [];
-  let gap = pCustomImg ? 85 : 28;
-  const rf = parseInt(document.getElementById('particleReduction')?.value || 1);
-  if(rf === 2) gap *= 1.5; else if(rf === 3) gap *= 2.5;
-  if(performanceMode) gap = Math.max(gap, 50);
-  for(let y = 0; y < pCanvas.height+gap; y+=gap) for(let x = 0; x < pCanvas.width+gap; x+=gap) pParticles.push(new Particle(x,y));
-}
+const canvas = document.getElementById('ember-canvas');
+const ctx = canvas.getContext('2d');
+let embers = [];
+const EMBER_COUNT = 80;
 
-function animateParticles() {
-  const enabled = document.getElementById('particleToggle')?.checked;
-  pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
-  if(!enabled) {
-    if(pWallpaperImg) pCtx.drawImage(pWallpaperImg, 0, 0, pCanvas.width, pCanvas.height);
-    requestAnimationFrame(animateParticles); return;
-  }
-  if(pMouse.speed > 1) pMouse.r += (pMouse.tr - pMouse.r) * 0.1; else pMouse.r *= 0.9;
-  pTime += 0.013; pMouse.speed *= 0.92;
-  for(const p of pParticles) { p.update(); p.draw(); }
-  for(let i = pBlocks.length-1; i >= 0; i--) { pBlocks[i].update(); pBlocks[i].draw(); if(pBlocks[i].life <= 0) pBlocks.splice(i,1); }
-  requestAnimationFrame(animateParticles);
-}
-
-document.addEventListener('mousemove', e => {
-  if(pgActive) {
-    pgMouse.vx = e.clientX - pgMouse.lx; pgMouse.vy = e.clientY - pgMouse.ly;
-    pgMouse.speed = Math.sqrt(pgMouse.vx**2 + pgMouse.vy**2);
-    pgMouse.x = e.clientX; pgMouse.y = e.clientY; pgMouse.lx = e.clientX; pgMouse.ly = e.clientY;
-  } else {
-    pMouse.vx = e.clientX - pMouse.lx; pMouse.vy = e.clientY - pMouse.ly;
-    pMouse.speed = Math.sqrt(pMouse.vx**2 + pMouse.vy**2);
-    pMouse.x = e.clientX; pMouse.y = e.clientY; pMouse.lx = e.clientX; pMouse.ly = e.clientY;
-  }
-});
-
-document.addEventListener('mousedown', e => {
-  if(pgActive) {
-    const pgC = document.getElementById('playgroundCanvas');
-    if(!pgC) return;
-    for(let i = 0; i < 14; i++) pgBlocks.push(new PgBlock(e.clientX, e.clientY));
-    for(const p of pgParticles) {
-      const dx = e.clientX - p.x, dy = e.clientY - p.y, d = Math.sqrt(dx*dx+dy*dy);
-      if(d < 160) { const a = Math.atan2(dy,dx); p.vx -= Math.cos(a)*36; p.vy -= Math.sin(a)*36; }
+function initEmbers() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    embers = [];
+    const colors = ['rgba(255, 100, 0, ', 'rgba(255, 160, 0, ', 'rgba(255, 50, 0, '];
+    for (let i = 0; i < EMBER_COUNT; i++) {
+        embers.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: Math.random() * 1.5 + 0.5,
+            speedY: Math.random() * 0.6 + 0.2,
+            speedX: Math.random() * 0.3 - 0.15,
+            glow: Math.random() * 0.5 + 0.2,
+            phase: Math.random() * Math.PI * 2,
+            colorBase: colors[Math.floor(Math.random() * colors.length)]
+        });
     }
-    return;
-  }
-  if(!document.getElementById('particleToggle')?.checked) return;
-  if(pWallpaperImg || performanceMode) return;
-  for(let i = 0; i < 10; i++) pBlocks.push(new Block(e.clientX, e.clientY));
-  for(const p of pParticles) {
-    const dx = e.clientX - p.x, dy = e.clientY - p.y, d = Math.sqrt(dx*dx+dy*dy);
-    if(d < 140) { const a = Math.atan2(dy,dx); p.vx -= Math.cos(a)*30; p.vy -= Math.sin(a)*30; }
-  }
-});
-
-function toggleParticles() {
-  const en = document.getElementById('particleToggle').checked;
-  localStorage.setItem('novaParticles', en);
-  document.getElementById('particleControls').style.display = en ? 'block' : 'none';
-  if(en) initParticles(); else { pCtx.clearRect(0,0,pCanvas.width,pCanvas.height); if(pWallpaperImg) pCtx.drawImage(pWallpaperImg,0,0,pCanvas.width,pCanvas.height); }
-}
-function changeParticleLib() { pCurrentLib = document.getElementById('particleLib').value; initParticles(); }
-
-function updateParticleItemActive(id) {
-  document.querySelectorAll('.particle-item').forEach(el => el.classList.remove('active-particle'));
-  const el = document.getElementById('pimg-'+id);
-  if(el) el.classList.add('active-particle');
 }
 
-function setParticleImage(type) {
-  if(type === 'custom') { document.getElementById('customParticleUpload').click(); return; }
-  const urls = {
-    dayton:'https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/dayton.png',
-    eli:'https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/eli.png',
-    payton:'https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/kirkpayton.png?raw=true',
-    hitler:'https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/ISTHATHITLER.png'
-  };
-  if(!urls[type]) return;
-  const img = new Image(); img.crossOrigin = 'anonymous';
-  img.onload = () => { pCustomImg = img; localStorage.setItem('novaParticleImage', type); initParticles(); updateParticleItemActive(type); showToast('Particle image updated'); };
-  img.onerror = () => showToast('Failed to load');
-  img.src = urls[type];
-}
-function handleCustomParticle(e) {
-  const file = e.target.files[0]; if(!file) return;
-  const r = new FileReader(); r.onload = ev => {
-    const img = new Image(); img.onload = () => { pCustomImg = img; localStorage.setItem('novaParticleImage','custom'); localStorage.setItem('novaParticleCustomData', ev.target.result); initParticles(); updateParticleItemActive('custom'); showToast('Custom particle applied'); };
-    img.src = ev.target.result;
-  }; r.readAsDataURL(file);
-}
-function resetParticleImage() { pCustomImg = null; localStorage.removeItem('novaParticleImage'); localStorage.removeItem('novaParticleCustomData'); initParticles(); updateParticleItemActive('dots'); showToast('Reset to dots'); }
-function loadSavedParticleImage() {
-  const type = localStorage.getItem('novaParticleImage');
-  if(type && type !== 'custom') setParticleImage(type);
-  else if(type === 'custom') {
-    const data = localStorage.getItem('novaParticleCustomData');
-    if(data) { const img = new Image(); img.onload = () => { pCustomImg = img; initParticles(); updateParticleItemActive('custom'); }; img.src = data; }
-  } else { updateParticleItemActive('dots'); }
-}
-
-function toggleWallpaper() {
-  const en = document.getElementById('wallpaperToggle').checked;
-  localStorage.setItem('novaWallpaperEnabled', en);
-  document.getElementById('wallpaperControls').style.display = en ? 'block' : 'none';
-  if(!en) { pWallpaperImg = null; localStorage.removeItem('novaWallpaperData'); if(document.getElementById('particleToggle').checked) initParticles(); else pCtx.clearRect(0,0,pCanvas.width,pCanvas.height); }
-  else loadSavedWallpaper();
-}
-function loadSavedWallpaper() {
-  const d = localStorage.getItem('novaWallpaperData'); if(!d) return;
-  const img = new Image(); img.onload = () => { pWallpaperImg = img; if(document.getElementById('particleToggle').checked) initParticles(); else { pCtx.clearRect(0,0,pCanvas.width,pCanvas.height); pCtx.drawImage(pWallpaperImg,0,0,pCanvas.width,pCanvas.height); } };
-  img.src = d;
-}
-function uploadWallpaper(e) {
-  const file = e.target.files[0]; if(!file) return;
-  const r = new FileReader(); r.onload = ev => {
-    const img = new Image(); img.onload = () => { pWallpaperImg = img; pCustomImg = null; localStorage.setItem('novaWallpaperData', ev.target.result); initParticles(); showToast('Wallpaper applied'); };
-    img.src = ev.target.result;
-  }; r.readAsDataURL(file);
-}
-function applyWallpaper() {
-  const url = document.getElementById('wallpaperUrl').value.trim(); if(!url) { showToast('Enter a URL'); return; }
-  const img = new Image(); img.crossOrigin = 'anonymous';
-  img.onload = () => {
-    pWallpaperImg = img; pCustomImg = null;
-    const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
-    c.getContext('2d').drawImage(img,0,0);
-    localStorage.setItem('novaWallpaperData', c.toDataURL());
-    initParticles(); showToast('Wallpaper applied');
-  };
-  img.onerror = () => showToast('Invalid URL'); img.src = url;
-}
-function clearWallpaper() {
-  pWallpaperImg = null;
-  document.getElementById('wallpaperToggle').checked = false;
-  document.getElementById('wallpaperControls').style.display = 'none';
-  document.getElementById('wallpaperUrl').value = '';
-  localStorage.removeItem('novaWallpaperEnabled'); localStorage.removeItem('novaWallpaperData');
-  if(document.getElementById('particleToggle').checked) initParticles(); else pCtx.clearRect(0,0,pCanvas.width,pCanvas.height);
-  showToast('Wallpaper cleared');
-}
-function setPerfMode() {
-  performanceMode = document.getElementById('perfToggle').checked;
-  localStorage.setItem('novaPerf', performanceMode);
-  document.getElementById('perfOptions').style.display = performanceMode ? 'block' : 'none';
-  initParticles(); initStars(); showToast('Performance mode ' + (performanceMode ? 'enabled' : 'disabled'));
-}
-
-function showToast(msg) {
-  const t = document.createElement('div'); t.textContent = msg;
-  t.style.cssText = 'position:fixed;bottom:36px;left:50%;transform:translateX(-50%);background:var(--p);color:#000;padding:10px 28px;border-radius:10px;font-size:0.8rem;font-weight:700;z-index:99999;box-shadow:0 12px 28px var(--p-glow);animation:fadeUp 0.15s ease;white-space:nowrap;letter-spacing:0.05em;';
-  document.body.appendChild(t);
-  setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'all 0.2s'; setTimeout(() => t.remove(), 200); }, 2000);
-}
-
-function handleGlobalSearch() {
-  const val = document.getElementById('globalSearch').value;
-  if(val.toLowerCase() === 'femboy') triggerFemboyEgg();
-  debouncedFilter();
-}
-
-function triggerFemboyEgg() {
-  if(femboyUnlocked) return;
-  femboyUnlocked = true;
-  const url = 'https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/ISTHATAFEMBOY.png';
-  const img = new Image(); img.crossOrigin = 'anonymous';
-  img.onload = () => {
-    femboyImg = img;
-    pCustomImg = img;
-    initParticles();
-    showToast('🏳️‍⚧️ Is that a femboy??');
-    if(pgActive) { pgCustomImg = img; initPgParticles(); }
-    const pimgGrid = document.getElementById('particleImageGrid');
-    if(pimgGrid && !document.getElementById('pimg-femboy')) {
-      const div = document.createElement('div');
-      div.className = 'particle-item active-particle';
-      div.id = 'pimg-femboy';
-      div.onclick = () => { pCustomImg = femboyImg; initParticles(); updateParticleItemActive('femboy'); showToast('femboy mode'); };
-      div.innerHTML = `<div class="particle-ico"><img src="${url}"></div><span class="particle-name">Is That A Femboy</span>`;
-      pimgGrid.insertBefore(div, pimgGrid.lastElementChild);
+function drawEmbers() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const time = Date.now() / 800;
+    for (let e of embers) {
+        const flicker = 0.5 + 0.5 * Math.sin(time * 3 + e.phase);
+        ctx.beginPath();
+        ctx.arc(e.x, e.y, e.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `${e.colorBase}${e.glow * flicker})`;
+        ctx.fill();
+        e.y -= e.speedY;
+        e.x += Math.sin(time + e.phase) * 0.2 + e.speedX;
+        if (e.y < -10) {
+            e.y = canvas.height + 10;
+            e.x = Math.random() * canvas.width;
+        }
+        if (e.x > canvas.width) e.x = 0;
+        if (e.x < 0) e.x = canvas.width;
     }
-    updateParticleItemActive('femboy');
-    if(!document.getElementById('pgImg-femboy')) addFemboyToPgHud(url);
-  };
-  img.onerror = () => showToast('femboy not found 💀');
-  img.src = url;
+    requestAnimationFrame(drawEmbers);
 }
+window.addEventListener('resize', initEmbers);
+initEmbers();
+drawEmbers();
 
-function addFemboyToPgHud(url) {
-  if(document.getElementById('pgImg-femboy')) return;
-  const lastSep = document.querySelector('.playground-hud .pg-sep:last-of-type');
-  if(!lastSep) return;
-  const btn = document.createElement('div');
-  btn.className = 'pg-img-btn';
-  btn.id = 'pgImg-femboy';
-  btn.title = 'Is That A Femboy';
-  btn.onclick = () => setPgImage('femboy');
-  btn.innerHTML = `<img src="${url}" onerror="this.style.display='none'">`;
-  lastSep.parentNode.insertBefore(btn, lastSep);
-}
-
-function checkAdmin(e) {
-  if(e.target.value.toLowerCase().includes('fakeadmin')) { document.getElementById('adminPanel').classList.add('show'); e.target.value = ''; }
-}
-makeDraggable(document.getElementById('adminPanel'), document.getElementById('adminDragHandle'));
-function makeDraggable(el, handle) {
-  let p1=0,p2=0,p3=0,p4=0;
-  handle.onmousedown = e => { e.preventDefault(); p3=e.clientX; p4=e.clientY; document.onmouseup=()=>{document.onmouseup=null;document.onmousemove=null;}; document.onmousemove=e=>{p1=p3-e.clientX;p2=p4-e.clientY;p3=e.clientX;p4=e.clientY;el.style.top=(el.offsetTop-p2)+"px";el.style.left=(el.offsetLeft-p1)+"px";}; };
-}
-
-function toggleBetaPlayground() {
-  const en = document.getElementById('betaPlaygroundToggle').checked;
-  localStorage.setItem('novaBetaPlayground', en);
-  const tnavEl = document.getElementById('tnav-playground');
-  const snavEl = document.getElementById('snav-playground');
-  if(tnavEl) tnavEl.style.display = en ? 'flex' : 'none';
-  if(snavEl) snavEl.style.display = en ? 'flex' : 'none';
-  showToast(en ? 'Playground tab enabled' : 'Playground tab removed');
-}
-
-function resizePgCanvas() {
-  const c = document.getElementById('playgroundCanvas');
-  if(!c) return;
-  const wrap = c.parentElement;
-  c.width = wrap.offsetWidth || window.innerWidth;
-  c.height = wrap.offsetHeight || window.innerHeight;
-}
-
-class PgParticle {
-  constructor(x, y) {
-    this.bx = x; this.by = y; this.x = x; this.y = y;
-    this.vx = 0; this.vy = 0;
-    this.size = pgCustomImg ? 72 : 2.6;
-  }
-  update() {
-    const dx = pgMouse.x - this.x, dy = pgMouse.y - this.y;
-    const dist = Math.sqrt(dx*dx + dy*dy);
-    const wx = Math.sin(pgTime*1.1 + this.by*0.01) * 14;
-    const wy = Math.cos(pgTime*1.1 + this.bx*0.01) * 14;
-    if(pgPhys === 'dayton_classic') {
-      if(dist < pgMouse.r) { const f = (pgMouse.r-dist)/pgMouse.r; const a = Math.atan2(dy,dx); this.vx -= Math.cos(a)*(f*(13+pgMouse.speed*0.35)); this.vy -= Math.sin(a)*(f*(13+pgMouse.speed*0.35)); }
-      this.vx += (this.bx+wx-this.x)*0.07; this.vy += (this.by+wy-this.y)*0.07;
-    } else if(pgPhys === 'dayton_fluid') {
-      if(dist < 90) { const p = (90-dist)/90; this.vx += pgMouse.vx*p*0.45; this.vy += pgMouse.vy*p*0.45; }
-      this.vx += (this.bx+wx-this.x)*0.04; this.vy += (this.by+wy-this.y)*0.04;
-    } else {
-      if(dist < 220 && pgMouse.speed > 0.5) { const p = (220-dist)/220; this.vx += dx*p*0.028; this.vy += dy*p*0.028; }
-      this.vx += (this.bx+wx-this.x)*0.055; this.vy += (this.by+wy-this.y)*0.055;
+const statusEl = document.getElementById('status');
+window.downloadApp = async function() {
+    const url = "https://raw.githubusercontent.com/TheDevMarcus/verison/refs/heads/main/main/nova.html";
+    statusEl.innerText = "🌀 DOWNLOADING ...";
+    statusEl.style.color = "#ffb700";
+    statusEl.style.borderColor = "rgba(255, 140, 0, 0.5)";
+    
+    try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const blob = await res.blob();
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `nova-v${currentVersion}.html`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(a.href);
+        
+        statusEl.innerText = "✔ DOWNLOADED · CHECK FOLDER";
+        statusEl.style.color = "#ffcda8";
+        statusEl.style.borderColor = "rgba(255, 140, 0, 0.8)";
+    } catch (err) {
+        statusEl.innerText = "✖ FAILED · TRY AGAIN";
+        statusEl.style.color = "#ff4d4d";
+        statusEl.style.borderColor = "rgba(255, 0, 0, 0.5)";
     }
-    this.vx *= 0.86; this.vy *= 0.86; this.x += this.vx; this.y += this.vy;
-  }
-  draw(ctx) {
-    if(pgCustomImg) { ctx.drawImage(pgCustomImg, this.x-this.size/2, this.y-this.size/2, this.size, this.size); }
-    else { ctx.fillStyle = pgColor; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill(); }
-  }
-}
-
-class PgBlock {
-  constructor(x,y) { this.x=x; this.y=y; this.size=Math.random()*8+4; this.vx=(Math.random()-0.5)*22; this.vy=(Math.random()-0.5)*22; this.life=1; }
-  update() { this.x+=this.vx; this.y+=this.vy; this.vy+=0.38; this.life-=0.028; }
-  draw(ctx) { ctx.save(); ctx.globalAlpha=this.life; ctx.fillStyle=pgColor; ctx.fillRect(this.x-this.size/2, this.y-this.size/2, this.size, this.size); ctx.restore(); }
-}
-
-function initPgParticles() {
-  const c = document.getElementById('playgroundCanvas'); if(!c) return;
-  pgParticles = [];
-  const gap = pgCustomImg ? 88 : 30;
-  for(let y = 0; y < c.height+gap; y+=gap) for(let x = 0; x < c.width+gap; x+=gap) pgParticles.push(new PgParticle(x,y));
-}
-
-function animatePg() {
-  if(!pgActive) return;
-  const c = document.getElementById('playgroundCanvas'); if(!c) return;
-  const ctx = c.getContext('2d');
-  ctx.clearRect(0,0,c.width,c.height);
-  if(pgMouse.speed > 1) pgMouse.r += (pgMouse.tr - pgMouse.r)*0.1; else pgMouse.r *= 0.9;
-  pgTime += 0.013; pgMouse.speed *= 0.92;
-  for(const p of pgParticles) { p.update(); p.draw(ctx); }
-  for(let i = pgBlocks.length-1; i >= 0; i--) { pgBlocks[i].update(); pgBlocks[i].draw(ctx); if(pgBlocks[i].life <= 0) pgBlocks.splice(i,1); }
-  pgAnimId = requestAnimationFrame(animatePg);
-}
-
-function startPgTab() {
-  pgActive = true;
-  resizePgCanvas();
-  initPgParticles();
-  if(!pgAnimId) animatePg();
-  if(femboyImg && !document.getElementById('pgImg-femboy')) {
-    addFemboyToPgHud('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/ISTHATAFEMBOY.png');
-  }
-}
-
-function stopPgTab() {
-  pgActive = false;
-  if(pgAnimId) { cancelAnimationFrame(pgAnimId); pgAnimId = null; }
-  pgParticles = []; pgBlocks = [];
-  const c = document.getElementById('playgroundCanvas');
-  if(c) { const ctx = c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height); }
-}
-
-function setPgPhys(lib) {
-  pgPhys = lib;
-  document.querySelectorAll('[id^="pgPhys-"]').forEach(b => b.classList.remove('active-pg'));
-  const el = document.getElementById('pgPhys-'+lib);
-  if(el) el.classList.add('active-pg');
-}
-
-const pgImageUrls = {
-  dayton: 'https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/dayton.png',
-  eli: 'https://raw.githubusercontent.com/TheDevMarcus/NOVA/main/main/backend/images/eli.png',
-  payton: 'https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/kirkpayton.png',
-  hitler: 'https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/ISTHATHITLER.png',
-  femboy: 'https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/ISTHATAFEMBOY.png'
 };
-
-function setPgImage(key) {
-  pgCurrentImgKey = key;
-  document.querySelectorAll('[id^="pgImg-"]').forEach(b => b.classList.remove('active-pg-img'));
-  const el = document.getElementById('pgImg-'+key);
-  if(el) el.classList.add('active-pg-img');
-  if(key === 'dots') { pgCustomImg = null; initPgParticles(); return; }
-  if(key === 'femboy' && femboyImg) { pgCustomImg = femboyImg; initPgParticles(); return; }
-  if(pgImageUrls[key]) {
-    const img = new Image(); img.crossOrigin = 'anonymous';
-    img.onload = () => { pgCustomImg = img; initPgParticles(); };
-    img.onerror = () => { pgCustomImg = null; initPgParticles(); showToast('Image load failed'); };
-    img.src = pgImageUrls[key];
-  }
-}
-
-function setPgColor(color) {
-  pgColor = color;
-  document.querySelectorAll('.pg-color-btn').forEach(b => b.classList.remove('active-color'));
-  const match = [...document.querySelectorAll('.pg-color-btn')].find(b => {
-    const bg = b.style.background;
-    return bg === color || bg.replace(/\s/g,'') === color;
-  });
-  if(match) match.classList.add('active-color');
-  document.getElementById('pgCustomColor').value = color;
-}
-
-function clearPgParticles() { initPgParticles(); pgBlocks = []; }
-
-function switchTab(tab) {
-  const wasPlayground = pgActive;
-  if(wasPlayground && tab !== 'playground') stopPgTab();
-
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  document.querySelectorAll('.nav-item,.top-nav-item').forEach(i => i.classList.remove('active'));
-  document.getElementById(tab+'-content').classList.add('active');
-  ['tnav-','snav-'].forEach(pfx => { const el = document.getElementById(pfx+tab); if(el) el.classList.add('active'); });
-
-  const sb = document.getElementById('globalSearchBar');
-  const urlW = document.getElementById('urlBarWebsites');
-  const urlG = document.getElementById('urlBarGames');
-  const footer = document.querySelector('.footer');
-
-  sb.style.display = (tab === 'home' || tab === 'settings' || tab === 'playground') ? 'none' : 'flex';
-  urlW.style.display = tab === 'websites' ? 'flex' : 'none';
-  urlG.style.display = tab === 'games' ? 'flex' : 'none';
-  if(footer) footer.style.display = tab === 'playground' ? 'none' : 'flex';
-
-  if(tab === 'settings') loadSettingsView();
-  if(tab !== 'home' && tab !== 'settings' && tab !== 'playground') filterApps();
-
-  if(tab === 'playground') {
-    setTimeout(() => startPgTab(), 50);
-  }
-}
-
-function switchSTab(id) {
-  document.querySelectorAll('.settings-section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.s-nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelector(`[onclick="switchSTab('${id}')"]`).classList.add('active');
-}
-
-async function fetchRemoteData() {
-  try {
-    const [wRes, gRes] = await Promise.all([
-      fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/dapps.json'),
-      fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/dgames.json')
-    ]);
-    if(wRes.ok) { const d = await wRes.json(); if(Array.isArray(d)) websiteApps = d.map(a => ({...a, category:'website', isDefault:true, hasMultipleUrls:!!(a.urls&&Array.isArray(a.urls))})); }
-    if(gRes.ok) { const d = await gRes.json(); if(Array.isArray(d)) gameApps = d.map(a => ({...a, category:'game', isDefault:true, hasMultipleUrls:!!(a.urls&&Array.isArray(a.urls))})); }
-  } catch(e) { console.log('Fetch error'); }
-  filterApps();
-  updateStats();
-}
-
-async function fetchPatchUrl() {
-  try {
-    const res = await fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/patchurl.json');
-    if(res.ok) {
-      const data = await res.json();
-      remotePatchUrl = data.url || data.patchUrl || data.patch_url || null;
-      if(!remotePatchUrl && typeof data === 'string') remotePatchUrl = data.trim();
-    }
-  } catch(e) { remotePatchUrl = null; }
-}
-
-function openBrokenLinkReport() { window.open('https://forms.gle/VxC42rWMcSWdfbar9', '_blank'); }
-
-function updateStats() {
-  const allG = gameApps.length + userApps.filter(a => a.category === 'game').length;
-  const allW = websiteApps.length + userApps.filter(a => a.category === 'website').length;
-  document.getElementById('statGames').textContent = allG || '–';
-  document.getElementById('statSites').textContent = allW || '–';
-}
-
-function filterApps() { filterWebsites(); filterGames(); }
-function filterWebsites() {
-  const q = (document.getElementById('globalSearch')?.value || document.getElementById('websiteFilter')?.value || '').toLowerCase();
-  let all = [...websiteApps, ...userApps.filter(a => a.category === 'website')];
-  if(q) all = all.filter(a => a.name.toLowerCase().includes(q));
-  all.sort((a,b) => a.name.localeCompare(b.name));
-  document.getElementById('websiteCount').textContent = all.length;
-  renderGrid('websitesGrid', all, 'website', q);
-}
-function filterGames() {
-  const q = (document.getElementById('globalSearch')?.value || document.getElementById('gameFilter')?.value || '').toLowerCase();
-  let all = [...gameApps, ...userApps.filter(a => a.category === 'game')];
-  if(q) all = all.filter(a => a.name.toLowerCase().includes(q));
-  all.sort((a,b) => a.name.localeCompare(b.name));
-  document.getElementById('gameCount').textContent = all.length;
-  renderGrid('gamesGrid', all, 'game', q);
-}
-
-function renderGrid(containerId, apps, type, query) {
-  const cont = document.getElementById(containerId); if(!cont) return;
-  let html = '';
-  if(!query && type === 'website') {
-    const icons = apps.map(a => a.icon).filter(Boolean).sort(() => Math.random()-0.5);
-    html += `<div class="random-card" onclick="launchRandom('${type}')">
-      <div class="random-label">🎲 RANDOM</div>
-      <div class="random-icon-cont" id="randIconCont">${icons.map((ic,i) => `<img src="${ic}" class="${i===0?'active':''}" onerror="this.style.display='none'" loading="lazy">`).join('')}</div>
-      <div class="app-name">SURPRISE ME</div>
-    </div>`;
-  }
-  if(apps.length === 0) { html += `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--txt-d);font-size:0.85rem;">No ${type}s found.</div>`; }
-  else {
-    for(const app of apps) {
-      const hasMulti = app.hasMultipleUrls && app.urls;
-      const nameEnc = encodeURIComponent(app.name.charAt(0));
-      const fallbackIcon = `https://ui-avatars.com/api/?background=140f23&color=fff&size=80&name=${nameEnc}`;
-      const urlsData = hasMulti ? JSON.stringify(app.urls).replace(/'/g,'&apos;') : '';
-      const del = !app.isDefault ? `<div class="app-del" onclick="event.stopPropagation();deleteApp('${app.url||''}','${type}')">✕</div>` : '';
-      html += `<div class="app-card${hasMulti?' multi-link':''}" ${hasMulti?`data-urls='${urlsData}'`:`data-url="${app.url||''}"`} data-name="${app.name}" data-icon="${app.icon||''}">
-        <div class="app-icon"><img src="${app.icon||''}" onerror="this.src='${fallbackIcon}'" loading="lazy"></div>
-        <div class="app-name">${app.name}${hasMulti?' ('+app.urls.length+')':''}</div>
-        ${del}
-      </div>`;
-    }
-  }
-  if(!query) html += `<div class="add-card" onclick="openAddModal()"><div class="add-icon">+</div><div class="add-label">Add ${type}</div></div>`;
-  cont.innerHTML = html;
-  if(!query && type === 'website') startRotation();
-  cont.addEventListener('click', function handler(e) {
-    const card = e.target.closest('.app-card');
-    if(!card) return;
-    if(e.target.classList.contains('app-del')) return;
-    if(card.classList.contains('multi-link')) {
-      const u = JSON.parse(card.dataset.urls); showServerSelector(card.dataset.name, u, type, card.dataset.icon);
-    } else {
-      const url = card.dataset.url; const name = card.dataset.name; const icon = card.dataset.icon;
-      if(url) { const inp = type==='game'?'urlGames':'urlWebsites'; document.getElementById(inp).value=url; launch(type,name,icon); }
-    }
-  }, { once: true });
-}
-
-function startRotation() {
-  if(rotationInterval) clearInterval(rotationInterval);
-  const c = document.getElementById('randIconCont'); if(!c) return;
-  const imgs = c.querySelectorAll('img'); if(imgs.length <= 1) return;
-  let idx = 0;
-  rotationInterval = setInterval(() => { imgs[idx].classList.remove('active'); idx = (idx+1)%imgs.length; imgs[idx].classList.add('active'); }, 1600);
-}
-
-function launchRandom(type) {
-  const pool = type === 'website' ? [...websiteApps, ...userApps.filter(a => a.category==='website')] : [...gameApps, ...userApps.filter(a => a.category==='game')];
-  let all = []; pool.forEach(a => { if(a.hasMultipleUrls && a.urls) all.push(...a.urls); else if(a.url) all.push(a.url); });
-  if(!all.length) { showToast('No items'); return; }
-  launch(type, undefined, undefined, all[Math.floor(Math.random()*all.length)]);
-}
-
-function deleteApp(url, type) {
-  const app = userApps.find(a => a.url === url && a.category === type);
-  if(!app) return;
-  if(confirm(`Remove "${app.name}"?`)) {
-    userApps = userApps.filter(a => !(a.url === url && a.category === type));
-    localStorage.setItem('novaApps', JSON.stringify(userApps));
-    filterApps(); updateStats(); showToast('Removed');
-  }
-}
-
-function saveNewApp() {
-  const name = document.getElementById('newAppName').value.trim();
-  const urlIn = document.getElementById('newAppUrl').value.trim();
-  const icon = document.getElementById('newAppIcon').value.trim();
-  const category = document.getElementById('newAppCat').value;
-  if(!name || !urlIn) { showToast('Name & URL required'); return; }
-  const urls = urlIn.split(',').map(u => u.trim()).filter(u => u);
-  if(!urls.length) return;
-  const hasMult = urls.length > 1;
-  if(!hasMult && userApps.some(a => a.url === urls[0])) { showToast('Already added'); return; }
-  const fallback = `https://ui-avatars.com/api/?background=141414&color=fff&size=80&name=${encodeURIComponent(name.charAt(0))}`;
-  const newApp = hasMult ? { name, urls, hasMultipleUrls:true, icon:icon||fallback, category } : { name, url:urls[0], icon:icon||fallback, category };
-  userApps.push(newApp);
-  localStorage.setItem('novaApps', JSON.stringify(userApps));
-  filterApps(); updateStats(); closeModals();
-  document.getElementById('newAppName').value=''; document.getElementById('newAppUrl').value=''; document.getElementById('newAppIcon').value='';
-  showToast(`${category} added`);
-}
-
-function restoreDefaultApps() {
-  if(confirm('Restore defaults? Custom apps will be removed.')) { userApps=[]; localStorage.setItem('novaApps','[]'); fetchRemoteData(); }
-}
-function exportApps() {
-  const blob = new Blob([JSON.stringify(userApps,null,2)],{type:'application/json'});
-  const a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='nova-vault.json'; a.click(); showToast('Exported');
-}
-function importApps(e) {
-  const file = e.target.files[0]; if(!file) return;
-  const r = new FileReader(); r.onload = ev => {
-    try {
-      const imported = JSON.parse(ev.target.result);
-      if(Array.isArray(imported) && imported.every(a => a.name && (a.url||a.urls))) {
-        if(confirm(`Import ${imported.length} app(s)?`)) { userApps = [...userApps, ...imported]; localStorage.setItem('novaApps',JSON.stringify(userApps)); filterApps(); showToast('Imported'); }
-      } else alert('Invalid format');
-    } catch { alert('Invalid JSON'); }
-  }; r.readAsText(file); e.target.value='';
-}
-function exportCookies() {
-  const c = document.cookie; if(!c) { showToast('No cookies'); return; }
-  const a = document.createElement('a'); a.href='data:text/plain,'+encodeURIComponent(c); a.download='nova-cookies.txt'; a.click(); showToast('Exported');
-}
-function importCookies(e) {
-  const file = e.target.files[0]; if(!file) return;
-  const r = new FileReader(); r.onload = ev => { ev.target.result.split(';').forEach(c => { if(c.trim()) document.cookie=c.trim(); }); showToast('Cookies imported'); };
-  r.readAsText(file); e.target.value='';
-}
-function clearCookies() {
-  if(confirm('Clear all cookies?')) { document.cookie.split(';').forEach(c => { const n = c.split('=')[0].trim(); document.cookie=n+'=;expires=Thu,01 Jan 1970 00:00:00 GMT;path=/'; }); showToast('Cleared'); }
-}
-
-function launch(forcedType, appName, appIcon, forcedUrl) {
-  let type = forcedType;
-  let url = forcedUrl;
-  if(!url) {
-    const inp = type === 'game' ? 'urlGames' : 'urlWebsites';
-    url = document.getElementById(inp)?.value.trim();
-    if(!url) return;
-    if(!url.startsWith('http')) url = 'https://'+url;
-  }
-  if(type === 'game') { openGameFrame(url, appName, appIcon); return; }
-  const win = window.open('about:blank','_blank');
-  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>NOVA</title><link rel="icon" href="https://i.ibb.co/ZR8kx20q/New-Project-1.png"><style>*{margin:0;padding:0;}body{background:#000;overflow:hidden;}iframe{width:100vw;height:100vh;border:none;}.nb{position:fixed;top:12px;left:12px;height:40px;width:40px;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.06);border-radius:10px;z-index:9999;display:flex;align-items:center;overflow:hidden;transition:0.25s;}.nb:hover{width:160px;border-color:rgba(255,140,66,0.3);}.trigger{min-width:40px;height:40px;display:flex;align-items:center;justify-content:center;}.ctrls{display:flex;gap:8px;opacity:0;transition:0.2s;padding-right:12px;}.nb:hover .ctrls{opacity:1;}.b{width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:#ccc;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:0.2s;font-size:13px;}.b:hover{background:rgba(255,140,66,0.2);color:#fff;}.ex:hover{background:rgba(255,80,80,0.2);color:#f88;}</style></head><body><div class="nb"><div class="trigger"><svg width="16" height="16" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></div><div class="ctrls"><button class="b ex" onclick="window.close()">✕</button><button class="b" onclick="location.reload()">↺</button></div></div><iframe src="${url}" allowfullscreen></iframe></body></html>`);
-}
-
-function openGameFrame(url, name, icon) {
-  currentGameUrl = url; currentGameName = name||'Game'; currentGameIcon = icon||'https://i.ibb.co/ZR8kx20q/New-Project-1.png';
-  document.getElementById('gameFrameName').textContent = currentGameName;
-  document.getElementById('gameFrameIcon').src = currentGameIcon;
-  document.getElementById('gameIframe').src = url;
-  document.getElementById('gameModal').classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-function closeGameFrame() { document.getElementById('gameModal').classList.remove('show'); document.getElementById('gameIframe').src=''; document.body.style.overflow=''; }
-function fullscreenGame() {
-  const c = document.querySelector('.game-container');
-  if(c.requestFullscreen) c.requestFullscreen(); else if(c.webkitRequestFullscreen) c.webkitRequestFullscreen();
-}
-function openGameNewTab() { closeGameFrame(); launch('website', undefined, undefined, currentGameUrl); }
-['fullscreenchange','webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, () => {
-  const c = document.querySelector('.game-container');
-  if(!document.fullscreenElement && !document.webkitFullscreenElement) c.classList.remove('fullscreen-active');
-}));
-
-function openAddModal() { document.getElementById('addAppModal').classList.add('show'); }
-function closeModals() { document.querySelectorAll('.modal,.version-modal,.server-modal').forEach(m => m.classList.remove('show')); document.body.style.overflow=''; }
-function closeServerModal() { document.getElementById('serverModal').classList.remove('show'); }
-function showServerSelector(name, urls, type, icon) {
-  const list = document.getElementById('serverList'); list.innerHTML = '';
-  urls.forEach((u,i) => {
-    const d = document.createElement('div'); d.className = 'server-opt';
-    d.innerHTML = `<span class="server-num">${i+1}</span><span class="server-url">${u}</span>`;
-    d.onclick = () => { const inp = type==='game'?'urlGames':'urlWebsites'; document.getElementById(inp).value=u; launch(type,name,icon); closeServerModal(); };
-    list.appendChild(d);
-  });
-  document.getElementById('serverModalTitle').textContent = `${name} — Select Server`;
-  document.getElementById('serverModal').classList.add('show');
-}
-function toggleDevFeed() { document.getElementById('devFeed').classList.toggle('show'); }
-
-function setBootProgress(pct, msg) {
-  document.getElementById('bootBar').style.width = pct + '%';
-  document.getElementById('bootStatus').textContent = msg;
-}
-
-async function checkOnlineStatus() {
-  try {
-    const res = await fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/status.json');
-    if(!res.ok) return false;
-    const data = await res.json();
-    return (data.status || '').toLowerCase() === 'online';
-  } catch(e) { return false; }
-}
-
-async function fetchChangelog() {
-  try {
-    const vRes = await fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/updates.json');
-    if(!vRes.ok) throw new Error('fetch failed');
-    let verData;
-    const rawText = await vRes.text();
-    try { verData = JSON.parse(rawText); } catch { verData = { version: rawText.trim() }; }
-    const ver = verData.version || verData;
-    const verStr = typeof ver === 'string' ? ver.trim() : JSON.stringify(ver);
-    let logs = null;
-    if(verData.changelog && Array.isArray(verData.changelog) && verData.changelog.length > 0) logs = verData.changelog;
-    else if(verData.logs && Array.isArray(verData.logs) && verData.logs.length > 0) logs = verData.logs;
-    renderLogs(logs);
-    if(verStr === '2.3') {
-      document.getElementById('startBtnW').disabled = false;
-      document.getElementById('startBtnG').disabled = false;
-      document.getElementById('versionText').textContent = 'V'+verStr;
-      document.getElementById('sysVer').textContent = 'V'+verStr;
-      document.getElementById('sysStatus').textContent = 'Online — V'+verStr;
-      document.getElementById('statVer').textContent = verStr;
-    } else {
-      document.getElementById('versionErrMsg').textContent = `You are on v2.3, but the current version is v${verStr}. A newer client is required.`;
-      if(remotePatchUrl) {
-        document.getElementById('patchBtn').style.display = 'block';
-        document.getElementById('patchBtn').textContent = 'INSTALL PATCH';
-        document.getElementById('patchNote').style.display = 'none';
-      } else {
-        document.getElementById('patchBtn').style.display = 'none';
-        const note = document.getElementById('patchNote');
-        note.style.display = 'block';
-        note.textContent = 'No patch URL available right now. Check back later.';
-      }
-      document.getElementById('versionModal').classList.add('show');
-      document.body.style.overflow = 'hidden';
-    }
-  } catch {
-    document.getElementById('startBtnW').disabled = false;
-    document.getElementById('startBtnG').disabled = false;
-    document.getElementById('versionText').textContent = 'OFFLINE';
-    document.getElementById('sysStatus').textContent = 'Offline mode';
-    renderLogs(null);
-  }
-}
-
-function renderLogs(logs) {
-  const modal = document.getElementById('devFeedBody');
-  const home = document.getElementById('homeLogList');
-  if(!logs || !Array.isArray(logs) || logs.length === 0) {
-    const noneHtml = '<div class="none-state">— NONE —</div>';
-    modal.innerHTML = noneHtml; home.innerHTML = noneHtml; return;
-  }
-  const toEntry = l => `<div class="log-entry" style="border-left-color:${l.color||'var(--p)'};">
-    <div class="log-entry-title">${l.title||'Update'}</div>
-    <div class="log-entry-msg">${l.message||l.msg||''}</div>
-    ${(l.author||l.by) ? `<div class="log-entry-author"><span class="log-dot" style="background:${l.color||'var(--p)'};"></span>${l.author||l.by}</div>` : ''}
-  </div>`;
-  modal.innerHTML = logs.map(toEntry).join('');
-  home.innerHTML = logs.slice(0,3).map(toEntry).join('');
-}
-
-document.getElementById('patchBtn').addEventListener('click', () => {
-  if(remotePatchUrl) { window.location.href = remotePatchUrl; }
-  else { const note = document.getElementById('patchNote'); note.style.display = 'block'; note.textContent = 'No patch URL is available right now. Check back later.'; }
-});
-
-function loadSettingsView() {
-  const theme = localStorage.getItem('novaTheme') || 'amber';
-  applyThemeVars(theme);
-  document.querySelectorAll('.theme-card').forEach(el => { el.classList.remove('active'); if(el.dataset.theme === theme) el.classList.add('active'); });
-  updateParticleColor();
-  const layout = localStorage.getItem('novaLayout') === 'sidebar';
-  document.getElementById('layoutToggle').checked = layout;
-  if(layout) document.body.classList.add('layout-sidebar'); else document.body.classList.remove('layout-sidebar');
-  const pOn = localStorage.getItem('novaParticles') !== 'false';
-  document.getElementById('particleToggle').checked = pOn;
-  toggleParticles();
-  const perfOn = localStorage.getItem('novaPerf') === 'true';
-  document.getElementById('perfToggle').checked = perfOn;
-  performanceMode = perfOn;
-  document.getElementById('perfOptions').style.display = perfOn ? 'block' : 'none';
-  const wallOn = localStorage.getItem('novaWallpaperEnabled') === 'true';
-  document.getElementById('wallpaperToggle').checked = wallOn;
-  document.getElementById('wallpaperControls').style.display = wallOn ? 'block' : 'none';
-  if(wallOn) loadSavedWallpaper();
-  loadSavedParticleImage();
-  resetCustomColors();
-  const betaPg = localStorage.getItem('novaBetaPlayground') === 'true';
-  document.getElementById('betaPlaygroundToggle').checked = betaPg;
-}
-
-function applyThemeVars(name) { document.body.setAttribute('data-theme', name); }
-
-function toggleLayout() {
-  const en = document.getElementById('layoutToggle').checked;
-  if(en) document.body.classList.add('layout-sidebar'); else document.body.classList.remove('layout-sidebar');
-  localStorage.setItem('novaLayout', en ? 'sidebar' : 'top');
-  showToast('Layout updated');
-}
-
-function applyCustomColors() {
-  if(!confirm('Override theme with custom colors?')) return;
-  customColorsActive = true; localStorage.setItem('novaCustomColors','true');
-  const p = document.getElementById('customPrimary').value;
-  const a = document.getElementById('customAccent').value;
-  const b = document.getElementById('customBg0').value;
-  const style = document.documentElement.style;
-  style.setProperty('--p', p); style.setProperty('--acc', a); style.setProperty('--bg0', b);
-  style.setProperty('--p-dim', p+'20'); style.setProperty('--p-glow', p+'70'); style.setProperty('--p-mid', p+'50');
-  style.setProperty('--border-h', p+'45'); style.setProperty('--footer-c', p+'99');
-  document.querySelectorAll('.theme-card').forEach(el => el.classList.remove('active'));
-  updateParticleColor(); showToast('Custom colors applied');
-}
-function resetCustomColors() {
-  const theme = document.body.getAttribute('data-theme') || 'amber';
-  const map = { amber:['#ff8c42','#ffb347','#070400'], nova:['#a87fff','#e066ff','#03020a'], ocean:['#38b6ff','#00e5ff','#000810'], crimson:['#ff3d3d','#ff6b35','#0f0000'] };
-  const v = map[theme] || map.amber;
-  document.getElementById('customPrimary').value = v[0];
-  document.getElementById('customAccent').value = v[1];
-  document.getElementById('customBg0').value = v[2];
-}
-function saveSettings() {
-  localStorage.setItem('novaParticles', document.getElementById('particleToggle').checked);
-  localStorage.setItem('novaPerf', document.getElementById('perfToggle').checked);
-  showToast('Settings saved');
-}
-function changeTheme(name) {
-  if(customColorsActive && !confirm('Custom colors active. Override?')) return;
-  customColorsActive = false; localStorage.removeItem('novaCustomColors');
-  applyThemeVars(name);
-  localStorage.setItem('novaTheme', name);
-  document.querySelectorAll('.theme-card').forEach(el => { el.classList.remove('active'); if(el.dataset.theme===name) el.classList.add('active'); });
-  updateParticleColor();
-  pWallpaperImg = null; localStorage.removeItem('novaWallpaperData');
-  document.getElementById('wallpaperToggle').checked = false;
-  document.getElementById('wallpaperControls').style.display = 'none';
-  if(document.getElementById('particleToggle').checked) initParticles(); else pCtx.clearRect(0,0,pCanvas.width,pCanvas.height);
-  resetCustomColors();
-  showToast('Theme: '+name);
-}
-function resetToDefaults() {
-  if(!confirm('Reset all settings?')) return;
-  ['novaTheme','novaLayout','novaParticles','novaPerf','novaCustomColors','novaWallpaperEnabled','novaWallpaperData','novaParticleImage','novaParticleCustomData','novaBetaPlayground'].forEach(k => localStorage.removeItem(k));
-  customColorsActive = false; pCustomImg = null; pWallpaperImg = null;
-  document.documentElement.style.cssText = '';
-  document.body.setAttribute('data-theme','amber');
-  document.body.classList.remove('layout-sidebar');
-  performanceMode = false;
-  document.getElementById('tnav-playground').style.display = 'none';
-  document.getElementById('snav-playground').style.display = 'none';
-  loadSettingsView(); initParticles(); initStars();
-  showToast('Reset complete');
-}
-function exportAllSettings() {
-  const s = { novaTheme:localStorage.getItem('novaTheme')||'amber', novaLayout:localStorage.getItem('novaLayout')||'top', novaParticles:localStorage.getItem('novaParticles')!=='false', novaPerf:localStorage.getItem('novaPerf')==='true', novaBetaPlayground:localStorage.getItem('novaBetaPlayground')==='true' };
-  const a = document.createElement('a'); a.href='data:application/json,'+encodeURIComponent(JSON.stringify(s,null,2)); a.download='nova-settings.json'; a.click(); showToast('Exported');
-}
-function importAllSettings(e) {
-  const file = e.target.files[0]; if(!file) return;
-  const r = new FileReader(); r.onload = ev => {
-    try {
-      const d = JSON.parse(ev.target.result);
-      Object.entries(d).forEach(([k,v]) => localStorage.setItem(k,v));
-      loadSettingsView(); showToast('Imported'); location.reload();
-    } catch { alert('Invalid file'); }
-  }; r.readAsText(file); e.target.value='';
-}
-
-const quotes = ["Your unblocked gateway.","Explore without limits.","Freedom to browse.","No walls, just web.","The ultimate vault.","Open the door.","Beyond restrictions.","Your digital escape."];
-let qIdx=0, cIdx=0, deleting=false;
-function typeWriter() {
-  const el = document.getElementById('typewriterText'); if(!el) return;
-  if(deleting) { el.textContent = quotes[qIdx].substring(0,--cIdx); } else { el.textContent = quotes[qIdx].substring(0,++cIdx); }
-  if(!deleting && cIdx === quotes[qIdx].length) { deleting=true; setTimeout(typeWriter,2200); }
-  else if(deleting && cIdx === 0) { deleting=false; qIdx=(qIdx+1)%quotes.length; setTimeout(typeWriter,450); }
-  else setTimeout(typeWriter, deleting?45:95);
-}
-
-function dismissBootScreen() {
-  const boot = document.getElementById('bootScreen');
-  boot.style.opacity = '0';
-  setTimeout(() => { boot.style.display = 'none'; }, 500);
-}
-
-(async function init() {
-  initStars(); drawStars();
-  resizeParticleCanvas();
-  animateParticles();
-
-  const savedTheme = localStorage.getItem('novaTheme') || 'amber';
-  applyThemeVars(savedTheme);
-  if(localStorage.getItem('novaLayout') === 'sidebar') document.body.classList.add('layout-sidebar');
-  updateParticleColor();
-  const pOn = localStorage.getItem('novaParticles') !== 'false';
-  if(document.getElementById('particleToggle')) document.getElementById('particleToggle').checked = pOn;
-  setTimeout(() => { initParticles(); loadSavedParticleImage(); }, 100);
-  const wallOn = localStorage.getItem('novaWallpaperEnabled') === 'true';
-  if(wallOn) loadSavedWallpaper();
-
-  const betaPg = localStorage.getItem('novaBetaPlayground') === 'true';
-  if(betaPg) {
-    document.getElementById('tnav-playground').style.display = 'flex';
-    document.getElementById('snav-playground').style.display = 'flex';
-  }
-
-  setBootProgress(20, 'CHECKING STATUS...');
-  const isOnline = await checkOnlineStatus();
-
-  if(!isOnline) {
-    setBootProgress(100, 'SERVICE UNAVAILABLE');
-    setTimeout(() => {
-      document.getElementById('bootScreen').style.opacity = '0';
-      setTimeout(() => {
-        document.getElementById('bootScreen').style.display = 'none';
-        document.getElementById('offlineGate').style.display = 'flex';
-      }, 500);
-    }, 800);
-    return;
-  }
-
-  setBootProgress(50, 'FETCHING PATCH INFO...');
-  await fetchPatchUrl();
-  setBootProgress(70, 'LOADING VAULT...');
-  await fetchChangelog();
-  fetchRemoteData();
-  setBootProgress(100, 'READY');
-  setTimeout(dismissBootScreen, 400);
-  typeWriter();
-})();
 </script>
 </body>
 </html>

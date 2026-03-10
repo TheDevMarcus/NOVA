@@ -252,7 +252,8 @@ body.layout-sidebar .main-wrapper{margin-left:var(--sidebar-w);padding-top:0;}
 .stat-card.clickable{cursor:pointer;}
 .stat-card.clickable:hover{border-color:var(--border-h);box-shadow:0 8px 24px var(--p-dim);}
 .stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--p);line-height:1;}
-.stat-num.icon-num{font-size:1.4rem;}
+.stat-num.icon-num{font-size:1.4rem;display:flex;align-items:center;justify-content:flex-start;}
+.stat-num.icon-num i{font-size:1.3rem;color:var(--p);}
 .stat-label{font-size:0.7rem;color:var(--txt-d);margin-top:4px;letter-spacing:0.1em;text-transform:uppercase;}
 .changelog-panel{background:var(--card);border:1px solid var(--border);border-radius:20px;display:flex;flex-direction:column;overflow:hidden;}
 .panel-top{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
@@ -423,6 +424,57 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
 .footer-links{display:flex;gap:20px;}
 .footer-link{color:var(--footer-c);text-decoration:none;transition:color 0.2s;opacity:0.7;font-size:0.68rem;font-weight:600;}
 .footer-link:hover{color:var(--p);opacity:1;}
+
+/* Offline Gate */
+#offlineGate{
+  position:fixed;inset:0;background:var(--bg0);
+  background-image:radial-gradient(ellipse 80% 50% at 50% 50%, color-mix(in srgb, var(--p) 6%, transparent), transparent);
+  z-index:99999;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:0;
+}
+.offline-box{
+  display:flex;flex-direction:column;align-items:center;gap:20px;
+  background:var(--card);border:1px solid var(--border-h);
+  border-radius:24px;padding:48px 52px;max-width:440px;width:90%;
+  box-shadow:0 30px 60px rgba(0,0,0,0.8);
+  animation:scaleIn 0.3s var(--ease);
+}
+.offline-icon{font-size:52px;line-height:1;filter:grayscale(0.3);}
+.offline-title{
+  font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;
+  letter-spacing:0.15em;
+  background:linear-gradient(135deg,#fff 0%,var(--p) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.offline-sub{font-size:0.88rem;color:var(--txt-d);text-align:center;line-height:1.7;max-width:320px;}
+.offline-badge{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,80,80,0.1);border:1px solid rgba(255,80,80,0.3);
+  border-radius:10px;padding:10px 20px;
+  font-family:'JetBrains Mono',monospace;font-size:0.78rem;font-weight:600;
+  color:#ff8080;letter-spacing:0.08em;
+}
+.offline-dot{width:8px;height:8px;background:#ff5555;border-radius:50%;box-shadow:0 0 8px #ff5555;animation:vdot 1.5s infinite;}
+
+/* Bootloader */
+#bootScreen{
+  position:fixed;inset:0;background:#000;
+  z-index:99998;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:24px;
+  transition:opacity 0.5s ease;
+}
+.boot-logo{
+  font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;letter-spacing:0.4em;
+  background:linear-gradient(135deg,#fff 0%,var(--p) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 30px var(--p-glow));
+  animation:bootPulse 1.2s ease infinite;
+}
+@keyframes bootPulse{0%,100%{filter:drop-shadow(0 0 20px var(--p-glow));}50%{filter:drop-shadow(0 0 50px var(--p-glow));}}
+.boot-status{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--txt-d);letter-spacing:0.12em;}
+.boot-bar-wrap{width:200px;height:2px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
+.boot-bar{height:100%;background:var(--p);border-radius:2px;width:0%;transition:width 0.4s ease;}
+
 @media(max-width:900px){.home-grid{grid-template-columns:1fr;}.settings-wrap{flex-direction:column;}.settings-nav{width:100%;flex-direction:row;overflow-x:auto;flex-wrap:nowrap;}.s-nav-btn{flex-shrink:0;}}
 @media(max-width:640px){.main-wrapper{padding:14px;}.apps-grid{grid-template-columns:repeat(2,1fr);}.vault-controls{flex-direction:column;align-items:flex-start;width:100%;}.filter-input,.filter-input:focus{width:100%;}.url-bar{flex-direction:column;border-radius:16px;padding:14px;}.url-bar input{width:100%;}.launch-btn{width:100%;}.top-nav-item span{display:none;}.top-nav{padding:0 14px;gap:4px;}}
 @media(max-width:400px){.apps-grid{grid-template-columns:repeat(2,1fr);}.home-stats{flex-direction:column;}}
@@ -432,6 +484,21 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
 
 <canvas id="stars-canvas"></canvas>
 <canvas id="particle-canvas"></canvas>
+
+<div id="bootScreen">
+  <div class="boot-logo">NOVA</div>
+  <div class="boot-bar-wrap"><div class="boot-bar" id="bootBar"></div></div>
+  <div class="boot-status" id="bootStatus">INITIALIZING...</div>
+</div>
+
+<div id="offlineGate" style="display:none;">
+  <div class="offline-box">
+    <div class="offline-icon">🚫</div>
+    <div class="offline-title">NOVA OFFLINE</div>
+    <div class="offline-badge"><div class="offline-dot"></div>SERVICE UNAVAILABLE</div>
+    <div class="offline-sub">NOVA is currently offline for maintenance or has been taken down. Please check back later.</div>
+  </div>
+</div>
 
 <nav class="top-nav" id="topNav">
   <div class="top-nav-logo">NOVA</div>
@@ -481,7 +548,7 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
   <div class="main-header">
     <div class="search-bar" id="globalSearchBar" style="display:none;">
       <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" id="globalSearch" placeholder="Search the vault..." autocomplete="off" oninput="filterApps()" onkeyup="checkAdmin(event)">
+      <input type="text" id="globalSearch" placeholder="Search the vault..." autocomplete="off" oninput="debouncedFilter()" onkeyup="checkAdmin(event)">
     </div>
   </div>
 
@@ -508,7 +575,7 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
             <div class="stat-label">Version</div>
           </div>
           <div class="stat-card clickable" onclick="openBrokenLinkReport()" title="Report a broken link">
-            <div class="stat-num icon-num">🔗</div>
+            <div class="stat-num icon-num"><i class="fas fa-link-slash"></i></div>
             <div class="stat-label">Report Broken Link</div>
           </div>
         </div>
@@ -539,7 +606,7 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
         </div>
         <div class="filter-wrap">
           <svg viewBox="0 0 24 24" fill="none"><polygon points="22 3 2 3 10 13 10 21 14 18 14 13 22 3"/></svg>
-          <input type="text" id="websiteFilter" class="filter-input" placeholder="Filter..." autocomplete="off" oninput="filterWebsites()">
+          <input type="text" id="websiteFilter" class="filter-input" placeholder="Filter..." autocomplete="off" oninput="debouncedFilterWebsites()">
         </div>
       </div>
     </div>
@@ -563,7 +630,7 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
         </div>
         <div class="filter-wrap">
           <svg viewBox="0 0 24 24" fill="none"><polygon points="22 3 2 3 10 13 10 21 14 18 14 13 22 3"/></svg>
-          <input type="text" id="gameFilter" class="filter-input" placeholder="Filter..." autocomplete="off" oninput="filterGames()">
+          <input type="text" id="gameFilter" class="filter-input" placeholder="Filter..." autocomplete="off" oninput="debouncedFilterGames()">
         </div>
       </div>
     </div>
@@ -809,6 +876,7 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
     <div class="modal-title" style="color:var(--p);">SYSTEM MISMATCH</div>
     <p style="color:var(--txt-d);margin-bottom:28px;" id="versionErrMsg">NOVA client update required.</p>
     <button class="m-btn primary" id="patchBtn">INSTALL PATCH</button>
+    <p style="color:var(--txt-d);font-size:0.72rem;margin-top:12px;" id="patchNote" style="display:none;"></p>
   </div>
 </div>
 
@@ -868,7 +936,13 @@ let currentParticleColor = '#ff8c42';
 let pTime = 0;
 let customColorsActive = false;
 let remotePatchUrl = null;
-let remoteBrokenLinkUrl = null;
+
+function debounce(fn, delay) {
+  let t; return function(...args) { clearTimeout(t); t = setTimeout(() => fn.apply(this, args), delay); };
+}
+const debouncedFilter = debounce(filterApps, 180);
+const debouncedFilterWebsites = debounce(filterWebsites, 180);
+const debouncedFilterGames = debounce(filterGames, 180);
 
 try { const s = localStorage.getItem('novaApps'); userApps = s ? JSON.parse(s) : []; if(!Array.isArray(userApps)) userApps = []; } catch(e) { userApps = []; }
 
@@ -885,14 +959,16 @@ function initStars() {
 }
 function drawStars() {
   sCtx.clearRect(0, 0, starsCanvas.width, starsCanvas.height);
-  for(let s of stars) {
+  for(const s of stars) {
     sCtx.beginPath(); sCtx.arc(s.x, s.y, s.r, 0, Math.PI*2);
     sCtx.fillStyle = `rgba(255,255,255,${s.g})`; sCtx.fill();
     s.y += s.s; if(s.y > starsCanvas.height) { s.y = 0; s.x = Math.random()*starsCanvas.width; }
   }
   requestAnimationFrame(drawStars);
 }
-window.addEventListener('resize', () => { initStars(); resizeParticleCanvas(); });
+
+const debouncedResize = debounce(() => { initStars(); resizeParticleCanvas(); }, 200);
+window.addEventListener('resize', debouncedResize);
 
 const pCanvas = document.getElementById('particle-canvas');
 const pCtx = pCanvas.getContext('2d');
@@ -907,18 +983,18 @@ class Particle {
   constructor(x, y) { this.bx = x; this.by = y; this.x = x; this.y = y; this.vx = 0; this.vy = 0; this.size = pCustomImg ? 70 : 2.3; }
   update() {
     if(pWallpaperImg) return;
-    let dx = pMouse.x - this.x, dy = pMouse.y - this.y;
-    let dist = Math.sqrt(dx*dx + dy*dy);
-    let wx = performanceMode ? 0 : Math.sin(pTime*1.1 + this.by*0.01) * 12;
-    let wy = performanceMode ? 0 : Math.cos(pTime*1.1 + this.bx*0.01) * 12;
+    const dx = pMouse.x - this.x, dy = pMouse.y - this.y;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    const wx = performanceMode ? 0 : Math.sin(pTime*1.1 + this.by*0.01) * 12;
+    const wy = performanceMode ? 0 : Math.cos(pTime*1.1 + this.bx*0.01) * 12;
     if(pCurrentLib === 'dayton_classic') {
-      if(dist < pMouse.r) { let f = (pMouse.r-dist)/pMouse.r; let a = Math.atan2(dy,dx); this.vx -= Math.cos(a)*(f*(11+pMouse.speed*0.3)); this.vy -= Math.sin(a)*(f*(11+pMouse.speed*0.3)); }
+      if(dist < pMouse.r) { const f = (pMouse.r-dist)/pMouse.r; const a = Math.atan2(dy,dx); this.vx -= Math.cos(a)*(f*(11+pMouse.speed*0.3)); this.vy -= Math.sin(a)*(f*(11+pMouse.speed*0.3)); }
       this.vx += (this.bx+wx-this.x)*0.07; this.vy += (this.by+wy-this.y)*0.07;
     } else if(pCurrentLib === 'dayton_fluid') {
-      if(dist < 80) { let p = (80-dist)/80; this.vx += pMouse.vx*p*0.4; this.vy += pMouse.vy*p*0.4; }
+      if(dist < 80) { const p = (80-dist)/80; this.vx += pMouse.vx*p*0.4; this.vy += pMouse.vy*p*0.4; }
       this.vx += (this.bx+wx-this.x)*0.04; this.vy += (this.by+wy-this.y)*0.04;
     } else {
-      if(dist < 200 && pMouse.speed > 0.5) { let p = (200-dist)/200; this.vx += dx*p*0.025; this.vy += dy*p*0.025; }
+      if(dist < 200 && pMouse.speed > 0.5) { const p = (200-dist)/200; this.vx += dx*p*0.025; this.vy += dy*p*0.025; }
       this.vx += (this.bx+wx-this.x)*0.055; this.vy += (this.by+wy-this.y)*0.055;
     }
     this.vx *= 0.86; this.vy *= 0.86; this.x += this.vx; this.y += this.vy;
@@ -954,7 +1030,7 @@ function animateParticles() {
   }
   if(pMouse.speed > 1) pMouse.r += (pMouse.tr - pMouse.r) * 0.1; else pMouse.r *= 0.9;
   pTime += 0.013; pMouse.speed *= 0.92;
-  pParticles.forEach(p => { p.update(); p.draw(); });
+  for(const p of pParticles) { p.update(); p.draw(); }
   for(let i = pBlocks.length-1; i >= 0; i--) { pBlocks[i].update(); pBlocks[i].draw(); if(pBlocks[i].life <= 0) pBlocks.splice(i,1); }
   requestAnimationFrame(animateParticles);
 }
@@ -968,10 +1044,10 @@ document.addEventListener('mousedown', e => {
   if(!document.getElementById('particleToggle')?.checked) return;
   if(pWallpaperImg || performanceMode) return;
   for(let i = 0; i < 10; i++) pBlocks.push(new Block(e.clientX, e.clientY));
-  pParticles.forEach(p => {
-    let dx = e.clientX - p.x, dy = e.clientY - p.y, d = Math.sqrt(dx*dx+dy*dy);
-    if(d < 140) { let a = Math.atan2(dy,dx); p.vx -= Math.cos(a)*30; p.vy -= Math.sin(a)*30; }
-  });
+  for(const p of pParticles) {
+    const dx = e.clientX - p.x, dy = e.clientY - p.y, d = Math.sqrt(dx*dx+dy*dy);
+    if(d < 140) { const a = Math.atan2(dy,dx); p.vx -= Math.cos(a)*30; p.vy -= Math.sin(a)*30; }
+  }
 });
 
 function toggleParticles() {
@@ -1116,8 +1192,7 @@ async function fetchPatchUrl() {
 }
 
 function openBrokenLinkReport() {
-  const url = 'https://forms.gle/3rGoVgYnjwChjB9T7';
-  window.open(url, '_blank');
+  window.open('https://forms.gle/VxC42rWMcSWdfbar9', '_blank');
 }
 
 function updateStats() {
@@ -1152,41 +1227,39 @@ function renderGrid(containerId, apps, type, query) {
     const icons = apps.map(a => a.icon).filter(Boolean).sort(() => Math.random()-0.5);
     html += `<div class="random-card" onclick="launchRandom('${type}')">
       <div class="random-label">🎲 RANDOM</div>
-      <div class="random-icon-cont" id="randIconCont">${icons.map((ic,i) => `<img src="${ic}" class="${i===0?'active':''}" onerror="this.style.display='none'">`).join('')}</div>
+      <div class="random-icon-cont" id="randIconCont">${icons.map((ic,i) => `<img src="${ic}" class="${i===0?'active':''}" onerror="this.style.display='none'" loading="lazy">`).join('')}</div>
       <div class="app-name">SURPRISE ME</div>
     </div>`;
   }
   if(apps.length === 0) { html += `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--txt-d);font-size:0.85rem;">No ${type}s found.</div>`; }
   else {
-    apps.forEach(app => {
+    for(const app of apps) {
       const hasMulti = app.hasMultipleUrls && app.urls;
       const nameEnc = encodeURIComponent(app.name.charAt(0));
       const fallbackIcon = `https://ui-avatars.com/api/?background=140f23&color=fff&size=80&name=${nameEnc}`;
       const urlsData = hasMulti ? JSON.stringify(app.urls).replace(/'/g,'&apos;') : '';
-      const urlAttr = hasMulti ? '' : `data-url="${app.url||''}"`;
-      const catCls = hasMulti ? 'multi-link' : '';
       const del = !app.isDefault ? `<div class="app-del" onclick="event.stopPropagation();deleteApp('${app.url||''}','${type}')">✕</div>` : '';
-      html += `<div class="app-card ${catCls}" ${urlAttr} ${hasMulti?`data-urls='${urlsData}'`:''} data-name="${app.name}" data-icon="${app.icon||''}">
-        <div class="app-icon"><img src="${app.icon||''}" onerror="this.src='${fallbackIcon}'"></div>
+      html += `<div class="app-card${hasMulti?' multi-link':''}" ${hasMulti?`data-urls='${urlsData}'`:`data-url="${app.url||''}"`} data-name="${app.name}" data-icon="${app.icon||''}">
+        <div class="app-icon"><img src="${app.icon||''}" onerror="this.src='${fallbackIcon}'" loading="lazy"></div>
         <div class="app-name">${app.name}${hasMulti?' ('+app.urls.length+')':''}</div>
         ${del}
       </div>`;
-    });
+    }
   }
   if(!query) html += `<div class="add-card" onclick="openAddModal()"><div class="add-icon">+</div><div class="add-label">Add ${type}</div></div>`;
   cont.innerHTML = html;
   if(!query && type === 'website') startRotation();
-  cont.querySelectorAll('.app-card').forEach(card => {
-    card.addEventListener('click', e => {
-      if(e.target.classList.contains('app-del')) return;
-      if(card.classList.contains('multi-link')) {
-        const u = JSON.parse(card.dataset.urls); showServerSelector(card.dataset.name, u, type, card.dataset.icon);
-      } else {
-        const url = card.dataset.url; const name = card.dataset.name; const icon = card.dataset.icon;
-        if(url) { const inp = type === 'game' ? 'urlGames' : 'urlWebsites'; document.getElementById(inp).value = url; launch(type, name, icon); }
-      }
-    });
-  });
+  cont.addEventListener('click', function handler(e) {
+    const card = e.target.closest('.app-card');
+    if(!card) return;
+    if(e.target.classList.contains('app-del')) return;
+    if(card.classList.contains('multi-link')) {
+      const u = JSON.parse(card.dataset.urls); showServerSelector(card.dataset.name, u, type, card.dataset.icon);
+    } else {
+      const url = card.dataset.url; const name = card.dataset.name; const icon = card.dataset.icon;
+      if(url) { const inp = type==='game'?'urlGames':'urlWebsites'; document.getElementById(inp).value=url; launch(type,name,icon); }
+    }
+  }, { once: true });
 }
 
 function startRotation() {
@@ -1316,9 +1389,25 @@ function showServerSelector(name, urls, type, icon) {
 }
 function toggleDevFeed() { document.getElementById('devFeed').classList.toggle('show'); }
 
+function setBootProgress(pct, msg) {
+  document.getElementById('bootBar').style.width = pct + '%';
+  document.getElementById('bootStatus').textContent = msg;
+}
+
+async function checkOnlineStatus() {
+  try {
+    const res = await fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/status.json');
+    if(!res.ok) return false;
+    const data = await res.json();
+    return (data.status || '').toLowerCase() === 'online';
+  } catch(e) {
+    return false;
+  }
+}
+
 async function fetchChangelog() {
   try {
-    const vRes = await fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/verison.json');
+    const vRes = await fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/updates.json');
     if(!vRes.ok) throw new Error('fetch failed');
     let verData;
     const rawText = await vRes.text();
@@ -1328,11 +1417,8 @@ async function fetchChangelog() {
     const verStr = typeof ver === 'string' ? ver.trim() : JSON.stringify(ver);
 
     let logs = null;
-    if(verData.changelog && Array.isArray(verData.changelog) && verData.changelog.length > 0) {
-      logs = verData.changelog;
-    } else if(verData.logs && Array.isArray(verData.logs) && verData.logs.length > 0) {
-      logs = verData.logs;
-    }
+    if(verData.changelog && Array.isArray(verData.changelog) && verData.changelog.length > 0) logs = verData.changelog;
+    else if(verData.logs && Array.isArray(verData.logs) && verData.logs.length > 0) logs = verData.logs;
 
     renderLogs(logs);
 
@@ -1346,7 +1432,18 @@ async function fetchChangelog() {
       document.getElementById('sysStatus').textContent = 'Online — V'+verStr;
       document.getElementById('statVer').textContent = verStr;
     } else {
-      document.getElementById('versionErrMsg').textContent = `Current: v${verStr}. A newer client is required.`;
+      document.getElementById('versionErrMsg').textContent = `You are on v2.3, but the current version is v${verStr}. A newer client is required.`;
+      if(remotePatchUrl) {
+        document.getElementById('patchBtn').style.display = 'block';
+        document.getElementById('patchBtn').textContent = 'INSTALL PATCH';
+        const note = document.getElementById('patchNote');
+        note.style.display = 'none';
+      } else {
+        document.getElementById('patchBtn').style.display = 'none';
+        const note = document.getElementById('patchNote');
+        note.style.display = 'block';
+        note.textContent = 'No patch URL available right now. Check back later.';
+      }
       document.getElementById('versionModal').classList.add('show');
       document.body.style.overflow = 'hidden';
     }
@@ -1362,27 +1459,27 @@ async function fetchChangelog() {
 function renderLogs(logs) {
   const modal = document.getElementById('devFeedBody');
   const home = document.getElementById('homeLogList');
-
   if(!logs || !Array.isArray(logs) || logs.length === 0) {
     const noneHtml = '<div class="none-state">— NONE —</div>';
-    modal.innerHTML = noneHtml;
-    home.innerHTML = noneHtml;
-    return;
+    modal.innerHTML = noneHtml; home.innerHTML = noneHtml; return;
   }
-
   const toEntry = l => `<div class="log-entry" style="border-left-color:${l.color||'var(--p)'};">
     <div class="log-entry-title">${l.title||'Update'}</div>
     <div class="log-entry-msg">${l.message||l.msg||''}</div>
     ${(l.author||l.by) ? `<div class="log-entry-author"><span class="log-dot" style="background:${l.color||'var(--p)'};"></span>${l.author||l.by}</div>` : ''}
   </div>`;
-
   modal.innerHTML = logs.map(toEntry).join('');
   home.innerHTML = logs.slice(0,3).map(toEntry).join('');
 }
 
 document.getElementById('patchBtn').addEventListener('click', () => {
-  const dest = remotePatchUrl || 'https://THEONLYNOVA.web.app';
-  window.location.href = dest;
+  if(remotePatchUrl) {
+    window.location.href = remotePatchUrl;
+  } else {
+    const note = document.getElementById('patchNote');
+    note.style.display = 'block';
+    note.textContent = 'No patch URL is available right now. Check back later.';
+  }
 });
 
 function loadSettingsView() {
@@ -1507,13 +1604,17 @@ function typeWriter() {
   else setTimeout(typeWriter, deleting?45:95);
 }
 
-(function init() {
+function dismissBootScreen() {
+  const boot = document.getElementById('bootScreen');
+  boot.style.opacity = '0';
+  setTimeout(() => { boot.style.display = 'none'; }, 500);
+}
+
+(async function init() {
   initStars(); drawStars();
   resizeParticleCanvas();
   animateParticles();
-  fetchPatchUrl();
-  fetchChangelog();
-  fetchRemoteData();
+
   const savedTheme = localStorage.getItem('novaTheme') || 'amber';
   applyThemeVars(savedTheme);
   if(localStorage.getItem('novaLayout') === 'sidebar') document.body.classList.add('layout-sidebar');
@@ -1523,6 +1624,32 @@ function typeWriter() {
   setTimeout(() => { initParticles(); loadSavedParticleImage(); }, 100);
   const wallOn = localStorage.getItem('novaWallpaperEnabled') === 'true';
   if(wallOn) loadSavedWallpaper();
+
+  setBootProgress(20, 'CHECKING STATUS...');
+
+  const isOnline = await checkOnlineStatus();
+
+  if(!isOnline) {
+    setBootProgress(100, 'SERVICE UNAVAILABLE');
+    setTimeout(() => {
+      document.getElementById('bootScreen').style.opacity = '0';
+      setTimeout(() => {
+        document.getElementById('bootScreen').style.display = 'none';
+        document.getElementById('offlineGate').style.display = 'flex';
+      }, 500);
+    }, 800);
+    return;
+  }
+   setBootProgress(50, 'FETCHING PATCH INFO...');
+  await fetchPatchUrl();
+
+  setBootProgress(70, 'LOADING VAULT...');
+  await fetchChangelog();
+  fetchRemoteData();
+
+  setBootProgress(100, 'READY');
+  setTimeout(dismissBootScreen, 400);
+
   typeWriter();
 })();
 </script>

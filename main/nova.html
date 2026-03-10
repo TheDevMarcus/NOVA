@@ -246,10 +246,13 @@ body.layout-sidebar .main-wrapper{margin-left:var(--sidebar-w);padding-top:0;}
 .tagline{font-size:1.1rem;color:var(--txt-d);font-weight:400;display:flex;align-items:center;gap:8px;height:2rem;margin-top:12px;}
 .cursor-char{color:var(--p);animation:blink 1s step-end infinite;}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
-.home-stats{display:flex;gap:20px;}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 24px;flex:1;transition:all 0.25s var(--ease);}
+.home-stats{display:flex;gap:20px;flex-wrap:wrap;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 24px;flex:1;transition:all 0.25s var(--ease);min-width:80px;}
 .stat-card:hover{border-color:var(--border-h);transform:translateY(-2px);}
+.stat-card.clickable{cursor:pointer;}
+.stat-card.clickable:hover{border-color:var(--border-h);box-shadow:0 8px 24px var(--p-dim);}
 .stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--p);line-height:1;}
+.stat-num.icon-num{font-size:1.4rem;}
 .stat-label{font-size:0.7rem;color:var(--txt-d);margin-top:4px;letter-spacing:0.1em;text-transform:uppercase;}
 .changelog-panel{background:var(--card);border:1px solid var(--border);border-radius:20px;display:flex;flex-direction:column;overflow:hidden;}
 .panel-top{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
@@ -446,7 +449,7 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
       <span>Games</span>
     </div>
     <div class="top-nav-item" id="tnav-settings" onclick="switchTab('settings')">
-      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       <span>Settings</span>
     </div>
   </div>
@@ -503,6 +506,10 @@ input:checked+.toggle-slider::before{transform:translateX(22px);}
           <div class="stat-card">
             <div class="stat-num" id="statVer">2.3</div>
             <div class="stat-label">Version</div>
+          </div>
+          <div class="stat-card clickable" onclick="openBrokenLinkReport()" title="Report a broken link">
+            <div class="stat-num icon-num">🔗</div>
+            <div class="stat-label">Report Broken Link</div>
           </div>
         </div>
       </div>
@@ -860,6 +867,8 @@ let particleReductionFactor = 1;
 let currentParticleColor = '#ff8c42';
 let pTime = 0;
 let customColorsActive = false;
+let remotePatchUrl = null;
+let remoteBrokenLinkUrl = null;
 
 try { const s = localStorage.getItem('novaApps'); userApps = s ? JSON.parse(s) : []; if(!Array.isArray(userApps)) userApps = []; } catch(e) { userApps = []; }
 
@@ -1093,6 +1102,22 @@ async function fetchRemoteData() {
   } catch(e) { console.log('Fetch error'); }
   filterApps();
   updateStats();
+}
+
+async function fetchPatchUrl() {
+  try {
+    const res = await fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/patchurl.json');
+    if(res.ok) {
+      const data = await res.json();
+      remotePatchUrl = data.url || data.patchUrl || data.patch_url || null;
+      if(!remotePatchUrl && typeof data === 'string') remotePatchUrl = data.trim();
+    }
+  } catch(e) { remotePatchUrl = null; }
+}
+
+function openBrokenLinkReport() {
+  const url = 'https://forms.gle/3rGoVgYnjwChjB9T7';
+  window.open(url, '_blank');
 }
 
 function updateStats() {
@@ -1355,7 +1380,10 @@ function renderLogs(logs) {
   home.innerHTML = logs.slice(0,3).map(toEntry).join('');
 }
 
-document.getElementById('patchBtn').addEventListener('click', () => { window.location.href = 'https://THEONLYNOVA.web.app'; });
+document.getElementById('patchBtn').addEventListener('click', () => {
+  const dest = remotePatchUrl || 'https://THEONLYNOVA.web.app';
+  window.location.href = dest;
+});
 
 function loadSettingsView() {
   const cloakOn = localStorage.getItem('novaCloak') === 'true';
@@ -1483,6 +1511,7 @@ function typeWriter() {
   initStars(); drawStars();
   resizeParticleCanvas();
   animateParticles();
+  fetchPatchUrl();
   fetchChangelog();
   fetchRemoteData();
   const savedTheme = localStorage.getItem('novaTheme') || 'amber';

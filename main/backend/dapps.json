@@ -6,7 +6,7 @@
       "https://jsu.js.org/",
       "https://www.1key.abrdns.com/"
     ],
-    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/1key.png?raw=true"
+    "icon": "https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/1key.png"
   },
   {
     "name": "55GMS",
@@ -15,7 +15,7 @@
       "http://quiz.htrick.ar",
       "https://math.nei.cl"
     ],
-    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/55GMS.png?raw=true"
+    "icon": "https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/55GMS.png"
   },
   {
     "name": "Noah's Tutoring",
@@ -24,7 +24,7 @@
       "http://history.calculus.library.project.programming.nishanpantha.com.np",
       "http://programming.literature.seminar.geography.studying.nanosoft.net.nz"
     ],
-    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/NoahsTutoring.png?raw=true"
+    "icon": "https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/NoahsTutoring.png"
   },
   {
     "name": "Truffled",
@@ -33,7 +33,7 @@
       "https://sorry.gang.this.is.a.linewize.7s.com.tr",
       "https://shoeyenn.kfa.cl"
     ],
-    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/Truffled.png?raw=true"
+    "icon": "https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/Truffled.png"
   },
   {
     "name": "Rosin",
@@ -41,7 +41,7 @@
       "https://hiii.acmys.cl",
       "https://analytics.echofx.com/"
     ],
-    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/ROSIN.png?raw=true"
+    "icon": "https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/ROSIN.png"
   },
   {
     "name": "DEMON",
@@ -49,7 +49,7 @@
       "https://demon.learn-math.space",
       "https://gullible.online/"
     ],
-    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/demon.png?raw=true"
+    "icon": "https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/demon.png"
   },
   {
     "name": "Cherri",
@@ -57,11 +57,11 @@
       "https://school.learning.misem.or.id/",
       "https://studyingtime.fun.debahamondesaviana.cl/"
     ],
-    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/cherri.png?raw=true"
+    "icon": "https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/cherri.png"
   },
   {
     "name": "Bloxcraft",
     "url": "https://bloxcraft-ubg.bavish9772.workers.dev/",
-    "icon": "https://github.com/TheDevMarcus/NOVA/blob/main/main/backend/images/bloxcraft.png?raw=true"
+    "icon": "https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/images/bloxcraft.png"
   }
 ]

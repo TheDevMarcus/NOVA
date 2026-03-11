@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>NOVA · distribution</title>
+<title></title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
 <style>
 * {
@@ -254,7 +254,6 @@ body {
 .btn-report {
     background: none;
     border: none;
-    color: var(--text-muted);
     font-family: 'Outfit', sans-serif;
     font-size: 0.65rem;
     letter-spacing: 1px;
@@ -296,15 +295,15 @@ body {
 
 <div class="wrapper">
     <div class="distro-header">
-        <h1>NOVA</h1>
+        <h1 id="mainTitle"></h1>
         <div class="distro-sub">BUILD V<span id="build-version">...</span></div>
     </div>
 
     <div class="card">
         <div class="smooth-antimon"></div>
-        <span class="tag">🔥 STABLE 🔥</span>
-        <h2>core bundle</h2>
-        <p>Signed cryptographic bundle · NOVA-<span id="bundle-version">...</span></p>
+        <span class="tag" id="statusTag"></span>
+        <h2 id="bundleLabel"></h2>
+        <p>Signed cryptographic bundle · <span id="bundleName"></span>-<span id="bundle-version">...</span></p>
         <button class="btn-primary" id="downloadBtn" onclick="downloadApp()">⬇ DOWNLOAD NOW</button>
     </div>
 
@@ -333,7 +332,7 @@ body {
     </div>
 
     <div class="footer-links">
-        <div class="footer-note">CHIP HILL · DISTRIBUTION</div>
+        <div class="footer-note" id="footerNote"></div>
         <a href="report.html" class="btn-report">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
@@ -346,11 +345,31 @@ body {
 </div>
 
 <script>
+const CONFIG = {
+    name: "NOVA",
+    repo: "NOVA",
+    footerText: "CHIP HILL · DISTRIBUTION",
+    statusTag: "🔥 STABLE 🔥",
+    bundleLabel: "core bundle"
+};
+
+document.title = `${CONFIG.name} · distribution`;
+document.getElementById('mainTitle').innerText = CONFIG.name;
+document.getElementById('bundleName').innerText = CONFIG.name;
+document.getElementById('statusTag').innerText = CONFIG.statusTag;
+document.getElementById('bundleLabel').innerText = CONFIG.bundleLabel;
+document.getElementById('footerNote').innerText = CONFIG.footerText;
+
+const GITHUB_BASE = `https://raw.githubusercontent.com/TheDevMarcus/${CONFIG.repo}/refs/heads/main/main`;
+const VERSION_URL = `${GITHUB_BASE}/backend/verison.json`;
+const DOWNLOAD_URL = `${GITHUB_BASE}/nova.html`;
+
 let currentVersion = "2.0";
+
 async function fetchNovaVersion() {
     try {
-        const res = await fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/verison.json');
-        if (!res.ok) throw new Error('Network response was not ok');
+        const res = await fetch(VERSION_URL);
+        if (!res.ok) throw new Error();
         const text = await res.text();
         try {
             const parsed = JSON.parse(text);
@@ -416,18 +435,17 @@ drawEmbers();
 
 const statusEl = document.getElementById('status');
 window.downloadApp = async function() {
-    const url = "https://raw.githubusercontent.com/TheDevMarcus/verison/refs/heads/main/main/nova.html";
     statusEl.innerText = "🌀 DOWNLOADING ...";
     statusEl.style.color = "#ffb700";
     statusEl.style.borderColor = "rgba(255, 140, 0, 0.5)";
     
     try {
-        const res = await fetch(url);
+        const res = await fetch(DOWNLOAD_URL);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const blob = await res.blob();
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
-        a.download = `nova-v${currentVersion}.html`;
+        a.download = `${CONFIG.name.toLowerCase()}-v${currentVersion}.html`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);

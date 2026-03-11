@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>NOVA · distribution</title>
+<title></title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
 <style>
 * {
@@ -14,29 +14,25 @@
 
 :root {
     --primary: #ff8c00;
-    --primary-glow: rgba(255, 140, 0, 0.8);
+    --primary-glow: rgba(255, 140, 0, 0.6);
     --primary-deep: #e03c00;
-    --accent: #ffb700;
     --bg-deep: #0a0300;
-    --bg-surface: #1a0800;
-    --glass-bg: rgba(26, 8, 0, 0.55);
+    --glass-bg: rgba(20, 8, 0, 0.6);
     --glass-border: rgba(255, 140, 0, 0.15);
-    --glass-border-hover: rgba(255, 140, 0, 0.4);
+    --glass-border-hover: rgba(255, 140, 0, 0.35);
     --text-dim: #ffd1a8;
-    --text-muted: #cc8e5e;
-    --trans-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    --trans-smooth: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 body {
     min-height: 100vh;
-    background: radial-gradient(ellipse at 50% 100%, #300c00 0%, #050100 80%);
-    background-color: var(--bg-deep);
+    background: radial-gradient(ellipse at 50% 100%, #200800 0%, #050100 100%);
     font-family: 'Outfit', sans-serif;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    padding: 1rem;
     position: relative;
     overflow-x: hidden;
 }
@@ -48,166 +44,231 @@ body {
     height: 100%;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.85;
+    opacity: 0.7;
 }
 
 .wrapper {
     position: relative;
     z-index: 30;
-    max-width: 650px;
+    max-width: 420px;
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1.2rem;
-}
-
-.main-panel {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.2rem;
+    gap: 1rem;
 }
 
 .distro-header {
     text-align: center;
-    width: 100%;
+    margin-bottom: 0.5rem;
 }
 
 .distro-header h1 {
     font-family: 'Cinzel', serif;
-    font-size: 3.8rem;
+    font-size: 2.8rem;
     font-weight: 900;
-    letter-spacing: 14px;
+    letter-spacing: 10px;
     background: linear-gradient(180deg, #ffffff 0%, #ffcda8 60%, #ff8c00 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 25px rgba(255, 100, 0, 0.6));
+    filter: drop-shadow(0 0 15px var(--primary-glow));
     animation: logoFloat 4s infinite alternate ease-in-out;
     line-height: 1;
-    will-change: transform, filter;
 }
 
 @keyframes logoFloat {
-    0% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 20px rgba(255,100,0,0.5)); }
-    100% { transform: translateY(-4px) scale(1.02); filter: drop-shadow(0 0 45px rgba(255,140,0,0.8)); }
+    0% { transform: translateY(0); filter: drop-shadow(0 0 10px rgba(255,100,0,0.4)); }
+    100% { transform: translateY(-3px); filter: drop-shadow(0 0 25px rgba(255,140,0,0.7)); }
 }
 
 .distro-sub {
-    font-size: 0.7rem;
-    letter-spacing: 5px;
+    font-size: 0.65rem;
+    letter-spacing: 4px;
     color: var(--text-dim);
-    background: rgba(0,0,0,0.4);
-    padding: 0.4rem 1.2rem;
-    border-radius: 60px;
+    background: rgba(0,0,0,0.5);
+    padding: 0.3rem 1rem;
+    border-radius: 30px;
     display: inline-block;
     backdrop-filter: blur(8px);
     border: 1px solid var(--glass-border);
-    margin-top: 0.3rem;
+    margin-top: 0.5rem;
 }
 
 .card {
     background: var(--glass-bg);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
-    border-radius: 40px;
-    padding: 2.2rem 2rem;
-    width: 100%;
-    transition: var(--trans-smooth);
-    box-shadow: 0 25px 50px -15px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
+    border-radius: 24px;
+    padding: 1.8rem 1.5rem;
     text-align: center;
     position: relative;
     overflow: hidden;
-    will-change: transform;
+    transition: var(--trans-smooth);
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
 }
 
 .card:hover {
-    transform: translateY(-4px);
     border-color: var(--glass-border-hover);
-    box-shadow: 0 35px 70px -20px rgba(0,0,0,0.9), 0 0 60px rgba(255, 100, 0, 0.15), inset 0 1px 0 rgba(255,255,255,0.1);
-    background: rgba(40, 12, 0, 0.65);
+    box-shadow: 0 25px 50px -15px rgba(0,0,0,0.9), 0 0 30px rgba(255, 100, 0, 0.1);
 }
 
 .tag {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     font-weight: 700;
-    letter-spacing: 3px;
-    padding: 0.4rem 1.4rem;
-    border-radius: 60px;
-    background: rgba(255, 140, 0, 0.05);
+    letter-spacing: 2px;
+    padding: 0.3rem 1rem;
+    border-radius: 30px;
+    background: rgba(255, 140, 0, 0.08);
     color: var(--primary);
-    border: 1px solid rgba(255, 140, 0, 0.3);
+    border: 1px solid rgba(255, 140, 0, 0.2);
     display: inline-block;
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.8rem;
 }
 
 .card h2 {
-    font-size: 2.4rem;
+    font-size: 1.8rem;
     font-weight: 700;
-    letter-spacing: 1px;
-    margin-bottom: 0.8rem;
-    background: linear-gradient(135deg, #fff, #ffcda8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.4rem;
 }
 
 .card p {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: var(--text-dim);
-    max-width: 350px;
-    margin: 0 auto 1.6rem;
+    margin: 0 auto 1.2rem;
     font-weight: 300;
-    line-height: 1.4;
 }
 
-.btn-download {
+.btn-primary {
     width: 100%;
-    padding: 1.2rem 1.8rem;
+    padding: 1rem;
     border: none;
-    border-radius: 50px;
+    border-radius: 16px;
     background: linear-gradient(135deg, #ff7b00, #d92b00);
     color: white;
     font-weight: 700;
-    font-size: 1.1rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
+    font-size: 0.95rem;
+    letter-spacing: 2px;
     cursor: pointer;
     transition: var(--trans-smooth);
-    box-shadow: 0 12px 25px rgba(200, 50, 0, 0.4), inset 0 2px 0 rgba(255,255,255,0.2);
+    box-shadow: 0 8px 20px rgba(200, 50, 0, 0.3), inset 0 2px 0 rgba(255,255,255,0.2);
     font-family: 'Outfit', sans-serif;
     position: relative;
     z-index: 5;
-    will-change: transform, box-shadow;
 }
 
-.btn-download:hover {
-    transform: scale(1.03) translateY(-2px);
+.btn-primary:hover {
+    transform: translateY(-2px);
     background: linear-gradient(135deg, #ff9433, #f03d00);
-    box-shadow: 0 18px 35px rgba(220, 70, 0, 0.6), inset 0 2px 0 rgba(255,255,255,0.3);
+    box-shadow: 0 12px 25px rgba(220, 70, 0, 0.5), inset 0 2px 0 rgba(255,255,255,0.3);
 }
 
-.btn-download:active {
-    transform: scale(0.98) translateY(2px);
-    box-shadow: 0 6px 15px rgba(150, 40, 0, 0.5);
+.btn-primary:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 10px rgba(150, 40, 0, 0.4);
 }
 
 #status {
-    font-size: 0.75rem;
-    font-weight: 400;
+    font-size: 0.7rem;
+    font-weight: 500;
     color: #ffcda8;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     background: rgba(10, 3, 0, 0.6);
-    padding: 0.8rem 1.5rem;
-    border-radius: 60px;
+    padding: 0.6rem 1rem;
+    border-radius: 12px;
     border: 1px solid var(--glass-border);
-    backdrop-filter: blur(12px);
-    transition: var(--trans-smooth);
-    box-shadow: 0 8px 20px -10px black;
-    width: 100%;
     text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.tutorial-section {
+    background: rgba(15, 5, 0, 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.tutorial-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: white;
+}
+
+.tutorial-title svg {
+    stroke: var(--primary);
+    width: 16px;
+    height: 16px;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+}
+
+.step:last-child {
+    margin-bottom: 0;
+}
+
+.step-number {
+    width: 18px;
+    height: 18px;
+    background: rgba(255, 140, 0, 0.15);
+    border: 1px solid rgba(255, 140, 0, 0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.step-text strong { color: white; }
+
+.footer-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 140, 0, 0.1);
+}
+
+.footer-note {
+    color: rgba(255,255,255,0.2);
+    font-size: 0.55rem;
+    letter-spacing: 3px;
+}
+
+.btn-report {
+    background: none;
+    border: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: var(--trans-smooth);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-report:hover {
+    color: var(--primary);
+    text-shadow: 0 0 8px var(--primary-glow);
 }
 
 .smooth-antimon {
@@ -216,117 +277,16 @@ body {
     left: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, transparent, var(--primary), var(--accent), var(--primary), transparent);
-    filter: blur(3px);
+    background: linear-gradient(90deg, transparent, var(--primary), #ffea00, var(--primary), transparent);
+    filter: blur(2px);
     opacity: 0.8;
-    animation: slideAntimon 5s infinite linear;
-    z-index: 10;
-    pointer-events: none;
+    animation: slideAntimon 4s infinite linear;
 }
 
 @keyframes slideAntimon {
-    0% { transform: translateX(-100%) scaleX(1); opacity: 0; }
-    20% { opacity: 1; }
-    50% { transform: translateX(100%) scaleX(1.5); opacity: 0.9; }
-    80% { opacity: 1; }
-    100% { transform: translateX(300%) scaleX(1); opacity: 0; }
-}
-
-.card .smooth-antimon {
-    bottom: 4px;
-    height: 3px;
-    filter: blur(4px);
-    background: linear-gradient(90deg, transparent, #ff9d00, #ffea00, #ff9d00, transparent);
-    animation: slideAntimon 6s infinite cubic-bezier(0.45, 0, 0.55, 1);
-}
-
-.tutorial-section {
-    width: 100%;
-    background: rgba(15, 5, 0, 0.4);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--glass-border);
-    border-radius: 36px;
-    padding: 1.4rem;
-    margin-top: 0.5rem;
-    transition: var(--trans-smooth);
-    position: relative;
-    overflow: hidden;
-}
-
-.tutorial-section:hover {
-    border-color: var(--glass-border-hover);
-    background: rgba(25, 8, 0, 0.6);
-}
-
-.tutorial-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 1rem;
-}
-
-.tutorial-title svg {
-    stroke: var(--primary);
-    width: 18px;
-    height: 18px;
-    filter: drop-shadow(0 0 5px var(--primary));
-}
-
-.tutorial-title span {
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 2px;
-    color: white;
-}
-
-.tutorial-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-    padding-left: 0.5rem;
-}
-
-.step {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 0.85rem;
-    color: var(--text-dim);
-}
-
-.step-number {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    background: rgba(255, 140, 0, 0.15);
-    border: 1px solid rgba(255, 140, 0, 0.4);
-    border-radius: 30px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    color: var(--accent);
-}
-
-.step-text {
-    font-weight: 300;
-}
-
-.step-text strong {
-    color: white;
-    font-weight: 500;
-}
-
-.footer-note {
-    margin-top: 1rem;
-    color: rgba(255,255,255,0.15);
-    font-size: 0.6rem;
-    letter-spacing: 4px;
-    border-top: 1px solid rgba(255, 140, 0, 0.1);
-    padding-top: 1.2rem;
-    width: 100%;
-    text-align: center;
+    0% { transform: translateX(-100%); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateX(100%); opacity: 0; }
 }
 </style>
 </head>
@@ -334,65 +294,82 @@ body {
 <canvas id="ember-canvas"></canvas>
 
 <div class="wrapper">
-    <div class="main-panel">
-        
-        <div class="distro-header">
-            <h1>NOVA</h1>
-            <div class="distro-sub">BUILD V<span id="build-version">...</span></div>
+    <div class="distro-header">
+        <h1 id="mainTitle"></h1>
+        <div class="distro-sub">BUILD V<span id="build-version">...</span></div>
+    </div>
+
+    <div class="card">
+        <div class="smooth-antimon"></div>
+        <span class="tag" id="statusTag"></span>
+        <h2 id="bundleLabel"></h2>
+        <p>Signed cryptographic bundle · <span id="bundleName"></span>-<span id="bundle-version">...</span></p>
+        <button class="btn-primary" id="downloadBtn" onclick="downloadApp()">⬇ DOWNLOAD NOW</button>
+    </div>
+
+    <div id="status">⚡ READY ⚡</div>
+
+    <div class="tutorial-section">
+        <div class="tutorial-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4M12 8h.01"></path>
+            </svg>
+            <span>HOW TO OPEN</span>
         </div>
-
-        <div class="card">
-            <div class="smooth-antimon"></div>
-            <span class="tag">🔥  STABLE  🔥</span>
-            <h2>core bundle</h2>
-            <p>Signed cryptographic bundle · NOVA‑<span id="bundle-version">...</span></p>
-            <button class="btn-download" id="downloadBtn" onclick="downloadApp()">⬇  DOWNLOAD  ⬇</button>
+        <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-text"><strong>Download</strong> the file above</div>
         </div>
-
-        <div id="status">⚡  READY  ⚡</div>
-
-        <div class="tutorial-section">
-            <div class="smooth-antimon" style="bottom: auto; top: 0;"></div>
-            
-            <div class="tutorial-title">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M12 16v-4M12 8h.01"></path>
-                </svg>
-                <span>HOW TO OPEN</span>
-            </div>
-            
-            <div class="tutorial-steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-text"><strong>Download</strong> the file above</div>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-text">Open your <strong>Downloads folder</strong></div>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-text"><strong>Double click</strong> the file to launch</div>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div class="step-text">That's it — NOVA opens in your browser</div>
-                </div>
-            </div>
+        <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-text">Open your <strong>Downloads folder</strong></div>
         </div>
+        <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-text"><strong>Double click</strong> the file to launch</div>
+        </div>
+    </div>
 
-        <div class="footer-note">CHIP HILL · DISTRIBUTION</div>
+    <div class="footer-links">
+        <div class="footer-note" id="footerNote"></div>
+        <a href="report.html" class="btn-report">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            Report Issue
+        </a>
     </div>
 </div>
 
 <script>
+const CONFIG = {
+    name: "NOVA",
+    repo: "NOVA",
+    footerText: "CHIP HILL · DISTRIBUTION",
+    statusTag: "🔥 STABLE 🔥",
+    bundleLabel: "core bundle"
+};
+
+document.title = `${CONFIG.name} · distribution`;
+document.getElementById('mainTitle').innerText = CONFIG.name;
+document.getElementById('bundleName').innerText = CONFIG.name;
+document.getElementById('statusTag').innerText = CONFIG.statusTag;
+document.getElementById('bundleLabel').innerText = CONFIG.bundleLabel;
+document.getElementById('footerNote').innerText = CONFIG.footerText;
+
+const GITHUB_BASE = `https://raw.githubusercontent.com/TheDevMarcus/${CONFIG.repo}/refs/heads/main/main`;
+const VERSION_URL = `${GITHUB_BASE}/backend/verison.json`;
+const DOWNLOAD_URL = `${GITHUB_BASE}/nova.html`;
+
 let currentVersion = "2.0";
 
 async function fetchNovaVersion() {
     try {
-        const res = await fetch('https://raw.githubusercontent.com/TheDevMarcus/NOVA/refs/heads/main/main/backend/verison.json');
-        if (!res.ok) throw new Error('Network response was not ok');
+        const res = await fetch(VERSION_URL);
+        if (!res.ok) throw new Error();
         const text = await res.text();
         try {
             const parsed = JSON.parse(text);
@@ -400,41 +377,32 @@ async function fetchNovaVersion() {
         } catch (e) {
             currentVersion = text.trim();
         }
-        document.getElementById('build-version').innerText = currentVersion;
-        document.getElementById('bundle-version').innerText = currentVersion;
     } catch (error) {
-        document.getElementById('build-version').innerText = currentVersion;
-        document.getElementById('bundle-version').innerText = currentVersion;
+        console.warn("Using default version fallback.");
     }
+    document.getElementById('build-version').innerText = currentVersion;
+    document.getElementById('bundle-version').innerText = currentVersion;
 }
-
 fetchNovaVersion();
 
 const canvas = document.getElementById('ember-canvas');
 const ctx = canvas.getContext('2d');
 let embers = [];
-
-const EMBER_COUNT = 120; 
+const EMBER_COUNT = 80;
 
 function initEmbers() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     embers = [];
-    
-    const colors = [
-        'rgba(255, 100, 0, ',
-        'rgba(255, 160, 0, ',
-        'rgba(255, 50, 0, '
-    ];
-
+    const colors = ['rgba(255, 100, 0, ', 'rgba(255, 160, 0, ', 'rgba(255, 50, 0, '];
     for (let i = 0; i < EMBER_COUNT; i++) {
         embers.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            radius: Math.random() * 2 + 0.5,
-            speedY: Math.random() * 0.8 + 0.2,
-            speedX: Math.random() * 0.4 - 0.2,
-            glow: Math.random() * 0.7 + 0.3,
+            radius: Math.random() * 1.5 + 0.5,
+            speedY: Math.random() * 0.6 + 0.2,
+            speedX: Math.random() * 0.3 - 0.15,
+            glow: Math.random() * 0.5 + 0.2,
             phase: Math.random() * Math.PI * 2,
             colorBase: colors[Math.floor(Math.random() * colors.length)]
         });
@@ -444,18 +412,14 @@ function initEmbers() {
 function drawEmbers() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const time = Date.now() / 800;
-    
     for (let e of embers) {
         const flicker = 0.5 + 0.5 * Math.sin(time * 3 + e.phase);
-        
         ctx.beginPath();
         ctx.arc(e.x, e.y, e.radius, 0, Math.PI * 2);
         ctx.fillStyle = `${e.colorBase}${e.glow * flicker})`;
         ctx.fill();
-        
         e.y -= e.speedY;
-        e.x += Math.sin(time + e.phase) * 0.3 + e.speedX;
-        
+        e.x += Math.sin(time + e.phase) * 0.2 + e.speedX;
         if (e.y < -10) {
             e.y = canvas.height + 10;
             e.x = Math.random() * canvas.width;
@@ -463,61 +427,39 @@ function drawEmbers() {
         if (e.x > canvas.width) e.x = 0;
         if (e.x < 0) e.x = canvas.width;
     }
-    
     requestAnimationFrame(drawEmbers);
 }
-
 window.addEventListener('resize', initEmbers);
 initEmbers();
 drawEmbers();
 
 const statusEl = document.getElementById('status');
-
 window.downloadApp = async function() {
-    const url = "https://raw.githubusercontent.com/TheDevMarcus/verison/refs/heads/main/main/nova.html";
-    
-    statusEl.innerText = "🌀  DOWNLOADING  ...";
+    statusEl.innerText = "🌀 DOWNLOADING ...";
     statusEl.style.color = "#ffb700";
-    statusEl.style.textShadow = "0 0 12px #ff8c00";
     statusEl.style.borderColor = "rgba(255, 140, 0, 0.5)";
     
     try {
-        const res = await fetch(url);
+        const res = await fetch(DOWNLOAD_URL);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const blob = await res.blob();
-        
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
-        a.download = `nova-v${currentVersion}.html`;
+        a.download = `${CONFIG.name.toLowerCase()}-v${currentVersion}.html`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(a.href);
         
-        statusEl.innerText = "✔  DOWNLOADED · CHECK YOUR FOLDER";
+        statusEl.innerText = "✔ DOWNLOADED · CHECK FOLDER";
         statusEl.style.color = "#ffcda8";
-        statusEl.style.textShadow = "0 0 20px #ff8c00";
         statusEl.style.borderColor = "rgba(255, 140, 0, 0.8)";
-        
     } catch (err) {
-        statusEl.innerText = "✖  FAILED · TRY AGAIN";
+        statusEl.innerText = "✖ FAILED · TRY AGAIN";
         statusEl.style.color = "#ff4d4d";
-        statusEl.style.textShadow = "0 0 18px #cc0000";
         statusEl.style.borderColor = "rgba(255, 0, 0, 0.5)";
     }
 };
-
-const btn = document.getElementById('downloadBtn');
-const antimonLines = document.querySelectorAll('.smooth-antimon');
-
-if (btn) {
-    btn.addEventListener('mouseenter', () => {
-        antimonLines.forEach(line => line.style.animationDuration = '2s');
-    });
-    btn.addEventListener('mouseleave', () => {
-        antimonLines.forEach(line => line.style.animationDuration = '6s');
-    });
-}
 </script>
 </body>
 </html>
